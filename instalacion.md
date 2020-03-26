@@ -64,4 +64,4 @@ julia>  Pkg.build("GLPK") #segunda opción si no funciona el primero
 - <a href=https://juliaacademy.com/p/intro-to-julia>Introducción a Julia</a>
 - <a href=https://docs.julialang.org/en/v1/>Documentación Julia</a>
 - <a href=https://www.gurobi.com/documentation/9.0/refman/index.html>Documentación Gurobi</a>
-- <a hred="http://www.juliaopt.org/JuMP.jl/stable/">Documentacipon JuMP</a>
+- <a href="http://www.juliaopt.org/JuMP.jl/stable/">Documentación JuMP</a>

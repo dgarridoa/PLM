@@ -1,1 +1,3 @@
-.ipynb_checkpoints
+*.ipynb_checkpoints
+gurobi/01.Linear_Programming-Empty.ipynb
+gurobi/01.Linear_Programming-Complete.ipynb
