@@ -1,2 +1,7 @@
 *.ipynb_checkpoints
-gurobi/01.Linear_Programming-Complete.ipynb
+
+*.fdb_latexmk
+*.fls
+*.log
+*.gz
+*.aux

@@ -1,0 +1,248 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[activeacute,spanish,es-nodecimaldot]{babel}
+\usepackage[left=1.5cm,top=1.5cm,right=1.5cm, bottom=1.5cm,letterpaper, includeheadfoot]{geometry}
+\usepackage[parfill]{parskip}
+
+\usepackage{amssymb, amsmath, amsthm}
+\usepackage{graphicx}
+\usepackage{lmodern,url}
+\usepackage{paralist} %util para listas compactas
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancypagestyle{plain}{%
+\fancyhf{}
+\lhead{\footnotesize\itshape\bfseries\rightmark}
+\rhead{\footnotesize\itshape\bfseries\leftmark}
+}
+
+
+% macros
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\CC}{\mathbb C}
+
+%Teoremas, Lemas, etc.
+\theoremstyle{plain}
+\newtheorem{teo}{Teorema}
+\newtheorem{lem}{Lema}
+\newtheorem{prop}{Proposición}
+\newtheorem{cor}{Corolario}
+
+\theoremstyle{definition}
+\newtheorem{defi}{Definición}
+\newtheorem{eje}{Ejemplo}
+\newtheorem{ejer}{Ejercicio}
+% fin macros
+
+%%%%% NOMBRE AUXILIARES Y FECHA
+\newcommand{\sca}{Diego Garrido}
+\newcommand{\fecha}{23 de  abril  de 2020}
+
+%%%%%%%%%%%%%%%%%%
+
+%Macros para este documento
+\newcommand{\cin}{\operatorname{cint}}
+
+
+\begin{document}
+%Encabezado
+\fancyhead[L]{Facultad de Ciencias Físicas y Matemáticas}
+\fancyhead[R]{Universidad de Chile}
+\vspace*{-1.2 cm}
+\begin{minipage}{0.6\textwidth}
+\begin{flushleft}
+\hspace*{-0.5cm}\textbf{MA4702. Programación Lineal Mixta. 2020.}\\
+\hspace*{-0.5cm}\textbf{Profesor:} José Soto\\
+\hspace*{-0.5cm}\textbf{Auxiliar:} \sca\\
+\hspace*{-0.5cm}\textbf{Fecha:} \fecha.
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.36\textwidth}
+\begin{flushright}
+\includegraphics[scale=0.15]{fcfm}
+\end{flushright}
+\end{minipage}
+\bigskip
+%Fin encabezado
+
+%Titulo Auxiliar
+\begin{center}
+\LARGE\textbf{Modelos y Dualidad}
+\end{center}
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+\hline
+                               & min          & max          &                                \\ \hline
+\multirow{}{}{Restricciones} & $\geq b_{i}$ & $\geq 0$     & \multirow{}{}{Variables}     \\ \cline{2-3}
+                               & $\leq b_{i}$ & $\leq 0$     &                                \\ \cline{2-3}
+                               & $= b_{i}$    & Libre        &                                \\ \hline
+\multirow{}{}{Variables}     & $\geq 0$     & $\leq c_{j}$ & \multirow{}{}{Restricciones} \\ \cline{2-3}
+                               & $\leq 0$     & $\geq c_{j}$ &                                \\ \cline{2-3}
+                               & Libre        & $= c_{j}$    &                                \\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\section{Minium Spanning Tree (MST)}
+Queremos construir una red de comunicación que conecte a todas las ciudades a costo mínimo, para ello contamos con un grafo conectado no dirigido $G(V,E)$, donde $V$ es el conjunto de ciudades, $E$ las carreteras que conectan las ciudades y $w_{e}$ costo de usar la carretera $e \in E$. El problema anterior se puede formular como un MST.
+
+\begin{itemize}
+\item[a)] Considere los siguientes modelos para el MST:
+
+\begin{table}[h]
+\begin{tabular}{ll}
+\begin{equation*}
+\boxed{
+\begin{aligned}
+\begin{center}\text{modeloConect}\end{center}\\
+& \min\        & \sum_{e \in E} w_{e}x_{e} \\
+& \text{s.a. } &  x(E) =& |V|-1 \\
+& & x(\delta(S))  \geq  &1   \quad \forall S \subset V, \quad S\neq \emptyset\\
+ &&  x_{e}  \in &\{0,1\} \quad  \forall e \in E\\
+\end{aligned}
+}
+\end{equation*}
+ & \begin{equation*}
+\boxed{
+\begin{aligned}
+\begin{center}\text{modeloCiclos}\end{center}\\
+& \min\        & \sum_{e \in E} w_{e}x_{e} \\
+& \text{s.a. }  &x(E) =& |V|-1 \\
+ & & x(E(S))  \leq&  |S|-1 \quad \forall S \subset V, \quad S\neq \emptyset\\
+ &&  x_{e} \in & \{0,1\} \quad  \forall e \in E\\
+\end{aligned}
+}
+\end{equation*}
+\end{tabular}
+\end{table}
+
+Demuestre que ambos son exactos
+
+\textbf{Solución}:\\
+
+Un árbol generador para un grafo $G(V,E)$ es un subgrafo conexo de $G$ que contiene a todos los vértices y utiliza exactamente $|V|-1$ arcos, si se le quita un arco el grafo resultante será no conexo. Una definición equivalente sería un subgrafo que utiliza exactamente $|V|-1$ arcos y no posee ciclos.
+
+Un modelo exacto posee correspondencia uno a uno de soluciones factibles con el problema original.
+\begin{itemize}
+    \item[(i)]   \textbf{modeloConect}\\
+    ($\Rightarrow$) Probaremos que cualquier solución del problema es un árbol generador:\\
+
+    Por la primera restricción se tiene que toda solución utiliza exactamente $|V|-1$ arcos. Sea $S^{C}$ el complemento de $S$, la segunda restricción indica que para cualquier $S\subset V, S\neq\emptyset$ existe un nodo en $S^{C}$ al cual se puede llegar, por tanto la solución es conexa.
+
+   ($\Leftarrow$)\\
+   Todo árbol generador posee exactamente $|V|-1$ arcos y como es conexo de cualquier subconjunto $S\subset V, S\neq\emptyset$ sale un arco, sino significaría que de un conjunto de nodos no se puede llegar a otro subconjunto lo que se contradice con la definición de grafo conexo.
+
+    \item[(ii)] \textbf{modeloCiclos}\\
+    ($\Rightarrow$) Probaremos que cualquier solución del problema es un árbol generador:
+    Por la primera restricción cualquier solución utilizará $|V|-1$ arcos, por tanto, se necesita probar que toda solución es además conexa para demostrar que cualquier solución del modeloCiclos es un árbol generador.
+
+    Por definición un conjunto de nodos $S$ posee un ciclo ssi $x(E(S)) \geq |S|$, notar que por la segunda restricción no hay forma de escoger un subconjunto de nodos $S\subset V, S\neq\emptyset$ que formen un ciclo. Sea $x$ una solución cualquiera, supongamos que es no conexa, esto significa que existe un $S\subset V, S\neq\emptyset$ del cual no sale ningún arco, es decir, $x(\delta(S))=0$, como $S$ no tiene ciclos a lo más posee $|S|-1$ arcos, sea $S^{C}$ el complemento de $S$, el cual tiene $|V|-|S|$ nodos, como la cantidad de arcos activos es $|V|-1$, $S^{C}$ debe tener al menos $|V|-|S|$ arcos, lo que es una contradicción ya que la solución no puede tener ciclos, por tanto, el problema no puede tener soluciones no conexas.\\
+    ($\Leftarrow$) Todo árbol generador posee exactamente $|V|-1$ arcos y no posee ciclos, por tanto satisface ambas restricciones.
+
+
+\end{itemize}
+
+\item[b)] Relaje la integralidad de la primera formulación. Demuestre que no es un modelo exacto, pero si un modelo.
+
+\textbf{Solución}:\\
+
+Para demostrar que no es un modelo exacto basta con encontrar una solución del modeloConect que no sea un árbol generador. Contraejemplo:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.2\textwidth]{graph.png}
+    \caption{Contraejemplo}
+\end{figure}
+
+Para demostrar que es un modelo necesitamos demostrar que existe una solución óptima que es un árbol generador.
+De optimización lineal sabemos que todo LP con óptimo finito y con al menos una esquina, entonces, existe un óptimo que es una esquina. En el problema anterior por unimodularidad todas sus soluciones básicas factibles (sbf) son enteras, y como el óptimo es una sbf, entonces, existe un óptimo que es un árbol generador. Otra forma de
+
+\section{Maximum Set Packing (MSP)}
+
+ Dado un universo $U$ y una familia $S$ de subconjuntos de $U$, un empaquetamiento es una subfamilia $C\subset S$ tal que todos los conjuntos en $C$ son disjuntos de a pares (en otras palabras, no hay dos conjuntos que compartan un elemento), siendo el tamaño del empaquetamiento igual a $|C|$. EL problema de empaquetamiento busca maximizar el número de conjuntos disjuntos de a pares en $S$ que se puede escoger.
+
+%https://en.wikipedia.org/wiki/Set_packing
+%terminar de formular y entender
+%https://en.wikipedia.org/wiki/Set_cover_problem
+\begin{center}
+\begin{alignat*}{5}
+&\max\ & \sum_{s \in S}x_{s}\\
+&\text{s.a. } &  \sum_{s \in S:e \in S}x_{s}  \leq  &1 &\quad \forall e \in U\\
+&& x_{s}  \in  &\{0,1\} &\quad \forall s \in S
+\end{alignat*}
+\end{center}
+
+Obtenga el dual de la relajación lineal, luego restringa el dominio de las variables a $\{0,1\}$ e interprete el problema obtenido.
+
+\textbf{Solución}:\\
+
+\begin{center}
+\begin{alignat*}{5}
+&\min\ & \sum_{e \in U}y_{e}\\
+&\text{s.a. } &  \sum_{e \in S}y_{e}  \geq  &1 &\quad \forall s \in S\\
+&& y_{e}  \in  &\{0,1\} &\quad \forall e \in U
+\end{alignat*}
+\end{center}
+
+El problema resultante se conoce como \textbf{Minimum Edge Cover}, consiste en utilizar la menor cantidad de elementos de $U$ tal que todo subconjunto $s \in S$ tiene al menos un elemento siendo utilizado. Notar que las soluciones básicas del problema relajado (tanto del primal como dual) son binarias.
+
+\section{Single Source Capacitated Facility Location Problem (CFLP)}
+El problema consiste en escoger donde instalar bodegas tal que se satisface la demanda de los minoristas a costo mínimo. Cada minorista debe estar asignado a una única bodega y esta debe satisfacer toda su demanda por producto único sin violar su restricción de capacidad.
+
+Parámetros del problema:
+\begin{itemize}
+    \item $M$: sitios potenciales, con $M = \{1, \ldots, m\}$
+    \item $N$: minoristas, con $N = \{1, \ldots, n\}$
+    \item $q_{j}$: capacidad de bodega $j$.
+    \item $w_{i}$: demanda del minorista $i$.
+    \item $f_{j}$: costo de abrir bodega en sitio $j$.
+    \item $c_{ij}$: costo de transportar $w_{i}$ unidades de producto de bodega $j$ a minorista $i$.
+\end{itemize}
+
+\begin{itemize}
+    \item[a)] Formule el PLB.
+
+\textbf{Solución:}\\
+\begin{itemize}
+    \item  $x_{ij}$ = $\begin{cases}
+      1 & \text{si el minorista $i$ es asignado a bodega $j$.} \\
+      0 & \sim
+    \end{cases}$
+    \item $y_{j}$ =
+    $\begin{cases}
+      1 & \text{si se abre una bodega en sitio $j$} \\
+      0 & \sim
+    \end{cases}$
+\end{itemize}
+
+\begin{center}
+\begin{alignat*}{5}
+\min\ & \sum_{i \in N}\sum_{j \in M}c_{ij}x_{ij}+\sum_{j\in M}f_{j}y_{j}\\
+\text{s.a. } &  \sum_{j\in M}x_{ij}  =  1 \quad \forall i \in N\\
+&  \sum_{i \in N}w_{i}x_{ij}  \leq  q_{j}y_{j} \quad \forall j \in M\\
+& x_{ij},y_{j}  \in  \{0,1\} \quad \forall i \in N, j \in M
+\end{alignat*}
+\end{center}
+
+    \item[b)] Obtenga el dual de la relajación lineal.\\
+
+\textbf{Solución}:\\
+
+\begin{center}
+\begin{alignat*}{5}
+\max\ & \sum_{i \in N}\mu_{i}+\sum_{j\in M}\beta_{j}\\
+\text{s.a. } &  \mu_{i}+w_{i}\lambda_{j}  \leq  c_{ij} \quad \forall i \in N, j \in M\\
+&  -q_{j}\lambda_{j}+\beta_{j}  \leq f_{j} \quad \forall j \in M\\
+& \lambda_{j}, \alpha_{ij},\beta_{j}  \leq  0, \mu_{i} \text{ libre} \quad \forall i \in N, j \in M
+\end{alignat*}
+\end{center}
+
+\end{itemize}
+
+\end{document}

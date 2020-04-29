@@ -1,0 +1,313 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[activeacute,spanish,es-nodecimaldot]{babel}
+\usepackage[left=1.5cm,top=1.5cm,right=1.5cm, bottom=1.5cm,letterpaper, includeheadfoot]{geometry}
+\usepackage[parfill]{parskip}
+
+\usepackage{amssymb, amsmath, amsthm}
+\usepackage{graphicx}
+\usepackage{lmodern,url}
+\usepackage{paralist} %util para listas compactas
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancypagestyle{plain}{%
+\fancyhf{}
+\lhead{\footnotesize\itshape\bfseries\rightmark}
+\rhead{\footnotesize\itshape\bfseries\leftmark}
+}
+
+% macros
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\CC}{\mathbb C}
+
+%Teoremas, Lemas, etc.
+\theoremstyle{plain}
+\newtheorem{teo}{Teorema}
+\newtheorem{lem}{Lema}
+\newtheorem{prop}{Proposición}
+\newtheorem{cor}{Corolario}
+
+\theoremstyle{definition}
+\newtheorem{defi}{Definición}
+\newtheorem{eje}{Ejemplo}
+\newtheorem{ejer}{Ejercicio}
+% fin macros
+
+%%%%% NOMBRE AUXILIARES Y FECHA
+\newcommand{\sca}{Diego Garrido}
+\newcommand{\fecha}{30 de  abril  de 2020}
+
+%%%%%%%%%%%%%%%%%%
+
+%Macros para este documento
+\newcommand{\cin}{\operatorname{cint}}
+
+
+\begin{document}
+%Encabezado
+\fancyhead[L]{Facultad de Ciencias Físicas y Matemáticas}
+\fancyhead[R]{Universidad de Chile}
+\vspace*{-1.2 cm}
+\begin{minipage}{0.6\textwidth}
+\begin{flushleft}
+\hspace*{-0.5cm}\textbf{MA4702. Programación Lineal Mixta. 2020.}\\
+\hspace*{-0.5cm}\textbf{Profesor:} José Soto\\
+\hspace*{-0.5cm}\textbf{Auxiliar:} \sca\\
+\hspace*{-0.5cm}\textbf{Fecha:} \fecha.
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.36\textwidth}
+\begin{flushright}
+\includegraphics[scale=0.15]{fcfm}
+\end{flushright}
+\end{minipage}
+\bigskip
+%Fin encabezado
+
+%Titulo Auxiliar
+\begin{center}
+\LARGE\textbf{Dualidad}
+\end{center}
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+\hline
+                               & min          & max          &                                \\ \hline
+\multirow{}{}{Restricciones} & $\geq b_{i}$ & $\geq 0$     & \multirow{}{}{Variables}     \\ \cline{2-3}
+                               & $\leq b_{i}$ & $\leq 0$     &                                \\ \cline{2-3}
+                               & $= b_{i}$    & Libre        &                                \\ \hline
+\multirow{}{}{Variables}     & $\geq 0$     & $\leq c_{j}$ & \multirow{}{}{Restricciones} \\ \cline{2-3}
+                               & $\leq 0$     & $\geq c_{j}$ &                                \\ \cline{2-3}
+                               & Libre        & $= c_{j}$    &                                \\ \hline
+\end{tabular}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Primal/Dual}   & \textbf{Optimo finito} & \textbf{No acotado} & \textbf{Infactible} \\ \hline
+\textbf{Optimo finito} & Posible                & Imposible           & Imposible           \\ \hline
+\textbf{No acotado}    & Imposible              & Imposible           & Posible             \\ \hline
+\textbf{Infactible}    & Imposible              & Posible             & Posible             \\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\section{Lema de Farkas}
+Pruebe otras versiones del lema de Farkas:
+
+\begin{itemize}
+\item[a)] $\{Ax=b, \; x\geq0\}\neq\emptyset \iff \{A^{T}y\leq0, \; b^{T}y>0\}=\emptyset$
+
+\item[b)] $\{Ax\leq0, \; x\geq0, \; c^{T}x>0\}\neq\emptyset \iff \{A^{T}y\geq c, \; y\geq0\}=\emptyset$
+\end{itemize}
+
+\textbf{Solución}:\\
+
+\textbf{(a)}
+Consideremos el siguiente par primal (P)-dual(D):
+
+\begin{center}
+\begin{alignat*}{5}
+\min\  0^{T}x &\qquad&&\max\ b^{T}y \\
+\text{s.a. }  Ax&= b \qquad&& \text{s.a. }  A^{T}y\leq 0 \\
+x&\geq 0  \qquad&&
+\end{alignat*}
+\end{center}
+
+\textbf{($\Longrightarrow$)}\\
+Si $\{Ax=b, \; x\geq0\}$ es factible se tiene que $(P)$ es factible, además cualquier solución factible es óptima y el óptimo es $c^{T}x^{*}=0$, por dualidad débil se tiene que $b^{T}y\leq0 \;\forall y \in (D)$, por tanto $\{A^{T}y\leq0, \; b^{T}y>0\}$ es infactible.
+
+\textbf{($\Longleftarrow$)}\\
+Sabemos por dualidad fuerte que si $(D)$ tiene óptimo finito, entonces $(P)$ es factible y con mismo valor óptimo. Notar que $(D)$ es siempre factible, basta tomar $y=0$, por ende, debemos demostrar que $(D)$ es acotado, en efecto, por hipótesis tenemos que $\{A^{T}y\leq0, \; b^{T}y>0\}$ es infactible lo que implica que  $b^{T}y\leq0\ \forall y \in (D)$, por tanto $(D)$ tiene óptimo finito e $\{Ax=b, \; x\geq0\}$ es factible.
+
+\textbf{(b)}
+Consideremos el siguiente par primal (P)-dual(D):
+
+\begin{center}
+\begin{alignat*}{5}
+\min\  0^{T}y &\qquad&\max\ &c^{T}x \\
+\text{s.a. }  A^{T}y&\geq c \qquad& \text{s.a. }  &Ax&\leq 0 \\
+y&\geq 0  \qquad& &x&\geq 0
+\end{alignat*}
+\end{center}
+
+\textbf{($\Longrightarrow$)}\\
+Sabemos que si $(D)$ es no acotado $(P)$ es infactible, para que $D$ sea no acotado debe existir una dirección de mejora de la función objetivo en la cual podemos movernos infinitamente sin salirnos de la región factible, formalmente esto es:
+
+$\exists d\in\mathb{R}^{m}$ tal que $A(x+\lambda d)\leq0 \; \forall \lambda\geq0$ y $c^{T}d > 0$, notar que $Ad\leq0$, ya que si existe $i \in \{1, \ldots, m\}$ tal que $(Ad)_{i}>0$ basta que tomemos un $\lambda$ lo suficientemente grande como $\lambda=+\infty$ obteniendosé que $\lambda(Ad)_{i}=+\infty$ lo que sería una contradicción. Del argumento anterior se tiene que el siguiente sistema tiene que ser factible $\{Ad\leq0, \;c^{T}d > 0\}$ para que el primal sea infactible, en efecto, se tiene que el sistema anterior es factible por hipótesis, basta tomar $x=d$, por tanto, como el dual es no acotado  $\{A^{T}y\geq c, \; y\geq0\}$ es infactible.
+
+\textbf{($\Longleftarrow$)}\\
+Si $\{A^{T}y\geq c, \; y\geq0\}$ es infactible se tiene que $(P)$ es infactible entonces $(D)$ debe ser infactible o no acotado, pero $(D)$ es factible, basta tomar $x=0$, por ende, $(D)$ es no acotado, esto significa que $\exists d\in\mathb{R}^{m}$ tal que $A(x+\lambda d)\leq0 \; \forall \lambda\geq0$ y $c^{T}d > 0$, esto implica que el siguiente sistema de ecuaciones $\{Ad\leq0, \;c^{T}d > 0\}$ es factible, tomado $x=d$ se tiene que $\{Ax\leq0, \; x\geq0, \; c^{T}x>0\}$ es factible.
+
+\section{Dualidad y relajación Lagrangeana}
+Consideré el siguiente problema primal:
+
+\begin{center}
+\begin{alignat*}{5}
+\min\  c^{T}x\\
+\text{s.a. }  Ax&\leq b\\
+x&\geq 0
+\end{alignat*}
+\end{center}
+Demuestre que la mejor cota (cota inferior más cercana al valor óptimo del primal) lagrangeana del primal es su dual. \textit{Hint}: Escriba la relajación lagrangeana del primal e imponga condiciones sobre los multiplicadores para que sea una cota inferior distinta de $-\infty$.
+
+\textbf{Solución}:\\
+La relajación lagrangena del primal es:
+\begin{center}
+\begin{alignat*}{5}
+L(y)= \underset{x\geq0}{\min}\  c^{T}x+y^{T}(b-Ax)\\
+\end{alignat*}
+\end{center}
+
+Notar que el multiplicador $y\leq0$ puesto que se quiere penalizar cuando $b-Ax\leq0$. Sea $c^{T}x^{*}$ el valor óptimo del primal, notar que $L(y)\leq c^{T}x^{*}+y^{T}(b-Ax^{*})\leq c^{T}x^{*}$, ya que $y^{T}(b-Ax^{*})\leq0$.
+\begin{center}
+\begin{alignat*}{5}
+L(y)= \underset{x\geq0}{\min}\  c^{T}x+y^{T}(b-Ax)=y^{T}b+\underset{x\geq0}{\min}\ (c^{T}-y^{T}A)x\\
+\end{alignat*}
+\end{center}
+Notar que \\
+
+ \[
+    \underset{x\geq0}{\min}\ (c^{T}-y^{T}A)x = \left\{\begin{array}{lr}
+        0, \; si \;(c^{T}-y^{T}A)\geq 0\\
+        -\infty, \; \sim\\
+        \end{array}
+  \]
+Al maximizar $L(y)$ necesitamos considerar solo aquellos valores de $y$ para los cuales $L(y)$ no es igual a $-\infty$. Luego maximizar $L(y)$ respecto a $y$ sujeto a las restricciones que evitan que sea $-\infty$ se obtiene:
+
+\begin{center}
+\begin{alignat*}{5}
+\max\  y^{T}b\\
+\text{s.a. }  y^{T}A&\leq c^{T}\\
+y&\leq 0
+\end{alignat*}
+\end{center}
+
+Lo que es equivalente al dual de nuestro problema primal.
+\section{Maximum Flow Problem}
+
+Considere el grafo dirigido $G(V,E)$, el objetivo del problema de flujo máximo es enviar la mayor cantidad de flujo desde un nodo $s$ a un nodo $t$, donde los arcos tienen capacidades positivas $c = (c_{e})_{e \in E}$.
+\begin{itemize}
+    \item[a)] Formule el PL y obtenga su dual
+    \item[b)] Obtenga el dual usando relajación lagrangeana
+\end{itemize}
+\textbf{Solución}
+
+\textbf{(a)}\\
+\begin{center}
+\begin{alignat*}{5}
+&\max\ x_{ts}\\
+&\text{s.a. } &  \sum_{e\in\delta^{+}(i)}x_{e}-\sum_{e\in\delta^{-}(i)}x_{e} &=0  &\forall i\in V\backslash \{s,t\}\\
+&&\sum_{e\in\delta^{+}(s)}x_{e}-\sum_{e\in\delta^{-}(s)}x_{e} &= x_{ts} \\
+&&\sum_{e\in\delta^{+}(t)}x_{t}-\sum_{e\in\delta^{-}(t)}x_{e}& =-x_{ts}  \\
+&&0\leq x_{e}\leq c_{e} \quad &\forall e\in E
+\end{alignat*}
+\end{center}
+
+\begin{center}
+\begin{alignat*}{5}
+&\min\ c^{T}z\\
+&\text{s.a. } &  y_{i}-y{j}+z_{ij}\geq 0 & \quad \forall (i,j) \in E\\
+&& y_{t}-y_{s}=1\\
+&& y_{i} \; libre, \;z_{e} \geq0 & \quad \forall i\in V, e \in E
+\end{alignat*}
+\end{center}
+
+La dificultad de calcular el dual en este problema recae en observar en qué restricciones del primal aparece $x_{ij}$, para esto debemos notar que el arco $(i,j)$ aparece en el conjunto de arcos que salen de $i$ y que entran a $j$, es decir, $\delta^{+}(i)$ y $\delta^{-}(j)$ respectivamente, por ende, debemos mirar la restricción $i$ y $j$ las cuales estan asociadas a las variables duales $y_{i}$ e $y_{j}$ respectivamente, luego el componente que acompaña a $x_{ij}$ en el primer conjunto es 1 y en el segundo -1, obteniendosé así $y_{i}-y{j}+z_{ij}\geq 0$.
+
+\textbf{(b)}\\
+Por relajación lagrangeana se tiene:\\
+\begin{center}
+\begin{aligned}
+L(\hat{y},z) &= \underset{x_{ts}, \;x_{e}\geq0 \;\forall e \in E}{\max}\ x_{ts}\big[1+\hat{y}_{t}-\hat{y}_{s}\big]+\sum_{i\in V}\hat{y}_{i}\big[\sum_{e\in\delta^{+}{i}}x_{e}-\sum_{e\in\delta^{-}{i}}x_{e}\big]+\sum_{e\in E}z_{e}\big[c_{e}-x_{e}\big]\\
+&=\underset{x_{ts}, \;x_{e}\geq0 \;\forall e \in E}{\max} x_{ts}\big[1+\hat{y}_{t}-\hat{y}_{s}\big]+\sum_{(i,j)\in E}x_{e}\big[\hat{y}_{i}-\hat{y}_{j}-z_{ij}\big]+c^{T}z
+\end{aligned}
+\end{center}
+
+Notar que:
+ \[
+    \underset{x_{st}}{\max}\  x_{ts}\big[1+\hat{y}_{t}-\hat{y}_{s}\big] = \left\{\begin{array}{lr}
+        0, \; si \;1+\hat{y}_{t}-\hat{y}_{s}= 0\\
+        +\infty, \; \sim\\
+        \end{array}
+  \]
+
+Además se tiene que $\forall (i,j) \in E$:
+   \[
+    \underset{x_{ij}\geq0}{\max}\  x_{ij}\big[\hat{y}_{i}-\hat{y}_{j}-z_{ij}\big] = \left\{\begin{array}{lr}
+        0, \; si \;\hat{y}_{i}-\hat{y}_{j}-z_{ij}\leq 0\\
+        +\infty, \; \sim\\
+        \end{array}
+  \]
+
+Luego la mejor cota lagrangeana es:
+\begin{center}
+\begin{alignat*}{5}
+&\min\ c^{T}z\\
+%Dónde aparece el arco (i,j)?
+%1. mirar el conjunto de arcos \delta^{-}(j), es decir, lo que entra al nodo j=>-1*y_{j}.
+%2. mirar el conjunto de arcos \delta^{+}(i), es decir, lo que sale del nodo i=>1*y_{i}
+&\text{s.a. } &  \hat{y}_{j}-\hat{y}_{i}+z_{ij}\geq 0 & \quad \forall (i,j) \in E\\
+&& \hat{y}_{s}-\hat{y}_{t}=1\\
+&& \hat{y}_{i} \; libre, \;z_{e} \geq0 & \quad \forall i\in V, e \in E
+\end{alignat*}
+\end{center}
+
+Para obtener el mismo problema de la parte anterior basta tomar $\hat{y}=-y$.
+
+\section{Teorema Carathéodory}
+Sea $P \subset \mathb{R}^{n}$ un politopo y $W=\{x^{1},\ldots, x^{k}\}$ sus puntos extremos.
+
+\begin{itemize}
+    \item[a)] Demuestre que $P=conv(W)$.
+    \item[b)] Muestre que todo elemento de $P$ puede ser expresado como una combinación convexa de a lo más $n+1$ puntos extremos. \textit{Hint:} plantee el poliedro asociado a un punto cualquiera de $P$.
+\end{itemize}
+
+\textbf{Solución}:\\
+
+\begin{equation*}
+  Q = \bigg\{x=\sum_{i=1}^{k}\lambda_{i}x^{i}\big| \sum_{i=1}^{k}\lambda_{i}=1, \lambda\geq0\bigg\}
+\end{equation*}
+
+\textbf{(a)}\\
+
+($Q\subset P$)\\
+Todo punto de $Q$ es combinación convexa de puntos extremos de $P$ y como $P$ es un conjunto convexo cualquier combinación convexa de una colección finita de puntos de $P$ pertenece a $P$, por tanto, todo punto de $Q$ pertence a $P$.
+
+($P\subset Q$)\\
+Sea $P$ un poliedro acotado y sin pérdida de generalidad $P=\{x \in \mathbb{R}^{n} |Ax\leq b\}$ y sea $x \in P$ y $I$  el conjunto de restricciones activas l.i., si $|I|=k<n$ existe una dirección $d\in\mathbb{R}^{n}\backslash\{0\}$ ortogonal a todas las restricciones activas $a_{i}^{T}d=0\; \forall i\in I$ si nos movemos en esa dirección en ambos sentidos chocaremos con una restricción debido a que el poliedro es acotado,  sean $y=x-\mu^{*}d$, $z=x+\lambda^{*}d$ con $\mu^{*}>0$, $\lambda^{*}>0$ los puntos formados por movernos en esa dirección en ambos sentidos hasta chocar con una restricción, notar que $z$ e $y$ tienen  $k+1$ restricciones activas l.i y que $x$ esta en el segmento que une $y$ con $z$ por tanto se puede escribir como la combinación convexa de estos, $x=\lambda^{0} y+(1-\lambda^{0})z$ con $\lambda^{0}\in (0,1)$. El procedimiento anterior se puede repetir $n-k$ veces hasta llegar a puntos extremos que tienen $n$ restricciones l.i por lo que ya no podemos encontrar direcciones ortongales no nulas (Nota: un arco tiene al menos un punto extremo, al ser un poliedro cerrado siempre tiene dos), por ejemplo, si $k=n-2$ el resultado de la primera iteración sería $y$ y $z$, ambos puntos están dentro de una arista (una arista tiene n-1 restricciones l.i.), una siguiente iteración dejaría 4 puntos extremos, $\{$x^{1}, x^{2}\}$ puntos extremos adyacentes asociados a $y$ y $\{x^{3}, x^{4}\}$ puntos extremos adyacentes asociados a $z$, luego $y=\lambda^{1} x^{1}+(1-\lambda^{1}) x^{2}$ y $z=\lambda^{2} x^{3}+(1-\lambda^{2}) x^{4}$, con $\lambda^{1}, \lambda^{2} \in (0,1)$, por ende $x=\lambda^{0} y+(1-\lambda^{0})z=\lambda^{0}(\lambda^{1} x^{1}+(1-\lambda^{1}) x^{2}))+(1-\lambda^{0})(\lambda^{2} x^{3}+(1-\lambda^{2}) x^{4}))=\sum_{i=1}^{4}\theta_{i}x^{i}, \sum_{i=1}^{4}\theta_{i}=1, \theta\geq0$. Para concluir se tiene que un punto cualquiera puede ser generado por la combinación convexa de dos puntos, puntos que a su vez fueron generados por la combinacion convexa de otros dos puntos y así sucesivamente hasta llegar a puntos extremos, luego esa combinación convexa recursiva se puede escribir en términos de combinación convexa de puntos extremos.
+
+\textbf{(b)}\\
+Sea $W={x^{1}, \ldots, x^{k}}$ la matriz cuyas columas son los puntos extremos de un poliedro acotado cualquiera $P$(Nota: todo poliedro acotado no vacío tiene al menos un punto extremo), por la parte anterior todo punto de $x \in P$ puede ser representado como una combinación convexa de las columnas de $W$, luego $P$ se puede escribir como:
+\begin{equation*}
+  P = \bigg\{x=\sum_{i=1}^{k}\lambda_{i}x^{i}\big| \sum_{i=1}^{k}\lambda_{i}=1, \lambda\geq0\bigg\}
+\end{equation*}
+
+Lo que se quiere demostrar es que cualquier punto $x \in P$ se puede escribir como $\sum_{i=1}^{k}\lambda_{i}x^{i}$, donde $\sum_{i=1}^{k}\lambda_{i}=1$ y $\lambda_{i}\geq0 \;\forall i \in{0,\ldots,k}$, con a lo más $n+1$ coeficientes $\lambda_{i}$ no nulos. Para demostrar esto consideremos el siguiente poliedro $Q$ para un $x \in P$ cualquiera:
+
+\begin{center}
+\begin{alignat*}{5}
+W\lambda&=x\\
+1^{T}\lambda&=1\\
+\lambda&\geq0
+\end{alignat*}
+\end{center}
+
+Notar que $Q$ siempre es factible dado que $P=conv(W)$, además $Q$ tiene al menos un punto extremo (Nota: todo poliedro en forma estándar no vacío tiene al menos un punto extremo), todo punto extremo de $Q$ debe tener $k$ restricciones l.i. activas. Supongamos que $k>n+1$ (sino no hay nada que demostrar) y sea $\hat{\lambda}$ un punto extremo de $Q$, como $\hat{\lambda}$ es un punto extremo debe tener $k$ restriciones l.i., sea $I$ el conjunto de restricciones l.i provenientes de
+  \begin{bmatrix}
+      W\\
+      1^{T}
+  \end{bmatrix}\lambda
+  =
+  \begin{bmatrix}
+    x\\
+    1
+  \end{bmatrix}
+  \]
+ y $J$ el conjunto de restricciones l.i provenientes de las restricciones de no negatividad con $\lambda_{j}=0 \;\forall j\in J$, se tiene que $|I|+|J|=k$ y que $|I|\leq n+1$, esto implica que $|J|\geq k-(n+1)$, por lo que a lo más $n+1$ componentes de $\hat{\lambda}$ son no nulos, por tanto $x$ se puede escribir por la combinación convexa de a lo más $n+1$ puntos extremos.
+
+
+\end{document}

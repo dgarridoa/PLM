@@ -1,0 +1,136 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[activeacute,spanish,es-nodecimaldot]{babel}
+\usepackage[left=1.5cm,top=1.5cm,right=1.5cm, bottom=1.5cm,letterpaper, includeheadfoot]{geometry}
+\usepackage[parfill]{parskip}
+
+\usepackage{amssymb, amsmath, amsthm}
+\usepackage{graphicx}
+\usepackage{lmodern,url}
+\usepackage{paralist} %util para listas compactas
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancypagestyle{plain}{%
+\fancyhf{}
+\lhead{\footnotesize\itshape\bfseries\rightmark}
+\rhead{\footnotesize\itshape\bfseries\leftmark}
+}
+
+
+% macros
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\CC}{\mathbb C}
+
+%Teoremas, Lemas, etc.
+\theoremstyle{plain}
+\newtheorem{teo}{Teorema}
+\newtheorem{lem}{Lema}
+\newtheorem{prop}{Proposición}
+\newtheorem{cor}{Corolario}
+
+\theoremstyle{definition}
+\newtheorem{defi}{Definición}
+\newtheorem{eje}{Ejemplo}
+\newtheorem{ejer}{Ejercicio}
+% fin macros
+
+%%%%% NOMBRE AUXILIARES Y FECHA
+\newcommand{\sca}{Diego Garrido}
+\newcommand{\fecha}{30 de  abril  de 2020}
+
+%%%%%%%%%%%%%%%%%%
+
+%Macros para este documento
+\newcommand{\cin}{\operatorname{cint}}
+
+
+\begin{document}
+%Encabezado
+\fancyhead[L]{Facultad de Ciencias Físicas y Matemáticas}
+\fancyhead[R]{Universidad de Chile}
+\vspace*{-1.2 cm}
+\begin{minipage}{0.6\textwidth}
+\begin{flushleft}
+\hspace*{-0.5cm}\textbf{MA4702. Programación Lineal Mixta. 2020.}\\
+\hspace*{-0.5cm}\textbf{Profesor:} José Soto\\
+\hspace*{-0.5cm}\textbf{Auxiliar:} \sca\\
+\hspace*{-0.5cm}\textbf{Fecha:} \fecha.
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.36\textwidth}
+\begin{flushright}
+\includegraphics[scale=0.15]{fcfm}
+\end{flushright}
+\end{minipage}
+\bigskip
+%Fin encabezado
+
+%Titulo Auxiliar
+\begin{center}
+\LARGE\textbf{Dualidad}
+\end{center}
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|l|l|l|l|}
+\hline
+                               & min          & max          &                                \\ \hline
+\multirow{}{}{Restricciones} & $\geq b_{i}$ & $\geq 0$     & \multirow{}{}{Variables}     \\ \cline{2-3}
+                               & $\leq b_{i}$ & $\leq 0$     &                                \\ \cline{2-3}
+                               & $= b_{i}$    & Libre        &                                \\ \hline
+\multirow{}{}{Variables}     & $\geq 0$     & $\leq c_{j}$ & \multirow{}{}{Restricciones} \\ \cline{2-3}
+                               & $\leq 0$     & $\geq c_{j}$ &                                \\ \cline{2-3}
+                               & Libre        & $= c_{j}$    &                                \\ \hline
+\end{tabular}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Primal/Dual}   & \textbf{Optimo finito} & \textbf{No acotado} & \textbf{Infactible} \\ \hline
+\textbf{Optimo finito} & Posible                & Imposible           & Imposible           \\ \hline
+\textbf{No acotado}    & Imposible              & Imposible           & Posible             \\ \hline
+\textbf{Infactible}    & Imposible              & Posible             & Posible             \\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\section{Lema de Farkas}
+Pruebe otras versiones del lema de Farkas:
+
+\begin{itemize}
+\item[a)] $\{Ax=b, \; x\geq0\}\neq\emptyset \iff \{A^{T}y\leq0, \; b^{T}y>0\}=\emptyset$
+
+\item[b)] $\{Ax\leq0, \; x\geq0, \; c^{T}x>0\}\neq\emptyset \iff \{A^{T}y\geq c, \; y\geq0\}=\emptyset$
+\end{itemize}
+
+\section{Dualidad y relajación Lagrangeana}
+Consideré el siguiente problema primal:
+
+\begin{center}
+\begin{alignat*}{5}
+\min\  c^{T}x\\
+\text{s.a. }  Ax&\leq b\\
+x&\geq 0
+\end{alignat*}
+\end{center}
+Demuestre que la mejor cota (cota inferior más cercana al valor óptimo del primal) lagrangeana del primal es su dual. \textit{Hint}: Escriba la relajación lagrangeana del primal e imponga condiciones sobre los multiplicadores para que sea una cota inferior distinta de $-\infty$.
+
+\section{Maximum Flow Problem}
+
+Considere el grafo dirigido $G(V,E)$, el objetivo del problema de flujo máximo es enviar la mayor cantidad de flujo desde un nodo $s$ a un nodo $t$, donde los arcos tienen capacidades positivas $c = (c_{e})_{e \in E}$.
+\begin{itemize}
+    \item[a)] Formule el PL y obtenga su dual
+    \item[b)] Obtenga el dual usando relajación lagrangeana
+\end{itemize}
+
+\section{Teorema Carathéodory}
+Sea $P \subset \mathb{R}^{n}$ un politopo y $W=\{x^{1},\ldots, x^{k}\}$ sus puntos extremos.
+
+\begin{itemize}
+    \item[a)] Demuestre que $P=conv(W)$.
+    \item[b)] Muestre que todo elemento de $P$ puede ser expresado como una combinación convexa de a lo más $n+1$ puntos extremos. \textit{Hint:} planteé el poliedro asociado a un punto cualquiera de $P$.
+\end{itemize}
+
+\end{document}
