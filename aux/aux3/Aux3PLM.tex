@@ -1,0 +1,114 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[activeacute,spanish,es-nodecimaldot]{babel}
+\usepackage[left=1.5cm,top=1.5cm,right=1.5cm, bottom=1.5cm,letterpaper, includeheadfoot]{geometry}
+\usepackage[parfill]{parskip}
+
+\usepackage{amssymb, amsmath, amsthm}
+\usepackage{graphicx}
+\usepackage{lmodern,url}
+\usepackage{paralist} %util para listas compactas
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancypagestyle{plain}{%
+\fancyhf{}
+\lhead{\footnotesize\itshape\bfseries\rightmark}
+\rhead{\footnotesize\itshape\bfseries\leftmark}
+}
+
+
+% macros
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\CC}{\mathbb C}
+
+%Teoremas, Lemas, etc.
+\theoremstyle{plain}
+\newtheorem{teo}{Teorema}
+\newtheorem{lem}{Lema}
+\newtheorem{prop}{Proposición}
+\newtheorem{cor}{Corolario}
+
+\theoremstyle{definition}
+\newtheorem{defi}{Definición}
+\newtheorem{eje}{Ejemplo}
+\newtheorem{ejer}{Ejercicio}
+% fin macros
+
+%%%%% NOMBRE AUXILIARES Y FECHA
+\newcommand{\sca}{Diego Garrido}
+\newcommand{\fecha}{14 de mayo  de 2020}
+
+%%%%%%%%%%%%%%%%%%
+
+%Macros para este documento
+\newcommand{\cin}{\operatorname{cint}}
+
+
+\begin{document}
+%Encabezado
+\fancyhead[L]{Facultad de Ciencias Físicas y Matemáticas}
+\fancyhead[R]{Universidad de Chile}
+\vspace*{-1.2 cm}
+\begin{minipage}{0.6\textwidth}
+\begin{flushleft}
+\hspace*{-0.5cm}\textbf{MA4702. Programación Lineal Mixta. 2020.}\\
+\hspace*{-0.5cm}\textbf{Profesor:} José Soto\\
+\hspace*{-0.5cm}\textbf{Auxiliar:} \sca\\
+\hspace*{-0.5cm}\textbf{Fecha:} \fecha.
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.36\textwidth}
+\begin{flushright}
+\includegraphics[scale=0.15]{fcfm}
+\end{flushright}
+\end{minipage}
+\bigskip
+%Fin encabezado
+
+%Titulo Auxiliar
+\begin{center}
+\LARGE\textbf{Dimensión y Caras}
+\end{center}
+
+
+\section{P1}
+Un vertex cover ($VC$) de $G=(V,E)$ es un conjunto de vértices $W\subseteq V$ talque para cada $e \in E$ tiene al menos un extremo en $W$. Sea $P_{vc}(G)=conv\{\chi^{W}:W \text{es } VC \text{ de } G\} \subseteq\mathbb{R}^{V}$. Es fácil ver que:
+
+\begin{align*}
+  P_{vc}(G)\subseteq Q(G):=\{x\in\mathbb{R}^{V}:x_{u}+x_{v}\geq 1, \forall (u,v) \in E, 0\leq x_{v} \leq 1, \forall v \in V\}
+\end{align*}
+
+\begin{itemize}
+\item[a)] Pruebe que $P_{vc}$ es de dimensión completa.
+
+\item[b)] Pruebe que las desigualdades $x_{v}\leq1$ inducen facetas.
+
+\item[c)] Pruebe que si existe un ciclo $\{(u,v), (v,w), (w,u)\}\subseteq E$ de largo 3, entonces, la desigualdad $x_{u}+x_{v}+x_{w}\geq2$ es válida y la desigualdad $x_{u}+x_{v}\geq1$ no induce faceta.
+
+\end{itemize}
+
+\section{P2}
+Sea $a\in \mathbb{R}^{n}_{++}$ y $b\in\mathbb{R}_{++}$ tal que $\sum_{i=1}^{n}a_{i}>b$. Consideremos el polítopo de Knapsack:
+
+\begin{align*}
+K_{n} = conv(\{x\in\{0,1\}^{n}:a^{T}x\leq b\})
+\end{align*}
+
+Y el polítpo de Knapsack Fraccionario:
+
+\begin{align*}
+K\text{-}Fr_{n} = \{x\in[0,1]^{n}:a^{T}x\leq b\}
+\end{align*}
+
+\begin{itemize}
+\item[a)] Contraste $K_{n}$ con $K\text{-}Fr_{n}$. ¿$K_{n}=K\text{-}Fr_{n}$? ¿Se tiene alguna inclusión?
+\item[b)] Calcula la dimensión de $K\text{-}Fr_{n}$ y de $K_{n}$.
+\item[c)] Encuentre las facetas de $K\text{-}Fr_{n}$.
+\end{itemize}
+
+
+\end{document}

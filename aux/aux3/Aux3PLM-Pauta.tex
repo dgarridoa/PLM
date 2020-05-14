@@ -1,0 +1,188 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[activeacute,spanish,es-nodecimaldot]{babel}
+\usepackage[left=1.5cm,top=1.5cm,right=1.5cm, bottom=1.5cm,letterpaper, includeheadfoot]{geometry}
+\usepackage[parfill]{parskip}
+
+\usepackage{amssymb, amsmath, amsthm}
+\usepackage{graphicx}
+\usepackage{lmodern,url}
+\usepackage{paralist} %util para listas compactas
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancypagestyle{plain}{%
+\fancyhf{}
+\lhead{\footnotesize\itshape\bfseries\rightmark}
+\rhead{\footnotesize\itshape\bfseries\leftmark}
+}
+
+
+% macros
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\CC}{\mathbb C}
+
+%Teoremas, Lemas, etc.
+\theoremstyle{plain}
+\newtheorem{teo}{Teorema}
+\newtheorem{lem}{Lema}
+\newtheorem{prop}{Proposición}
+\newtheorem{cor}{Corolario}
+
+\theoremstyle{definition}
+\newtheorem{defi}{Definición}
+\newtheorem{eje}{Ejemplo}
+\newtheorem{ejer}{Ejercicio}
+% fin macros
+
+%%%%% NOMBRE AUXILIARES Y FECHA
+\newcommand{\sca}{Diego Garrido}
+\newcommand{\fecha}{14 de mayo  de 2020}
+
+%%%%%%%%%%%%%%%%%%
+
+%Macros para este documento
+\newcommand{\cin}{\operatorname{cint}}
+
+
+\begin{document}
+%Encabezado
+\fancyhead[L]{Facultad de Ciencias Físicas y Matemáticas}
+\fancyhead[R]{Universidad de Chile}
+\vspace*{-1.2 cm}
+\begin{minipage}{0.6\textwidth}
+\begin{flushleft}
+\hspace*{-0.5cm}\textbf{MA4702. Programación Lineal Mixta. 2020.}\\
+\hspace*{-0.5cm}\textbf{Profesor:} José Soto\\
+\hspace*{-0.5cm}\textbf{Auxiliar:} \sca\\
+\hspace*{-0.5cm}\textbf{Fecha:} \fecha.
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.36\textwidth}
+\begin{flushright}
+\includegraphics[scale=0.15]{fcfm}
+\end{flushright}
+\end{minipage}
+\bigskip
+%Fin encabezado
+
+%Titulo Auxiliar
+\begin{center}
+\LARGE\textbf{Dimensión y Caras}
+\end{center}
+
+
+\section{P1}
+Un vertex cover ($VC$) de $G=(V,E)$ es un conjunto de vértices $W\subseteq V$ talque para cada $e \in E$ tiene al menos un extremo en $W$. Sea $P_{vc}(G)=conv\{\chi^{W}:W \text{es } VC \text{ de } G\} \subseteq\mathbb{R}^{V}$. Es fácil ver que:
+
+\begin{align*}
+  P_{vc}(G)\subseteq Q(G):=\{x\in\mathbb{R}^{V}:x_{u}+x_{v}\geq 1, \forall (u,v) \in E, 0\leq x_{v} \leq 1, \forall v \in V\}
+\end{align*}
+
+\begin{itemize}
+\item[a)] Pruebe que $P_{vc}$ es de dimensión completa.
+
+\textbf{Solución:}
+Primero notar que $P_{vc}$ se puede escribir de la siguiente forma:
+
+\begin{align*}
+P_{vc} = conv(\{x\in\{0,1\}^{V}: x_{u}+x_{v}\geq 1, \forall (u,v) \in E\})
+\end{align*}
+
+%agregar teorema nucleo imagen
+
+Sea $I=act(P_{vc})$, demostrar que $P_{vc}$ tiene dimensión completa es equivalente a demostrar que $rango(A_{I})=0$, para que eso ocurra se debe cumplir $I=\emptyset$. A continuación demostraremos que si existe un $x\in P_{vc}$ con ninguna restricción activa entonces $P_{vc}$ tiene rango completo.\\
+
+Consideremos la siguiente colección de puntos $\{x^{1}, \ldots, x^{V}\}\subseteq\{0,1\}^{V}$, con $x^{i}_{v}=1$ si $i\neq v$ y $x^{i}_{v}=0$ si $i=v$, notar que $x^{i}$ es un $VC$ ya que si existe un arco $(i,j)$ o $(k,i)$ con $k,j \in V\setminus\{i\}$ se tiene que $x^{i}_{i}+x^{i}_{j}\geq1$ y $x^{i}_{k}+x^{i}_{i}\geq1$ ya que $x^{i}_{j}=x^{i}_{k}=1$. Sea $\bar{x}=\sum_{i=1}^{V}\lambda_{i}x^{i}$, con $\sum_{i=1}^{V}\lambda_{i}=1$, $\lambda>0$, como $\bar{x}$ es una combinación convexa de $VCs$, entonces pertencece a $P_{vc}$, luego se tiene que $\bar{x}_{v}=\sum_{i \in V\setminus{v}}\lambda_{i} \in (0,1)$, además se tiene que $\forall (u,v) \in E$:
+
+\begin{align*}
+\bar{x}_{u}+\bar{x}_{v}=\sum_{i \in V\setminus\{u\}}\lambda_{i}+\sum_{i \in V\setminus\{v\}}\lambda_{i}=\sum_{i \in V}\lambda_{i} +\sum_{i\in V\setminus\{u,v\}}\lambda_{i}=1+\epsilon, \epsilon>0
+\end{align*}
+
+
+Se concluye que $act(\bar{x})=\emptyset \implies P_{vc}$ tiene rango completo.
+
+\item[b)] Pruebe que las desigualdades $x_{v}\leq1$ inducen facetas.
+
+\textbf{Solución:}
+
+Para probar que una restricción induce una faceta debemos probar que es irredundante. Sea $j$ la desigualdad $x_{j}\leq 1$ con $j\in V$, por demostrar que $\exists \bar{x} \in P_{vc}$ tal que $act(\bar{x})=act(P_{vc})\cup\{j\}=\{j\}$.
+
+Consideremos la siguiente colección de puntos $\{x^{1}, \ldots, x^{V}\}\setminus{x^{j}}\subseteq\{0,1\}^{V}$ con $x^{i}_{v}=1$ si $i\neq v$ y $x^{i}_{v}=0$ si $i=v$, sea $\bar{x}=\sum_{i \in V\setminus\{j\}}\lambda_{i}x^{i}$, con $\sum_{v\in V\setminus\{j\}}\lambda_{i}=1$, $\lambda>0$, se tiene que $\bar{x}_{v}=\sum_{i \in V\setminus\{v,j\}}\lambda_{i} \in (0,1) \;\forall v \in V\setminus\{j\}$ y $\bar{x}_{j}=\sum_{i \in V\setminus\{j\}}\lambda_{i}=1$, por tanto, se tiene que $\bar{x}$ tiene activa $j$, además se tiene que $\forall (u,v) \in E$ con $u\neq j$ y $v\neq j$:
+
+\begin{align*}
+\bar{x}_{u}+\bar{x}_{v}=\sum_{i \in V\setminus\{u,j\}}\lambda_{i}+\sum_{i \in V\setminus\{v,j\}}\lambda_{i}=\sum_{i \in V\{j\}}\lambda_{i} +\sum_{i\in V\setminus\{u,v,j\}}\lambda_{i}=1+\epsilon, \epsilon>0
+\end{align*}
+
+Y para el caso $u=j$ o $v=j$:
+\begin{align*}
+\bar{x}_{u}+\bar{x}_{v} = \sum_{i \in V\setminus\{j\}}\lambda_{i}+\sum_{i \in V\setminus\{v, j\}}\lambda_{i}= 1+\sum_{i \in V\setminus\{v, j\}}\lambda_{i}=1+\epsilon, \epsilon>0
+\end{align*}
+
+Se concluye que $act(\bar{x})=\{j\}$ y $j$ es irredudante, por tanto, induce faceta en $P_{vc}$.
+
+\item[c)] Pruebe que si existe un ciclo $\{(u,v), (v,w), (w,u)\}\subseteq E$ de largo 3, entonces, la desigualdad $x_{u}+x_{v}+x_{w}\geq2$ es válida y la desigualdad $x_{u}+x_{v}\geq1$ no induce faceta.
+
+\textbf{Solución:}\\
+
+Sea $j$ la restricción $x_{u}+x_{v}=1$ y sea $F_{j}=\{x\in P_{vc}| x_{u}+x_{v}=1\}$ la cara que induce esa restricción, la dimensión de esta cara es $dim(F_{j}) = dim(P)-rango(A_{act(F_{j})})$, se debe tener que $j \subsetneq act(F_{j})$ y además $rango(A_{act(F_{j})})\geq2$ para que no sea faceta, eso siginifica que $j$ debe activar alguna otra restricción y esta debe ser linealmente independiente. Además, basta probar que $j$ no genera faceta en $Q$ para demostrar que no genera faceta en $P_{vc}$, esto se debe a que $P\subseteq Q$ y que toda desigualdad de $Q$ es valida para $P$, teniéndose la siguiente relación:
+
+\begin{align*}
+  F_{j}(P_{vc})\subseteq F_{j}(Q) \Leftrightarrow dim(F_{j}(P_{vc}))\leq dim(F_{j}(Q))
+\end{align*}
+
+El ciclo de largo 3 implica lo siguiente:
+
+\begin{align}
+x_{u}+x_{v}\geq1\\
+x_{v}+x_{w}\geq1\\
+x_{w}+x_{u}\geq1
+\end{align}
+
+Por (1) $x_{u}=1$ o $x_{v}=1$, si $x_{u}=1$ se tiene por (2) que $x_{v}=1$ o $x_{w}=1$, por otro lado, si $x_{v}=1$ se tiene por (3) que $x_{w}=1$ o $x_{u}=1$, se concluye que $x_{u}+x_{v}+x_{w}\geq2$ es una desigualdad valida. Luego si $x_{u}+x_{v}=1$ se tiene que $x_{w}=1$, además son l.i., puesto que $1_{u,v}}^{T}1_{w}=0$, donde $1_{I}\in\{0,1\}^{V}$ es una indicatriz que toma valor 1 en toda posición $i \in I$.
+
+\end{itemize}
+
+\newpage
+\section{P2}
+Sea $a\in \mathbb{R}^{n}_{++}$ y $b\in\mathbb{R}_{++}$ tal que $\sum_{i=1}^{n}a_{i}>b$. Consideremos el polítopo de Knapsack:
+
+\begin{align*}
+K_{n} = conv(\{x\in\{0,1\}^{n}:a^{T}x\leq b\})
+\end{align*}
+
+Y el polítopo de Knapsack Fraccionario:
+
+\begin{align*}
+K\text{-}Fr_{n} = \{x\in[0,1]^{n}:a^{T}x\leq b\}
+\end{align*}
+
+\begin{itemize}
+\item[a)] Contraste $K_{n}$ con $K\text{-}Fr_{n}$. ¿$K_{n}=K\text{-}Fr_{n}$? ¿Se tiene alguna inclusión?
+
+\textbf{Solución:}\\
+
+Se tiene que todo $x\in\{0,1\}^{n}$ que satisface $a^{T}x\leq b$ pertenece a $[0,1]^{n}$ y por tanto a $K\text{-}Fr_{n}$, además el conjunto de puntos que satisface esto es finito (es a lo más $2^{n}$) y como $K_Fr_{n}$ es un poliedro cualquier combinación convexa finita de sus puntos está contenida, se concluye que $K_{n}\subseteq K\text{-}Fr_{n}$. La contrarecíproca no siempre es cierta, sea $I=\{i\in[n]: a_{i}>b\}$, luego se tiene que todo $\bar{x}\in \{x\in\{0,1\}^{n}:a^{T}x\leq b\}$ cumple que $\bar{x_{I}}=0$ y toda combinación convexa de estos puntos también, por tanto, basta probar que existe un $\bar{x} \in K\text{-}Fr_{n}$ tal que $\bar{x_{i}}\neq0$ para algún $i\in I$, en efecto, basta tomar $\bar_{x_{i}}= b/\sum_{i=1}^{n}a_{i} \in (0,1)$, solo queda validar que satisface la restricción de capacidad, se tiene que $a^{T}\bar{x}=\sum_{i=1}^{n}a_{i}b/\sum_{i=1}^{n}a_{i}=b\leq b$, se concluye que $\bar{x} \in K\text{-}Fr_{n}$.
+
+\item[b)] Calcula la dimensión de $K\text{-}Fr_{n}$ y de $K_{n}$.
+De la parte anterior
+
+\textbf{Solución}\\
+
+Vamos a probar que $K\text{-}Fr_{n}$ tiene rango completo (dimensión $n$), similarmente a la parte anterior tomando $\bar{x}=(b-\epsilon)/\sum_{i=1}^{n}a_{i}$ con $\epsilon>0$ suficientemente pequeño tal que $b-\epsilon>0$, el cual existe debido a que por enunciado sabemos que $b>0$, luego se tiene que $\bar{x}\in(0,1)^{n}$ y que $a^{T}\bar{x} = b-\epsilon <b$, como se tiene un punto que pertenece a $K\text{-}Fr_{n}$ que no tiene ninguna restricción activa se tiene que $act(K\text{-}Fr_{n})=\emptyset$, luego $dim(K\text{-}Fr_{n})=n-rango(A_{act(K\text{-}Fr_{n})})=n$.\\
+
+Sea $I=\{i\in[n]: a_{i}>b\}$ y sea $k$ la restricción de capacidad, sea $J=[m]\setminus I$, para todo $j\in J$ se tiene que $a_{j}\leq b$, sea $Q=\{x^{1}, \ldots, x^{J}\}=\{x \in \{0,1\}^{n}: \sum_{j\in J}x_{j}=1, x_{I}=0\}$, notar que $Q\subseteq K_{n}$ ya que $a^{T}x^{j}=a_{j}\leq b \; \forall j \in J$. Sea $\bar{x} = \sum_{j\in J}\lambda_{j}x^{j}$ con $\sum_{j\in J}\lambda_{j}=1$, $\lambda>0$, notar que $\bar{x}_{j} = \lambda_{j} \in (0,1) \;\forall j \in J$ y que $a^{T}\bar{x}=\sum_{j\in J}a_{j}\lambda{j}\leq b$, la desigualdad anterior es activa solo si $a_{j}=b \; \forall j \in J$.  Se concluye que $act(K_{n}) = I$ si existe $j \in J$ tal que $a_{j}<b$ si no se tiene que $act(K_{n})= I\cup\{k\}$, notar que para todo $i\in I$ son de la forma $e_{i}^{T}x_{i}=0$, como son vectores unitarios y por tanto ortogonales se tiene que $rango(A_{I})=|I|$, además las restricciones $I\cup\{k\}$ también son todas l.i. ya que $a>0$ y $e_{i}$ (a menos que $|I|=n$)\; \forall i \in I$, como la dimensión de $K_{n}=n-rango(A_{act(K_{n})})$ se tiene que la dimensión de $K_{n} \in \{n-|I|, n-(|I|+1)\}$.
+
+\item[c)] Encuentre las facetas de $K\text{-}Fr_{n}$.
+
+Sea $I = \{i \in [m]: a_{i}>=b\}$ y sea $J=[m]\setminus I$, las restricciones $x_{i}=1 \;\forall i \in I$ no inducen facetas, ya que si $a_{i}>b$ se tiene que la cara que genera esa restricción es el vacío y si $a_{i}=b$ se tiene que $x_{j}=0 \;\forall j \in [m]\setminus\{i\}$, esto implica que $rango(A_{act(F_{i})})=n$ y la cara que genera es de dimensión 0 (un vertice), para el caso $x_{j}=1$ con $j\in J$ induce una faceta si existe un $x$ tal que $x_{i} \in (0,1)$ para todo $i\in I\setminus\{j\}$ y que satisface la restricción de capacidad de forma irrestricta, en efecto, tomemos $x$ tal que $x_{i} = (b-(a_{j}+\epsilon))\sum_{i \in I\setminus\{j\}}a_{i} \in (0,1) \; \forall i \in [m]\setminus\{j\}$, con $\epsilon>0$ suficientemente pequeño, además se tiene que $x$ cumple $a^{T}x=a_{j}+b-(a_{j}+\epsilon)=b-\epsilon < b$, se concluye que  $F_{j} = \{x \in K\text{-}F_{rn}: x_{j}=1\}$ es faceta para todo $j \in J$.\\
+
+En el caso de las restricciones $x_{j}=0$ con $j\in[m]$ basta tomar un $x$ con $x_{j}=1$ y $x_{i}=(b-\epsilon)/\sum_{i \in I\setminus\{j\}}a_{i} \in (0,1)$ con $\epsilon>0$ suficientemente pequeño, luego se tiene que $a^{T}x=b-\epsilon<b$, se concluye que $F_{j} = \{x \in K\text{-}F_{rn}: x_{j}=0\}$ es faceta para todo $j \in [m]$.\\
+
+Sea $j$ la restricción $a^{T}x=b$, esta restricción induce faceta si existe un $x\in(0,1)^{n}$ que activa esa restricción, en efecto, basta tomar $x_{i}=b/\sum_{i=1}^{n}a_{i} \in (0,1)$, luego se tiene que $a^{T}x=\sum_{i=1}^{n}a_{i}(b/\sum_{i=1}^{n}a_{i})=b$, se concluye que $F_{j} = \{x \in K\text{-}F_{rn}: a^{T}x=b\}$ es faceta.
+
+\end{itemize}
+\end{document}
