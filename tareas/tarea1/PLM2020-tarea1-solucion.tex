@@ -1,0 +1,418 @@
+% BEGIN_FOLD preamble
+
+\documentclass{article}
+\usepackage[activeacute,spanish]{babel}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{url,multirow}
+\usepackage[centertableaux,smalltableaux]{ytableau}
+\usepackage[utf8]{inputenc}
+\usepackage{cancel, comment}
+\usepackage[left=2cm,top=1.5cm,right=2cm, bottom=1.5cm,letterpaper, includeheadfoot]{geometry}
+\usepackage{amssymb, amsmath, amsthm, mathtools}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	linkcolor={red!50!black},
+	citecolor={blue!50!black},
+	urlcolor={blue!80!black}
+}
+
+\usepackage[prependcaption,textsize=tiny,,textwidth=5cm]{todonotes}
+\newcommand{\js}[1]{\todo[inline,linecolor=red,backgroundcolor=red!25,bordercolor=red]{jsoto. #1}}
+
+\usepackage{paralist}
+\usepackage{contour}
+
+
+%%%Definiciones
+\newcommand{\dis}{\displaystyle}
+\newcommand{\IV}[1]{[\![#1]\!]} %Iverson
+
+\newcommand{\E}{\mathcal{E}}
+\newcommand{\V}{\mathcal{V}}
+
+\def\multiset#1#2{\ensuremath{
+		\mathchoice{\left(\kern-.3em\left(\genfrac{}{}{0pt}{}{#1}{#2}\right)\kern-.3em\right)}}
+	{\big(\!\binom{#1}{#2}\!\big)}{\big(\!\binom{#1}{#2}\!\big)}{\big(\!\binom{#1}{#2}\!\big)}}
+\DeclareRobustCommand{\sbinom}{\genfrac{[}{]}{0pt}{}}
+\DeclareRobustCommand{\lbinom}{\genfrac{\{}{\}}{0pt}{}}
+\newcommand{\fallfac}[2]{{#1}^{\underline{#2}}}
+\newcommand{\risefac}[2]{{#1}^{\overline{#2}}}
+
+\newcommand{\defn}[1]{\textit{\textsc{[Def]\,}}\textbf{#1}\\[5pt]\indent}
+\newcommand{\nin}{\noindent}
+% macros
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\FF}{\mathbb F}
+\newcommand{\CC}{\mathbb C}
+\newcommand{\EE}{\mathbb E}
+\DeclareMathOperator{\COM}{COM}
+\DeclareMathOperator{\com}{com}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\WCOM}{WCOM}
+\DeclareMathOperator{\wcom}{wcom}
+\newcommand{\sop}{\operatorname{sop}}
+
+%Teoremas, Lemas, etc.
+
+\theoremstyle{plain}
+\newtheorem{teo}{Teorema}
+\newtheorem{lem}[teo]{Lema}
+\newtheorem{prop}{Proposici\'on}
+\newtheorem{cor}[teo]{Corolario}
+\newtheorem{cor*}{Corolario}
+\theoremstyle{definition}
+\newtheorem{defi}[teo]{Definici\'on}
+\newtheorem{eje}[teo]{Ejemplo}
+\newtheorem{ejeres}[teo]{Ejercicios resueltos}
+\newtheorem{ejere}[teo]{Ejercicio resuelto}
+\newtheorem{ejes}[teo]{Ejemplos}
+\newtheorem{ejer}[teo]{Ejercicio}
+\newtheorem{prob}[teo]{Problema}
+\newtheorem{obs}[teo]{Observaci\'on}
+\newtheoremstyle{Azul}
+{\topsep}   % ABOVESPACE
+{\topsep}   % BELOWSPACE
+{\color{blue}}  % BODYFONT
+{0pt}       % INDENT (empty value is the same as 0pt)
+{\color{blue}\bfseries} % HEADFONT
+{.}         % HEADPUNCT
+{5pt plus 1pt minus 1pt}  % HEADSPACE. `plain` default: {5pt plus 1pt minus 1pt}
+{}          % CUSTOM-HEAD-SPEC
+\theoremstyle{Azul}
+\newtheorem*{comm}{Comentario}
+\newcommand{\commento}[1]{\noindent{\color{blue}#1}\vspace*{-3pt}}
+
+% fin macros
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancypagestyle{plain}{%
+\fancyhf{}
+\lhead{\footnotesize\itshape\bfseries\rightmark}
+\rhead{\footnotesize\itshape\bfseries\leftmark}
+}
+
+% END_FOLD
+\begin{document}
+% BEGIN_FOLD encabezado
+\setlength{\headheight}{14pt}
+\fancyhead[L]{Facultad de Ciencias F\'isicas y Matem\'aticas}
+\fancyhead[R]{Universidad de Chile}
+\vspace*{-1.2 cm}
+\begin{minipage}{0.6\textwidth}
+	\begin{flushleft}
+		\hspace*{-0.5cm}\textbf{MA4702. Programación Lineal Mixta 2020.}\\
+		\hspace*{-0.5cm}\textbf{Profesor: José Soto.}\\
+	\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.36\textwidth}
+	\begin{flushright}
+		\includegraphics[scale=0.15]{fcfm}
+	\end{flushright}
+\end{minipage}
+\bigskip
+%Fin encabezado
+
+% END_FOLD
+\newif\ifsol
+\soltrue
+\solfalse
+
+\begin{center}
+  \LARGE \textbf{Tarea 1}.\\
+\end{center}
+\bigskip
+
+\noindent\textbf{Fecha entrega}: Lunes 04/05 a las 12:00.\\
+\textbf{Instrucciones:} Entregue los 4 problemas escaneados o en una foto de alta calidad, via ucursos.
+Los problemas de la tarea se deben resolver de manera individual. Para asegurar trabajo personal se exige que las respuestas sean escritas a mano.\\
+
+Hola
+\noindent \textbf{¡No se aceptarán documentos tipeados o generados por computador!}\\
+\textbf{¡No se aceptarán documentos tipeados o generados por computador!}\\
+\textbf{¡No se aceptarán documentos tipeados o generados por computador!}\\
+\textbf{¡No se aceptarán documentos tipeados o generados por computador!}\\
+
+\begin{prob}
+Escriba restricciones lineales mixtas (puede imponer integralidad o usar variables adicionales) para modelar las siguientes condiciones lógicas o algebraicas, dando una explicación breve de su solución.
+
+
+\begin{enumerate}[(1)]
+\item[(0)] (Ejemplo)  $x, y\in [3], x=3 \implies y\ge 2$\\
+(Solución):   \begin{align*}
+x\leq 3, y\leq 3, x\ge 1, y&\ge 1, x, y\in \ZZ\\
+4x-y&\leq 10
+\end{align*}
+Explicación breve: Si $x\leq 2$, $4x$ es a lo más 8, y luego la desigualdad inferior se cumple para todo $y$.
+Pero si $x=3$ entonces $4x$ es 12, y luego para que la desigualdad inferior se cumpla, $y$ debe ser al menos 2.
+
+\item $x, y\in \{0,1\}$, $x=1 \implies y=1$.
+
+\textbf{Solución:}\\
+\begin{align*}
+	x\leq y
+\end{align*}
+
+Está restricción impone que $y=1$ si $x=1$ y ninguna condición si $x=0$.
+\item $x_i \in \{0,1\}, \forall i\in [m], y\in \{0,1\}$. Si más de $k$ variables $x_i$ son 1 entonces $y=1$.
+
+\textbf{Solución:}\\
+\begin{align*}
+	\sum_{i=1}^{m}x_{i}-k\leq (m-k)y
+\end{align*}
+El lado izquierdo de esta restricción es mayor que 0 cuando más de $k$ variables $x_{i}$ son 1 y cuando esto courre $y$ es 1.
+
+\item $x, y, z\in \{0,1\}, \text{si $x=1$, entonces ($y=1$ o $z=1$)}$
+
+\textbf{Solución:}\\
+\begin{align*}
+	x\leq y+z
+\end{align*}
+Cuando $x=1$ se tiene que $y+z\geq1$, por ende, se tiene que alemnos $y$ o $z$ debe ser 1.
+
+\item $x_i \in \{0,1\}, \forall i\in [m]$, $\prod_{i=1}^m x_i = 0$.
+
+\textbf{Solución:}\\
+\begin{align*}
+	\sum_{i=1}^{m}x_{i}\leq m-1
+\end{align*}
+La restricción del enunciado impone que al menos un $x_i=0$ para que así el producto de todos sea 0, entonces, basta limitar que la suma de los $x_{i}$ sea menor estrico que $m$.
+
+\item $x, y\in [n]$, $x$ e $y$ tienen la misma paridad.
+
+\textbf{Solución:}\\
+\begin{align*}
+x+y=2z, \; z\in[n]
+\end{align*}
+Notar que la suma de dos valores con la misma paridad siempre es un número par, en cambio la suma de números con distinta paridad da un número impar.
+
+\item $x\in [-M,M]$ (intervalo real), $y=|x|$.\\
+ (Indicación, cree variables binarias $w_1, w_2$ que representen la expresión $w_1=1 \iff (x\geq 0 \wedge y=x)$; $w_2=1 \iff (x\leq 0 \wedge y=-x)$
+
+\textbf{Solución:}\\
+Creamos las variables binarias $w_{1}$ y $w_{2}$ para capturar el signo de $x$:
+\begin{align}
+x \leq M w_{1}, \; x\geq-Mw_{2}\\
+0\leq y-x \leq 2M(1-w_{1})\\
+0\leq y+x \leq 2M(1-w_{2})\\
+w_{1}+w_{2}=1
+\end{align}
+Por (1) se tiene que $w_{1}=1$ si $x\geq0$ y $w_{2}=1$ si $x\leq0$, por (2) se tiene que $y=x$ cuando $w_{1}=1$ y por (3) se tiene que $y=-x$ cuando $w_{2}=1$. Por (4) se tiene la recíproca, si $w_{1}= 1$ se tiene que $w_{2}=0$, luego por (1) se tiene que $x\geq0$ y por (2) $y=x$, se obtiene resultado análogo si $w_{2}=1$.
+\end{enumerate}
+\end{prob}
+
+\newpage
+
+\begin{prob} El problema de la mochila fraccional se modela con el siguiente programa lineal puro:
+$$\max\{v^Tx\colon x\in \RR^n, \sum_{i=1}^n s_ix_i \leq B; 0\leq x_i\leq 1, \forall i\in [n]\},$$
+donde los tamaños $s_i>0, \forall i\in [n]$ y los valores son arbitrarios $v\in \RR^n_+$. Asuma además sin pérdida de generalidad que los objetos están ordenados de acuerdo a valor sobre tamaño, es decir $$\frac{v_1}{s_1}\geq \frac{v_2}{s_2}\geq \dots \geq \frac{v_n}{s_n}$$
+
+Sea $h$ el índice más grande tal que los primeros $h$ objetos caben en la mochila: $\sum_{i=1}^h s_i \leq B$. Suponiendo que $h<n$, demuestre usando holgura complementaria que existe una solución óptima $x^*$ de este problema que satisface
+\begin{align*}
+x_i^*=1, \text{ para } i\in [h], \qquad x^*_{h+1}=\frac{B-\sum_{i=1}^h s_i}{s_{h+1}}, \qquad x^*_{i}=0, \text{ para }  i\geq h+2.
+\end{align*}
+\end{prob}
+
+\textbf{Solución:}\\
+
+Lo que se pide demostrar es que en el problema de la mochila fraccional en donde los productos se ordenan decrecientemente por utilidad marginal (por ejemplo, utilidad por $cm^{3}$) existe una solución óptima donde se van incorporando los productos de mayor utilidad marginal hasta que se llega al producto $h+1$ que no cabe completamente y entonces se llena el sobrante de la mochila con lo que quepa de este producto.
+
+Antes de plantear las condiciones de holgura complementaria necesitamos obtener el dual del problema de la mochila:
+\begin{align*}
+	\max v^{T}x && \min 1^{T}y+Bz\\
+	\sum_{i=1}^{n}s_{i}x_{i}&\leq B &   y_{i}+s_{i}z&\geq v_{i} \; \forall i\in[n]\\
+	x_{i}&\leq 1 \;\forall i \in [n] &  y&\geq0 \;\forall i \in[n]\\
+	x_{i}&\geq 0 \;\forall i \in[n] &  z&\geq0
+\end{align*}
+
+Recordar que un par solución primal-dual son óptimas ssi satisfacen holgura complementaria. Las condiciones de holgura complementaria son:
+
+\begin{align}
+	\left(\sum_{i=1}^{n}s_{i}x_{i}-B\right)z&=0\\
+	(x_{i}-1)y_{i}&=0 \;\forall i \in[n]\\
+	(y_{i}+s_{i}z-v_{i})x_{i}&=0 \;\forall i \in[n]
+\end{align}
+Por el enunciado sabemos que la capacidad restante de la mochila es $B-\sum_{i=1}^{h}s_{i}$ y que $x_{h+1}<1$, por ende, si fijamos $x_{h+1} = \frac{B-\sum_{i=1}^{h}s_{i}}{s_{h+1}}$ significa que $x_i=0 \; \forall i \in \{h+2, \ldots, n\}$, ya que llenaríamos el sobrante de la mochila con $h+1$. Por (5) se tiene que $y_{i}=0  \; \forall i \in \{h+1, \ldots, n\}$, como $x_{h+1}\in(0,1)$, reemplazando en (6) se tiene que $z=\frac{v_{h+1}}{s_{h+1}}$.\\
+
+Veamos si existe una solución del dual que junto a esta solución del primal satisfacen las condiciones de holgura complementaria:
+
+\begin{itemize}
+	\item Como $z=\frac{v_{h+1}}{s_{h+1}}>0$ se tiene que cumplir que $\sum_{i=1}^{n}s_{i}x_{i}-B=0$, en efecto, $\sum_{i=1}^{n}s_{i}x_{i}=\sum_{i=1}^{h}s_{i}+ \left(\frac{B-\sum_{i=1}^{h}s_{i}}{s_{h+1}}\right)s_{h+1}=B$.
+	\item Para $i \in \{1, \ldots, h\}$ se tiene que $x_{i}=1$, por ende $y_{i}+s_{i}z-v_{i}=0 \implies y_{i}=s_{i}\left(\frac{v_{i}}{s_{i}}-\frac{v_{h+1}}{s_{h+1}}\right)$, luego $y_{i}\geq0$ ya que $\frac{v_{i}}{s_{i}}\geq\frac{v_{j}}{s_{j}}$ si $i\leq j$.
+	\item Se tiene que $x_{i}\in[0,1) \; \forall i \in \{h+1, \ldots, n\}$, esto implica que $y_{i}=0$, ahora basta demostrar que $y_{i}+s_{i}z\geq v_{i}$, lo que se cumple puesto que $\frac{v_{h+1}}{s_{h+1}}\geq \frac{v_{i}}{s_{i}} \; \forall i\geq h+1$.
+\end{itemize}}
+
+
+\newpage
+\begin{prob} \textbf{Teorema de descomposición de flujo}. Sea $G=(V,E)$ un grafo dirigido y $s$, $t$ dos de sus vértices.
+Considere los siguientes poliedros.
+\begin{align*}
+P_1=\{x\in \RR^E_{+}\colon
+x(\delta^+(v))-x(\delta^- (v))&=0, \forall v\in V\setminus \{s,t\}, x(\delta^+(s))-x(\delta^- (s))\geq0\}.\\
+P_2=\{x\in \RR^E_{+}\colon
+x(\delta^+(v))-x(\delta^- (v))&=0, \forall v\in V\setminus \{s,t\},
+x(\delta^+(s))-x(\delta^- (s))=1\}.\\
+P_3=\{x\in \RR^E_{+}\colon
+x(\delta^+(v))-x(\delta^- (v))&=0, \forall v\in V\setminus \{t\}\},
+\end{align*}
+
+Los elementos de $P_1$ se llaman $s$-$t$ flujos, los elementos de $P_2$ se llaman $s$-$t$ flujos de valor 1 y los elementos de $P_3$ se llaman $s$-$t$ flujos de valor 0, o circulaciones.
+
+\begin{enumerate}[(a)]
+\item Pruebe que $P_1$ y $P_3$ son conos, que $P_2\subseteq P_1$ y que $\text{rec}(P_2)=P_3$.
+
+\textbf{Solución:}\\
+
+En primer lugar se demostrará que $P_1$ y $P_3$ son conos, para esto notar que ambos se pueden escribir de la forma $Ax\leq0$, con $A_{ij}\in\{-1,0,1\}$, por ende, ambos son conos y de hecho son conos poliedrales.\\
+
+Ahora se demostrará que $P_{2}\subseteq P_{1}:$\\
+
+\begin{aligned}
+	P_{2} & =\{x\in \RR^E_{+}\colon x(\delta^+(v))-x(\delta^- (v))=0, \forall v\in V\setminus \{s,t\},  x(\delta^+(s))-x(\delta^- (s))\geq0\}\cap \{x\in \RR^E_{+}:x(\delta^{+}(v))-x(\delta^{-}(s))=1\}\\
+	& = P_{1} \cap \{x\in \RR^E_{+}:x(\delta^{+}(v))-x(\delta^{-}(s))=1\}
+\end{aligned}\\
+
+Por último, se demostrará que $rec(P_{2})=P_{3}$, en efecto, recordando que el cono de recesión de un poliedro de la forma $Ax\leq b$ es $Ax\leq0$ y $P_{3}=\hat{A}x\leq0$, luego basta notar que $A=\hat{A}$, puesto a que las restricciones de flujo están definidas sobre el mismo conjunto de nodos y las de no negatividad sobre el mismo conjunto de arcos.
+
+\item Para todo $x\in P_{1}$, llame soporte de $x$ al conjunto de arcos $S_x=\{e\in E\colon x_e>0\}$. Demuestre que si $x$ no es el vector 0 entonces $S_x$ contiene a los arcos de algún $s$-$t$ camino $P$ o de un un ciclo $C$.
+
+\textbf{Solución:}\\
+
+Observación: Sea $v \in V\setminus\{s,t\}$, existe un arco entrando a $v$ en $S_x$ si y solo si existe un arco saliendo de $v$ en $S_x$. En efecto, como $x(\delta^-v)=x(\delta^+v)$, se tiene que $x(\delta^v)>0$ si y solo si $x(\delta^-v)>0$. La primera condición es equivalente a $|\delta^-(v) \cap S_x|>0$ y la segunda a $|\delta^+(v)\cap S_x|>0$.\\
+
+Supongamos que $S_{x}$ no posee ciclos y demostremos que entonces debe tener un $s-t$ camino. Sea $W= \{e_{1}, e_{2}, \ldots, ..., e_{k}\}$  un paseo maximal en $S_{x}$ con $e_{i}=(a_{i},a_{i+1})$, un paseo es una secuencia de arcos distintos tal que la cabeza de $e_{i}$ es cola de $e_{i+1}$, es decir, si $e_{i} = (a_{i}, a_{i+1})$, entonces,  $e_{i+1}=(a_{i+1}, a_{i+2})$. Si el paseo no tiene ciclos, todos los $a_{i}$ son distintos y $W$ es un camino, si $a_{k+1}=v$ con $v \in V\setminus\{s,t\}$ entonces como $e_{k+1}$ entra a  v, debe existir un arco $e_{k+2}$ que sale de $v$ lo que nos permitiría  extender $W$ por la derecha a un camino más largo y no sería maximal, o bien cerrar un ciclo con algún vértice de $W$, es decir, $a_{k+1}=a_{1}$. Si $a_{k+1}=s$ entonces $x(\delta^-s)>0$, pero entonces como $x(\delta^+s)-x(\delta^-s)\geq0$ (\textbf{Observación:} si esto no se tenía en cuenta se llegaba a que $S_{x}$ además contenía los arcos de un t-s camino, respuesta igual de válida) se concluye que $x(\delta^+(s))>0$ y luego existe un arco $e_{k+2}$ que sale de $s$, lo que nos permitiría alargar el camino o cerrar un ciclo ($a_{k+1}=a_{1}=s$), por lo que $a_{k+1}=t$. Finalmente tenemos que $a_{1}$ solo puede ser $s$ o $t$ (pues si $a_{1}=v$ distinto de $s$ o $t$ y $e_1$ sale de $v$ debe haber un $e_{i}$ que entra a $v$, permitiendo extender $W$ o cerrar un ciclo), como no hay ciclos, $a_1$ debe ser $s$.
+
+\item Llame $\mathcal{P}=\{P\subseteq E\colon \text{$P$ es un $s$-$t$ camino de $G$}\}$ y $\mathcal{C}=\{C\subseteq E\colon \text{$C$ es un ciclo de } $G$\}$. Pruebe usando la parte anterior que $P_1$ está cónicamente generado por $\{\chi^P\colon P\in \mathcal{P}\}\cup \{\chi^C\colon C\in \mathcal{C}\}$ donde $\chi^R\in \RR^E$ es el vector indicatriz de $R$, es decir $\chi^R_e$ es 1 si $e\in R$ y 0 si $e\not\in R$. \textbf{Indicación:} Pruebe que $x\in P_1$ tiene la combinación cónica pedida por inducción en el tamaño de $S_x$.
+
+\textbf{Solución:}\\
+
+Por demostrar que $P_{1}=cono(\{\chi^P\colon P\in \mathcal{P}\}\cup \{\chi^C\colon C\in \mathcal{C}\})$:
+
+
+\textbf{$\supseteq$)}\\
+
+Primero notar que $1_{\chi^{P}}$ y $1_{\chi^{C}}$ pertenecen a $P_{1}$, puesto a que son flujos unitarios que satisfacen las restricciones de conservación de flujo en los nodos $V \setminus \{s,t\}$. Luego la combinación cónica de sus elementos pertence $P_{1}$ ya que es cono.
+
+\textbf{$\subseteq$)}\\
+
+Notar que el poliedro $P_{1}$ se puede escribirse en la siguiente forma compacta:
+
+\begin{align*}
+	P_{1} = \left\{x\in R^{E}_{+}: Ax=0, A \in R^{|V|-2 \times |E|}, A_{ij} \in \{-1,0,1\} \; \forall i \in V\setminus\{s,t\}, j \in \{1, \ldots, |E|\}\right\}
+\end{align*}
+
+Si $x=0$ se tiene que $x$ pertenece al cono ya que todo cono contiene al $0$, si no por la parte anterior tenemos que $S_x$ contiene los arcos de un ciclo o un s-t camino, sea $\mathb{1}_{R^{1}}, R^{1}\in\mathcal{P}\cup\mathcal{C}$ un ciclo o s-t camino en $S_{x}$, sea $\lambda^{1} = \underset{e\in R^{1}}{min}\{x_{e}\}$ y $e^{1}=\underset{e\in R}{argmin}\{x_{e}\}$, definamos $\hat{x}=x-\lambda^{1}\mathb{1}_{R^{1}}$, notar que $\hat{x}\geq0$ y $\hat{x}=0$ solo si $x$ es un ciclo o un $s-t$ camino, en ese caso $x=\lambda^{1}\mathb{1}_{R^{1}}$ y terminaría la demostración. Notar que $\hat{x}\in P_{1}$, en efecto, $A\hat{x}=A(x-\lambda^{1}\mathb{1}_{R^{1}})=Ax-\lambda^{1}A\mathb{1}_{R^{1}}=0$, sea $S_{\hat{x}}=\{e\in E: \hat{x}_{e}>0\}$, notar que $|S_{\hat{x}}|\leq|S_{x}|-1$, debido a que el arco $e^{1}$ ahora tiene flujo 0, luego este procedimiento se puede repetir $k$ veces con $k\leq|S_{x}|$ hasta que $\hat{x}=0$, entonces, por inducción se tiene que $x=\sum_{i=1}^{k}\lambda^{i}\mathb{1}_{R^{i}}, \lambda\geq0$ donde $\mathb{1}_{R^{i}}$ es un ciclo o un $s-t$ camino $\forall i \in [k]$.
+
+
+\item Deduzca la siguiente descomposición de Minkowski-Weyl del poliedro $P_2$:\\
+$P_2=\text{conv}(\{\chi^P\colon P\in \mathcal{P}\}) + \text{cono}(\{\chi^C\colon C\in \mathcal{C}\})$.
+\end{enumerate}
+
+\textbf{Solución:}\\
+
+
+\textbf{$\supseteq$)}\\
+
+Sea $x=\underset{P \in \mathcal{P}}{\sum}\lambda_{P}\mathb{1}_{\chi^{P}}+\underset{C \in \mathcal{C}}{\sum}\theta_{C}\mathb{1}_{\chi^{C}}$, con $\lambda\geq0$, $\theta\geq0$ y $\underset{P\in\mathcal{P}}{\sum}\lambda_{P}=1$, luego $\forall v \in V\setminus\{s,t\}$ se tiene:
+
+\begin{align*}
+	x(\delta^{+}(v))-x(\delta^{-}(v)) &=\underset{e\in\delta^{+}(v)}{\sum}\underset{P \in \mathcal{P}}{\sum}\lambda_{P}\mathb{1}_{\chi^{P}_{e}}+\underset{C \in \mathcal{C}}{\sum}\theta_{C}\mathb{1}_{\chi^{C}_{e}}-\underset{e\in\delta^{-}(v)}{\sum}\underset{P \in \mathcal{P}}{\sum}\lambda_{P}\mathb{1}_{\chi^{P}_{e}}+\underset{C \in \mathcal{C}}{\sum}\theta_{C}\mathb{1}_{\chi^{C}_{e}}\\
+	&=\underset{P \in \mathcal{P}}{\sum}\lambda_{P}\left(\underset{e\in\delta^{+}(v)}{\sum}\mathb{1}_{\chi^{P}_{e}}-\underset{e\in\delta^{-}(v)}{\sum}\mathb{1}_{\chi^{P}_{e}}\right)+\underset{C \in \mathcal{C}}{\sum}\theta_{C}\left(\underset{e\in\delta^{+}(v)}{\sum}\mathb{1}_{\chi^{C}_{e}}-\underset{e\in\delta^{-}(v)}{\sum}\mathb{1}_{\chi^{C}_{e}}\right)\\
+	&=\underset{P \in \mathcal{P}}{\sum}\lambda_{P}0+\underset{C \in \mathcal{C}}{\sum}\theta_{C}0=0\\
+\end{align*}
+
+Para $s$ se tiene:
+
+\begin{align*}
+	x(\delta^{+}(s))-x(\delta^{-}(s)) &=\underset{P \in \mathcal{P}}{\sum}\lambda_{P}\left(\underset{e\in\delta^{+}(s)}{\sum}\mathb{1}_{\chi^{P}_{e}}-\underset{e\in\delta^{-}(s)}{\sum}\mathb{1}_{\chi^{P}_{e}}\right)+\underset{C \in \mathcal{C}}{\sum}\theta_{C}\left(\underset{e\in\delta^{+}(s)}{\sum}\mathb{1}_{\chi^{C}_{e}}-\underset{e\in\delta^{-}(s)}{\sum}\mathb{1}_{\chi^{C}_{e}}\right)\\
+	&=\underset{P \in \mathcal{P}}{\sum}\lambda_{P}1+\underset{C \in \mathcal{C}}{\sum}\theta_{C}0=1\\
+\end{align*}
+
+Por tanto, $x\in P_{2}$.
+
+\textbf{$\subseteq$)}\\
+
+Por (a) se tiene que $P_{2}\subseteq P_{1}$ y como $P_{1}=cono(\{\chi^P\colon P\in \mathcal{P}\}\cup \{\chi^C\colon C\in \mathcal{C}\})$ se tiene que $x$ se puede escribir como una combinación cónica de $s-t$ caminos y ciclos, por tanto,  $\forall x\in P_{2}$ se tiene que existen $\lambda\geq0$, $\theta\geq0$ tal que $x=\underset{P \in \mathcal{P}}{\sum}\lambda_{P}\mathb{1}_{\chi^{P}}+\underset{C \in \mathcal{C}}{\sum}\theta_{C}\mathb{1}_{\chi^{C}}$, además como $x$ pertenece a $P_{2}$ debe satisfacer:
+
+\begin{align*}
+	1=x(\delta^{+}(s))-x(\delta^{-}(s)) & =\underset{P \in \mathcal{P}}{\sum}\lambda_{P}\left(\underset{e\in\delta^{+}(s)}{\sum}\mathb{1}_{\chi^{P}_{e}}-\underset{e\in\delta^{-}(s)}{\sum}\mathb{1}_{\chi^{P}_{e}}\right)+\underset{C \in \mathcal{C}}{\sum}\theta_{C}\left(\underset{e\in\delta^{+}(s)}{\sum}\mathb{1}_{\chi^{C}_{e}}-\underset{e\in\delta^{-}(s)}{\sum}\mathb{1}_{\chi^{C}_{e}}\right)\\
+	&=\underset{P \in \mathcal{P}}{\sum}\lambda_{P}1+\underset{C \in \mathcal{C}}{\sum}\theta_{C}0=\underset{P \in \mathcal{P}}{\sum}\lambda_{P}
+\end{align*}
+
+Lo anterior implica que existen  $\lambda\geq0$ con $\underset{P\in\mathcal{P}}{\sum}\lambda_{P}=1$ y $\theta\geq0$ tal que $x=\underset{P \in \mathcal{P}}{\sum}\lambda_{P}\mathb{1}_{\chi^{P}}+\underset{C \in \mathcal{C}}{\sum}\theta_{C}\mathb{1}_{\chi^{C}}$.
+
+\end{prob}
+
+\newpage
+\begin{prob}
+Calcule el dual de los siguientes programas lineales puros (suponga $G=(V,E)$ es un grafo, que para todo $U\subseteq V$, $E(U)$ es el conjunto de aristas con ambos extremos en $U$, $\delta(U)$ es el conjunto de aristas con un extremo dentro de $U$ y uno fuera de $U$. )
+
+\begin{alignat*}{5}
+(P1): &\min\        & \sum_{e \in E} c_ex_e \\
+&\text{s.a. } & x(\delta(v))&\geq 1 & \forall v\in V  \\
+&                  & x_e                       &\geq 0 &\quad\forall e \in E
+\intertext{}
+(P2): &\max\        & \sum_{e \in E} w_ex_e \\
+&\text{s.a. } & x(\delta(v))&\leq 1 & \forall v\in V  \\
+&             & x(E(U))) &\leq \frac{|U|-1}{2} \quad & \forall U\subseteq V, |U| \text{ impar}\\
+&             & x_e                       &\geq 0 &\quad\forall e \in E \\
+(P3): &\max &\sum_{i=1}^I\sum_{j=1}^J\sum_{k=1}^K w_{ijk}x_{ijk}\\
+&\text{s.a. }  &\sum_{j=1}^J\sum_{k=1}^K x_{ijk} &= a_{i} & \forall i\in [I].\\
+&              &\sum_{i=1}^I\sum_{k=1}^K x_{ijk} &\leq b_{j} & \forall j\in [J].\\
+&              &\sum_{i=1}^I\sum_{j=1}^J x_{ijk} &\geq c_{k} & \forall k\in [K].\\
+&               &x_{ijk} &\geq 0 &\forall (i,j,k)\in [I]\times [J]\times [K].
+\end{alignat*}
+
+
+\textbf{Notas:} (P1) es el politopo de los edge-covers de $G$ cuando $G$ es bipartito, (P2) es el polítopo de los matchings de $G$, (P3) es la relajación de una variante de 3D-matching.
+
+
+\textbf{Solución:}\\
+
+\textbf{P1)}\\
+
+Notar que un arco $(i,j)$ está presente en $\delta(i)$ y $\delta(j)$.
+\begin{center}
+\begin{aligned}
+	\max \sum_{v\in V}y_{v}\\
+	 y_{i}+y_{j} & \leq c_{ij} & \forall (i,j) \in E \\
+	y_{v} &\geq 0 & \forall v \in V
+\end{aligned}
+\end{center}
+
+
+\textbf{P2)}\\
+
+Sea $S=\{1, \ldots, k\}$ enumeración de todos los $U\subseteq V, \; |U|$ impar y sea $\mathcal{U}=\{U_{1}, \ldots, U_{k}\}$ subconjunto con todos los subconjuntos de nodos de $V$ de cardinalidad impar.
+
+\begin{center}
+\begin{aligned}
+	\min \sum_{v \in V}y_{v}+\sum_{s\in S}z_{s}\left( \frac{|\mathcal{U}(s)| -1}{2}\right)\\
+	 y_{i}+y_{j}+\sum_{s\in S|(i,j)\in E(\mathcal{U}(s))}z_{s} & \geq w_{ij} & \forall (i,j) \in E \\
+	y_{v} & \geq 0 & \forall v \in V\\
+	z_{s} & \geq0 & \forall s \in S
+\end{aligned}
+\end{center}
+
+\textbf{P3)}\\
+
+\begin{center}
+\begin{aligned}
+	\min \sum_{i=1}^{I}a_{i}\lambda_{i} + \sum_{j=1}^{J}b_{j}\beta_{j}+ \sum_{k=1}^{K}c_{k}\gamma_{k}\\
+	\lambda_{i}+\beta_{j}+\gamma_{k}&\geq w_{ijk} &\forall (i,j,k) \in [I]\times[J]\times[K]\\
+	\lambda_{i} & \; \text{libre} &\forall i \in [I]\\
+	\beta_{j}&\geq 0 &\forall j \in [J]\\
+	\gamma_{k}&\leq0 &\forall k \in [K]
+\end{aligned}
+\end{center}
+
+\end{prob}
+
+
+\end{document}
