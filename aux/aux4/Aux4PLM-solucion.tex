@@ -1,0 +1,148 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[activeacute,spanish,es-nodecimaldot]{babel}
+\usepackage[left=1.5cm,top=1.5cm,right=1.5cm, bottom=1.5cm,letterpaper, includeheadfoot]{geometry}
+\usepackage[parfill]{parskip}
+
+\usepackage{amssymb, amsmath, amsthm}
+\usepackage{graphicx}
+\usepackage{lmodern,url}
+\usepackage{paralist} %util para listas compactas
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancypagestyle{plain}{%
+\fancyhf{}
+\lhead{\footnotesize\itshape\bfseries\rightmark}
+\rhead{\footnotesize\itshape\bfseries\leftmark}
+}
+
+
+% macros
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\CC}{\mathbb C}
+
+%Teoremas, Lemas, etc.
+\theoremstyle{plain}
+\newtheorem{teo}{Teorema}
+\newtheorem{lem}{Lema}
+\newtheorem{prop}{Proposición}
+\newtheorem{cor}{Corolario}
+
+\theoremstyle{definition}
+\newtheorem{defi}{Definición}
+\newtheorem{eje}{Ejemplo}
+\newtheorem{ejer}{Ejercicio}
+% fin macros
+
+%%%%% NOMBRE AUXILIARES Y FECHA
+\newcommand{\sca}{Diego Garrido}
+\newcommand{\fecha}{11 de junio  de 2020}
+
+%%%%%%%%%%%%%%%%%%
+
+%Macros para este documento
+\newcommand{\cin}{\operatorname{cint}}
+
+
+\begin{document}
+%Encabezado
+\fancyhead[L]{Facultad de Ciencias Físicas y Matemáticas}
+\fancyhead[R]{Universidad de Chile}
+\vspace*{-1.2 cm}
+\begin{minipage}{0.6\textwidth}
+\begin{flushleft}
+\hspace*{-0.5cm}\textbf{MA4702. Programación Lineal Mixta. 2020.}\\
+\hspace*{-0.5cm}\textbf{Profesor:} José Soto\\
+\hspace*{-0.5cm}\textbf{Auxiliar:} \sca\\
+\hspace*{-0.5cm}\textbf{Fecha:} \fecha.
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.36\textwidth}
+\begin{flushright}
+\includegraphics[scale=0.15]{fcfm}
+\end{flushright}
+\end{minipage}
+\bigskip
+%Fin encabezado
+
+%Titulo Auxiliar
+\begin{center}
+\LARGE\textbf{Generación de columnas}
+\end{center}
+
+
+\section{Vehicle Routing Problem (VRP)}
+
+Cuenta con una flota homogenea de $n$ vehículos de capacidad $F$ con la que debe satisfacer la demanda de $m$ clientes a costo mínimo, siendo la demanda $d_{i}$ para $i\in\{1,\ldots, m\}$. Sea $G(V,E)$ el grafo dirigido del problema, con $V=\{0\}\cup[m]$ y $E=V\times V$, el nodo $\{0\}$ representa el centro de distribución (CD) de donde todos los vehículos empiezan y terminan su ruta, por último, sea $c_{e}$ el costo de usar el arco $e\in E$.  
+
+\begin{itemize}
+\item[a)] Formule el problema anterior como un PE que solo use la variable binaria $x_{ij}^{k}$ que toma valor $1$ y el vehículo $k$ usa el arco $(i,j)$, 0 sino.\\
+
+\textbf{Solución:}
+
+\begin{align}
+\min &\sum_{k=1}^{n}\sum_{i=0}^{m}\sum_{j=0}^{m} x_{ij}^{k}\nonumber\\ 
+& \sum_{k=1}^{n}\sum_{i=0}^{m} x_{ij}^{k} = 1, \;\forall j \in [m]\\
+& \sum_{j=1}^{m}x_{0j}^{k}=\sum_{i=1}^{m}x_{i0}^{k}=1, \; \forall k \in [n]\\
+& \sum_{(i,j)\in \delta(S)}x_{ij}^{k}\leq |S|-1, \forall k\in[n], S\subseteq [m], S\neq\emptyset\\
+& \sum_{i=1}^{m}\sum_{j=0}^{m} d_{i}x_{ij}^{k}\leq F \; \forall k \in [n]\\
+& x_{ij}^{k}\in\{0,1\} \; \forall (i,j)\in E, k \in [n]\nonumber
+\end{align}
+
+La restricción (1) indica que cada cliente es atendido por un único vehículo y solo una vez, (2) obliga a que todo vehículo debe salir del CD hacia un cliente y volver desde un cliente al CD, (3) corresponde a la restricción de eliminación de subtour, así las rutas de los vehículos son conexas, por último, (4) corresponde a la restricción de capacidad de los vehículos. Es importante notar que por (1) se tiene que $\sum_{i=0}^{m}x_{ij}^{k}\leq 1, \; \forall k \in [n], j \in [m]$.
+
+\item[b)] Formule el problema como un PE que solo use la variable $x_{p}$ que toma valor 1 si se usa la ruta $p\in P$.\\ \textbf{Indicación}: una ruta $p\in P$ pertenece a $\{0,1\}^{E}$, además, defina explícitamente $c_{p}$ como el costo de usar la ruta $p$.
+
+\textbf{Solución:}
+
+El costo de un patrón $p$ es $c_{p}=\sum_{i=0}^{m}\sum_{j=0}^{m}c_{ij}p_{ij}$, notar que como el patrón representa una ruta cumple $p_{j}=\sum_{i=0}^{m}p_{ij}\leq 1, \;\forall j \in [m]$.
+
+\begin{align}
+\min & \sum_{p\in P}c_{p}x_{p}\nonumber\\
+& \sum_{p\in P}x_{p}=n\\
+& \sum_{p\in P}p_{j}x_{p} = 1 \; \forall j \in [m]\\
+& x_{p}\in\{0,1\} \; \forall p \in P\nonumber
+\end{align}
+La restricción (5) obliga a que la cantidad de rutas a utilizar tiene que ser exactamente el tamaño de la flota y por (6) se obliga a que cada cliente es atendido por una única ruta.
+
+\item[c)] Para $Q\subseteq P$, formule el master problem MP(Q) y su DUAL-MP(Q).
+
+\textbf{Solución:}
+
+Para $Q\subset P$ el problema maestro se escribe como sigue:
+\begin{align}
+    (MP(Q))\min & \sum_{p\in P}c_{p}x_{p}\nonumber\\
+    & \sum_{p\in Q}x_{p}=n\\
+    & \sum_{p\in Q}p_{j}x_{p} = 1 \; \forall j \in [m]\\
+    & x_{p}\geq 0 \; \forall p \in Q\nonumber
+\end{align}
+
+Luego su dual es:
+\begin{align}
+    (MP(Q))\max & \;z+\sum_{j=1}^{m}y_{j}\nonumber\\
+    & z+\sum_{j=1}p_{j}y_{j}\leq c_{p} \forall p \in Q\\
+    & z \; libre, y_{j} \; libre \;\forall j \in [m]\nonumber
+\end{align}
+
+, donde $z$ es la variable dual de la restricción (7) e $y$ la variable dual de la restricción (6).
+
+\item[d)] Para una solución dual factible de DUAL-MP(Q) formule el pricing problem.
+
+\textbf{Solución:}
+El pricing problem $PP(y,z)$ corresponde a buscar la ruta $p$ que más viola que más viola (9), equivalentemente es el que viola más $z\leq c_{p}-\sum_{j=1}^{m}p_{j}y_{j}$, luego como $z$ es fijo y solo el lado derecho depende de $p$ el $PP(y,z)$ equivale a minimizar el lado derecho sujeto a las restricciones que hacen que $p$ sea una ruta (10) y (11).
+
+\begin{align}
+    \min & \sum_{i=0}^{m}\sum_{j=0}^{m}c_{ij}p_{ij}-\sum_{j=1}^{m}y_{j}\sum_{i=0}^{m}p_{ij}\nonumber\\
+    & \sum_{j=1}^{m}p_{0j}=\sum_{i=1}^{m}p_{i0}=1\\
+    & \sum_{(i,j)\in \delta(S)}p_{ij}\leq |S|-1, \; \forall S\subseteq [m], S\neq\emptyset\\
+    & p_{ij}\in\{0,1\} \;\forall (i,j) \in E\nonumber
+\end{align}
+\end{itemize}
+
+Sea $\eta$ el valor óptimo del problema anterior y $p$ la solución óptima, luego $p$ se agrega a $Q$ solo si $\eta<z$. 
+
+\end{document}

@@ -1,0 +1,93 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[activeacute,spanish,es-nodecimaldot]{babel}
+\usepackage[left=1.5cm,top=1.5cm,right=1.5cm, bottom=1.5cm,letterpaper, includeheadfoot]{geometry}
+\usepackage[parfill]{parskip}
+
+\usepackage{amssymb, amsmath, amsthm}
+\usepackage{graphicx}
+\usepackage{lmodern,url}
+\usepackage{paralist} %util para listas compactas
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancypagestyle{plain}{%
+\fancyhf{}
+\lhead{\footnotesize\itshape\bfseries\rightmark}
+\rhead{\footnotesize\itshape\bfseries\leftmark}
+}
+
+
+% macros
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\CC}{\mathbb C}
+
+%Teoremas, Lemas, etc.
+\theoremstyle{plain}
+\newtheorem{teo}{Teorema}
+\newtheorem{lem}{Lema}
+\newtheorem{prop}{Proposición}
+\newtheorem{cor}{Corolario}
+
+\theoremstyle{definition}
+\newtheorem{defi}{Definición}
+\newtheorem{eje}{Ejemplo}
+\newtheorem{ejer}{Ejercicio}
+% fin macros
+
+%%%%% NOMBRE AUXILIARES Y FECHA
+\newcommand{\sca}{Diego Garrido}
+\newcommand{\fecha}{11 de junio  de 2020}
+
+%%%%%%%%%%%%%%%%%%
+
+%Macros para este documento
+\newcommand{\cin}{\operatorname{cint}}
+
+
+\begin{document}
+%Encabezado
+\fancyhead[L]{Facultad de Ciencias Físicas y Matemáticas}
+\fancyhead[R]{Universidad de Chile}
+\vspace*{-1.2 cm}
+\begin{minipage}{0.6\textwidth}
+\begin{flushleft}
+\hspace*{-0.5cm}\textbf{MA4702. Programación Lineal Mixta. 2020.}\\
+\hspace*{-0.5cm}\textbf{Profesor:} José Soto\\
+\hspace*{-0.5cm}\textbf{Auxiliar:} \sca\\
+\hspace*{-0.5cm}\textbf{Fecha:} \fecha.
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.36\textwidth}
+\begin{flushright}
+\includegraphics[scale=0.15]{fcfm}
+\end{flushright}
+\end{minipage}
+\bigskip
+%Fin encabezado
+
+%Titulo Auxiliar
+\begin{center}
+\LARGE\textbf{Generación de columnas}
+\end{center}
+
+
+\section{Vehicle Routing Problem (VRP)}
+
+Cuenta con una flota homogenea de $n$ vehículos de capacidad $F$ con la que debe satisfacer la demanda de $m$ clientes a costo mínimo, siendo la demanda $d_{i}$ para $i\in\{1,\ldots, m\}$. Sea $G(V,E)$ el grafo dirigido del problema, con $V=\{0\}\cup[m]$ y $E=V\times V$, el nodo $\{0\}$ representa el centro de distribución (CD) de donde todos los vehículos empiezan y terminan su ruta, por último, sea $c_{e}$ el costo de usar el arco $e\in E$.  
+
+\begin{itemize}
+\item[a)] Formule el problema anterior como un PE que solo use la variable binaria $x_{ij}^{k}$ que toma valor $1$ y el vehículo $k$ usa el arco $(i,j)$, 0 sino.
+
+\item[b)] Formule el problema como un PE que solo use la variable $x_{p}$ que toma valor 1 si se usa la ruta $p\in P$.\\ \textbf{Indicación}: una ruta $p\in P$ pertenece a $\{0,1\}^{E}$, además, defina explícitamente $c_{p}$ como el costo de usar la ruta $p$.
+
+\item[c)] Para $Q\subseteq P$, formule el master problem MP(Q) y su DUAL-MP(Q).
+\item[d)] Para una solución dual factible de DUAL-MP(Q) formule el pricing problem.
+
+\end{itemize}
+
+
+\end{document}
