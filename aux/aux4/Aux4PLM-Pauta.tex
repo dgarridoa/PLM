@@ -74,7 +74,6 @@
 \LARGE\textbf{Generación de columnas}
 \end{center}
 
-
 \section{Vehicle Routing Problem (VRP)}
 
 Cuenta con una flota homogenea de $n$ vehículos de capacidad $F$ con la que debe satisfacer la demanda de $m$ clientes a costo mínimo, siendo la demanda $d_{i}$ para $i\in\{1,\ldots, m\}$. Sea $G(V,E)$ el grafo dirigido del problema, con $V=\{0\}\cup[m]$ y $E=V\times V$, el nodo $\{0\}$ representa el centro de distribución (CD) de donde todos los vehículos empiezan y terminan su ruta, por último, sea $c_{e}$ el costo de usar el arco $e\in E$.  
@@ -113,7 +112,7 @@ La restricción (5) obliga a que la cantidad de rutas a utilizar tiene que ser e
 
 \textbf{Solución:}
 
-Para $Q\subset P$ el problema maestro se escribe como sigue:
+Para $Q\subseteq P$ el problema maestro se escribe como sigue:
 \begin{align}
     (MP(Q))\min & \sum_{p\in P}c_{p}x_{p}\nonumber\\
     & \sum_{p\in Q}x_{p}=n\\
