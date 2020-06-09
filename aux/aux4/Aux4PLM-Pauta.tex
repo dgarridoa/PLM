@@ -85,14 +85,16 @@ Cuenta con una flota homogenea de $n$ vehículos de capacidad $F$ con la que deb
 
 \begin{align}
 \min &\sum_{k=1}^{n}\sum_{i=0}^{m}\sum_{j=0}^{m} x_{ij}^{k}\nonumber\\ 
-& \sum_{k=1}^{n}\sum_{i=0}^{m} x_{ij}^{k} = 1, \;\forall j \in [m]\\
+& x_{ii}^{k}=0 \; \forall i \in V, k \in [n]\\
+& \sum_{j=0}^{m}x_{ji}^{k} - \sum_{j=0}^{m}x_{ij}^{k} = 0\; \forall i \in [m], k \in [n]\\
 & \sum_{j=1}^{m}x_{0j}^{k}=\sum_{i=1}^{m}x_{i0}^{k}=1, \; \forall k \in [n]\\
-& \sum_{(i,j)\in \delta(S)}x_{ij}^{k}\leq |S|-1, \forall k\in[n], S\subseteq [m], S\neq\emptyset\\
+& \sum_{(i,j)\in E(S)}x_{ij}^{k}\leq |S|-1, \forall k\in[n], S\subseteq [m], S\neq\emptyset\\
 & \sum_{i=1}^{m}\sum_{j=0}^{m} d_{i}x_{ij}^{k}\leq F \; \forall k \in [n]\\
+& \sum_{k=1}^{n}\sum_{i=0}^{m} x_{ij}^{k} = 1, \;\forall j \in [m]\\
 & x_{ij}^{k}\in\{0,1\} \; \forall (i,j)\in E, k \in [n]\nonumber
 \end{align}
 
-La restricción (1) indica que cada cliente es atendido por un único vehículo y solo una vez, (2) obliga a que todo vehículo debe salir del CD hacia un cliente y volver desde un cliente al CD, (3) corresponde a la restricción de eliminación de subtour, así las rutas de los vehículos son conexas, por último, (4) corresponde a la restricción de capacidad de los vehículos. Es importante notar que por (1) se tiene que $\sum_{i=0}^{m}x_{ij}^{k}\leq 1, \; \forall k \in [n], j \in [m]$.
+La restricción (1) elimina los arcos $(i,i)$, (2) es la restricción de conservación de flujo, así si un vehículo visita a un cliente debe salir de él hacia otro nodo, (3) obliga a que todo vehículo debe salir del CD hacia un cliente y volver desde un cliente al CD, (4) es la restricción de eliminación de subtour, así las rutas de los vehículos son conexas, (5) corresponde a la restricción de capacidad de los vehículos, por último (6) indica que cada cliente es atendido por un único vehículo y solo una vez. Es importante notar que por (6) se tiene que $\sum_{i=0}^{m}x_{ij}^{k}\leq 1, \; \forall k \in [n], j \in [m]$.
 
 \item[b)] Formule el problema como un PE que solo use la variable $x_{p}$ que toma valor 1 si se usa la ruta $p\in P$.\\ \textbf{Indicación}: una ruta $p\in P$ pertenece a $\{0,1\}^{E}$, además, defina explícitamente $c_{p}$ como el costo de usar la ruta $p$.
 
@@ -106,7 +108,7 @@ El costo de un patrón $p$ es $c_{p}=\sum_{i=0}^{m}\sum_{j=0}^{m}c_{ij}p_{ij}$, 
 & \sum_{p\in P}p_{j}x_{p} = 1 \; \forall j \in [m]\\
 & x_{p}\in\{0,1\} \; \forall p \in P\nonumber
 \end{align}
-La restricción (5) obliga a que la cantidad de rutas a utilizar tiene que ser exactamente el tamaño de la flota y por (6) se obliga a que cada cliente es atendido por una única ruta.
+La restricción (7) obliga a que la cantidad de rutas a utilizar tiene que ser exactamente el tamaño de la flota y por (8) se obliga a que cada cliente es atendido por una única ruta.
 
 \item[c)] Para $Q\subseteq P$, formule el master problem MP(Q) y su DUAL-MP(Q).
 
@@ -127,17 +129,20 @@ Luego su dual es:
     & z \; libre, y_{j} \; libre \;\forall j \in [m]\nonumber
 \end{align}
 
-, donde $z$ es la variable dual de la restricción (7) e $y$ la variable dual de la restricción (6).
+, donde $z$ es la variable dual de la restricción (9) e $y$ la variable dual de la restricción (10).
 
 \item[d)] Para una solución dual factible de DUAL-MP(Q) formule el pricing problem.
 
 \textbf{Solución:}
-El pricing problem $PP(y,z)$ corresponde a buscar la ruta $p$ que más viola que más viola (9), equivalentemente es el que viola más $z\leq c_{p}-\sum_{j=1}^{m}p_{j}y_{j}$, luego como $z$ es fijo y solo el lado derecho depende de $p$ el $PP(y,z)$ equivale a minimizar el lado derecho sujeto a las restricciones que hacen que $p$ sea una ruta (10) y (11).
+El pricing problem $PP(y,z)$ corresponde a buscar la ruta $p$ que más viola que más viola (11), equivalentemente es el que viola más $z\leq c_{p}-\sum_{j=1}^{m}p_{j}y_{j}$, luego como $z$ es fijo y solo el lado derecho depende de $p$ el $PP(y,z)$ equivale a minimizar el lado derecho sujeto a las restricciones que hacen que $p$ sea una ruta (12-15) más la restricción de capacidad del vehículo (16).
 
 \begin{align}
     \min & \sum_{i=0}^{m}\sum_{j=0}^{m}c_{ij}p_{ij}-\sum_{j=1}^{m}y_{j}\sum_{i=0}^{m}p_{ij}\nonumber\\
-    & \sum_{j=1}^{m}p_{0j}=\sum_{i=1}^{m}p_{i0}=1\\
-    & \sum_{(i,j)\in \delta(S)}p_{ij}\leq |S|-1, \; \forall S\subseteq [m], S\neq\emptyset\\
+    & p_{ii}=0 \; \forall i \in V\\
+    & \sum_{i=0}^{m}p_{ij} - \sum_{i=0}^{m}p_{ji} = 0,\; \forall j \in [m]\\
+    & \sum_{j=1}^{m}p_{0j}=\sum_{i=1}^{m}p_{i0}=1, \; \forall k \in [n]\\
+    & \sum_{(i,j)\in E(S)}p_{ij}\leq |S|-1, \; \forall S\subseteq [m], S\neq\emptyset\\
+    & \sum_{i=1}^{m}\sum_{j=0}^{m} d_{i}p_{ij}\leq F\\
     & p_{ij}\in\{0,1\} \;\forall (i,j) \in E\nonumber
 \end{align}
 \end{itemize}
