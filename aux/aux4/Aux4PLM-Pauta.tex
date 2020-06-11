@@ -84,7 +84,7 @@ Cuenta con una flota homogenea de $n$ vehículos de capacidad $F$ con la que deb
 \textbf{Solución:}
 
 \begin{align}
-\min &\sum_{k=1}^{n}\sum_{i=0}^{m}\sum_{j=0}^{m} x_{ij}^{k}\nonumber\\ 
+\min &\sum_{k=1}^{n}\sum_{i=0}^{m}\sum_{j=0}^{m} c_{ij}x_{ij}^{k}\nonumber\\ 
 & x_{ii}^{k}=0 \; \forall i \in V, k \in [n]\\
 & \sum_{j=0}^{m}x_{ji}^{k} - \sum_{j=0}^{m}x_{ij}^{k} = 0\; \forall i \in [m], k \in [n]\\
 & \sum_{j=1}^{m}x_{0j}^{k}=\sum_{i=1}^{m}x_{i0}^{k}=1, \; \forall k \in [n]\\
