@@ -77,9 +77,9 @@
 
 \section{Teorema de Braum-Trotter}
 
-Diremos que un poliedro $P$ tiene la propiedad de descomposición entera si $\forall k \in \mathbb{Z}^{+}\setminus\{0\}$ se tiene que todo vector integral del conjunto $kP$ es suma de $k$ vectores integrales de $P$. Sea $P=\{x\in\mathbb{R}^{n}: Ax\leq b, x\geq 0\}$ un poliedro racional.
+Diremos que un poliedro $P$ tiene la propiedad de descomposición entera si $\forall k \in \mathbb{Z}^{+}\setminus\{0\}$ se tiene que todo vector integral del conjunto $kP$ es suma de $k$ vectores integrales de $P$. Sea $P=\{x\in\mathbb{R}^{n}: Ax\leq b, x\geq 0\}$ un poliedro racional y puntiagudo.
 \begin{itemize}
-    \item[a)] Deuestra que si $P$ tiene la propiedad de descomposición entera, entonces $P$ es un poliedro entero.
+    \item[a)] Demuestre que si $P$ tiene la propiedad de descomposición entera, entonces $P$ es un poliedro entero.
     
     \textbf{Solución:}\\
     Basta con demostrar que los vértices de $P$ son enteros para demostrar lo pedido. Por contradicción, sea $x$ un vertice no entero; como es racional, si $k$ es el mínimo común múltiplo de las coordenadas de $x$, se sigue que $kx$ es entero, y $kx\in kP$. Luego, existen $x_{1},\ldots, x_{k}\in P$ integrales tal que:
@@ -90,13 +90,13 @@ Diremos que un poliedro $P$ tiene la propiedad de descomposición entera si $\fo
     \item[b)] Demuestre que si $A$ es total unimodular y $b$ es integral, entonces $P$ tiene la propiedad de descomposición entera.
     
     \textbf{Solución:}\\
-    Lo probaremos por inducción en $k$. El caso base es obvio ($k=1$). Sea $y\in kP\cup\mathbb{Z}^{n}$, es decir, $y$ integral tal que $k^{-1}y\geq 0, k^{-1}Ay\leq b$. Consideremos el poliedro:
+    Lo probaremos por inducción en $k$. El caso base es obvio ($k=1$). Sea $y\in kP\cap\mathbb{Z}^{n}$, es decir, $y$ integral tal que $k^{-1}y\geq 0, k^{-1}Ay\leq b$. Consideremos el poliedro:
 
     \begin{equation*}
-    Q = \{x\in \mathbb{R}^{n}:0\leq x \leq y, Ax\leq b, Ax\leq Ay-kb+b\} 
+    Q = \{x\in \mathbb{R}^{n}:0\leq x \leq y,  Ay-kb+b\leq Ax\leq b\} 
     \end{equation*}
 
-    Luego como $A$ es $TU$, $Q$ es entero, además es no vacío ya que $k^{-1}y\in Q$ y es un politopo ya que $x$ está acotado, por ende $Q$ es puntiagudo. Sea $x_{k}$ vértice de $Q$ (notar que es entero ya que $Q$ es entero), notar que un vertice cumple $Ax_{k}=b$, tomando $\bar{y}=y-x_{k}$ se cumple $\bar{y}\geq0$ y $A\bar{y}\leq(k-1)b$. Por hipótesis inductiva existen $x_{1},\ldots, x_{k-1}$ tales que $\bar{y}=x_{1}+\ldots+x_{k-1}$ y luego $y=x_{1}+\ldots x_{k}$.
+    Luego como $A$ es $TU$, $Q$ es entero, además es no vacío ya que $k^{-1}y\in Q$ y es un politopo ya que $x$ está acotado, por ende $Q$ es puntiagudo. Sea $x_{k}$ vértice de $Q$ (notar que es entero ya que $Q$ es entero), tomando $\bar{y}=y-x_{k}$ se cumple $\bar{y}\geq0$ y $A\bar{y}\leq(k-1)b$. Por hipótesis inductiva existen $x_{1},\ldots, x_{k-1}$ tales que $\bar{y}=x_{1}+\ldots+x_{k-1}$ y luego $y=x_{1}+\ldots x_{k}$.
 
     \item[c)] Concluya quue $P$ tiene la propiedad de descomposición entera para todo $b$ integral si y sólo si $A$ es total unimodular.
     
@@ -112,11 +112,11 @@ Prueba que si $A\in\{-1,0,1\}^{m\times n}$ es unimodular, entonces:
     \item[a)] Cada submatriz cuadrada invertible de $A$ tiene una fila con un número impar de coordenadas no nulas.
     
     \textbf{Solución:}\\
-    Sea $B\in \{-1,0,1\}^{k\times k}$ una submatriz invertible de $A$, por propiedad de matrices TU sabemos que $B$ es TU, por ende podemos usar el teorema de Ghouila-Houri, el cual dice que para todo subconjunto $I\subset[k]$ de columnas de $B$ se puede particionar en dos $I_{+}$ y $I-{-}$ de modo tal que:
+    Sea $B\in \{-1,0,1\}^{k\times k}$ una submatriz invertible de $A$, por propiedad de matrices TU sabemos que $B$ es TU, por ende podemos usar el teorema de Ghouila-Houri, el cual dice que para todo subconjunto $I\subseteq[k]$ de columnas de $B$ se puede particionar en dos $I_{+}$ y $I_{-}$ de modo tal que:
     \begin{equation*}
         \sum_{i\in I_{+}}B_{i}- \sum_{i\in I_{-}}B_{i} \in \{-1, 0, 1\}^{k}
     \end{equation*}
-    Ahora supongamos que la cantidad de componentes no nulas de cada fila de $B$ es par y tomemos $I=[k]$, luego la suma por filas de $B$ es par, por lo que existe un $x\in{-1,1}^{k}$ con $x_{i} = 1 \;\forall i \in I_{+}$ y $x_{i} = -1 \;\forall i \in I_{-}$ que cumple $Bx=0$ (ya que la suma sobre $I_{+}$ tiene la misma paridad que sobre $I_{-}$, puesto que la suma de ambas es par) y como $x\neq0$ se tiene que $B$ es no invertible, lo que es una contradicción.
+    Ahora supongamos que la cantidad de componentes no nulas de cada fila de $B$ es par y tomemos $I=[k]$, luego la suma por filas de $B$ es par, por lo que existe un $x\in\{-1,1\}^{k}$ con $x_{i} = 1 \;\forall i \in I_{+}$ y $x_{i} = -1 \;\forall i \in I_{-}$ que cumple $Bx=0$ (ya que la suma sobre $I_{+}$ tiene la misma paridad que sobre $I_{-}$, puesto que la suma de ambas es par) y como $x\neq0$ se tiene que $B$ es no invertible, lo que es una contradicción.
     \item[b)] Si $B$ es submatriz cuadrada de $A$ tal que la suma sobre las filas y sobre las columnas de $B$ es par, entonces la suma sobre todo $B$ es divisible por 4.
     
     \textbf{Solución:}\\
