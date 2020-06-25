@@ -1,0 +1,282 @@
+% BEGIN_FOLD preamble
+
+\documentclass{article}
+\usepackage{dsfont}
+
+\usepackage[activeacute,spanish]{babel}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{url,multirow}
+\usepackage[centertableaux,smalltableaux]{ytableau}
+\usepackage[utf8]{inputenc}
+\usepackage{cancel, comment}
+\usepackage[left=2cm,top=1.5cm,right=2cm, bottom=1.5cm,letterpaper, includeheadfoot]{geometry}
+\usepackage{amssymb, amsmath, amsthm, mathtools}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	linkcolor={red!50!black},
+	citecolor={blue!50!black},
+	urlcolor={blue!80!black}
+}
+
+\usepackage[prependcaption,textsize=tiny,,textwidth=5cm]{todonotes}
+\newcommand{\js}[1]{\todo[inline,linecolor=red,backgroundcolor=red!25,bordercolor=red]{jsoto. #1}}
+
+\usepackage{paralist}
+\usepackage{contour}
+\usepackage{algorithm, algorithmic}
+
+%%%Definiciones
+\newcommand{\dis}{\displaystyle}
+\newcommand{\IV}[1]{[\![#1]\!]} %Iverson
+
+\newcommand{\E}{\mathcal{E}}
+\newcommand{\V}{\mathcal{V}}
+
+\def\multiset#1#2{\ensuremath{
+		\mathchoice{\left(\kern-.3em\left(\genfrac{}{}{0pt}{}{#1}{#2}\right)\kern-.3em\right)}}
+	{\big(\!\binom{#1}{#2}\!\big)}{\big(\!\binom{#1}{#2}\!\big)}{\big(\!\binom{#1}{#2}\!\big)}}
+\DeclareRobustCommand{\sbinom}{\genfrac{[}{]}{0pt}{}}
+\DeclareRobustCommand{\lbinom}{\genfrac{\{}{\}}{0pt}{}}
+\newcommand{\fallfac}[2]{{#1}^{\underline{#2}}}
+\newcommand{\risefac}[2]{{#1}^{\overline{#2}}}
+
+\newcommand{\defn}[1]{\textit{\textsc{[Def]\,}}\textbf{#1}\\[5pt]\indent}
+\newcommand{\nin}{\noindent}
+% macros
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\FF}{\mathbb F}
+\newcommand{\CC}{\mathbb C}
+\newcommand{\EE}{\mathbb E}
+\DeclareMathOperator{\COM}{COM}
+\DeclareMathOperator{\com}{com}
+\DeclareMathOperator{\act}{act}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\DFJ}{DFJ}
+\DeclareMathOperator{\EUL}{EUL}
+\DeclareMathOperator{\WCOM}{WCOM}
+\DeclareMathOperator{\wcom}{wcom}
+\newcommand{\sop}{\operatorname{sop}}
+\newcommand{\rango}{\operatorname{rango}}
+\newcommand{\aff}{\operatorname{aff}}
+
+%Teoremas, Lemas, etc.
+
+\theoremstyle{plain}
+\newtheorem{teo}{Teorema}
+\newtheorem{lem}[teo]{Lema}
+\newtheorem{prop}{Proposici\'on}
+\newtheorem{cor}[teo]{Corolario}
+\newtheorem{cor*}{Corolario}
+\theoremstyle{definition}
+\newtheorem{defi}[teo]{Definici\'on}
+\newtheorem{eje}[teo]{Ejemplo}
+\newtheorem{ejeres}[teo]{Ejercicios resueltos}
+\newtheorem{ejere}[teo]{Ejercicio resuelto}
+\newtheorem{ejes}[teo]{Ejemplos}
+\newtheorem{ejer}[teo]{Ejercicio}
+\newtheorem{prob}[teo]{Problema}
+\newtheorem{obs}[teo]{Observaci\'on}
+\newtheoremstyle{Azul}
+{\topsep}   % ABOVESPACE
+{\topsep}   % BELOWSPACE
+{\color{blue}}  % BODYFONT
+{0pt}       % INDENT (empty value is the same as 0pt)
+{\color{blue}\bfseries} % HEADFONT
+{.}         % HEADPUNCT
+{5pt plus 1pt minus 1pt}  % HEADSPACE. `plain` default: {5pt plus 1pt minus 1pt}
+{}          % CUSTOM-HEAD-SPEC
+\theoremstyle{Azul}
+\newtheorem*{comm}{Comentario}
+\newcommand{\commento}[1]{\noindent{\color{blue}#1}\vspace*{-3pt}}
+
+% fin macros
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancypagestyle{plain}{%
+\fancyhf{}
+\lhead{\footnotesize\itshape\bfseries\rightmark}
+\rhead{\footnotesize\itshape\bfseries\leftmark}
+}
+
+% END_FOLD
+\begin{document}
+% BEGIN_FOLD encabezado
+\setlength{\headheight}{14pt}
+\fancyhead[L]{Facultad de Ciencias F\'isicas y Matem\'aticas}
+\fancyhead[R]{Universidad de Chile}
+\vspace*{-1.2 cm}
+\begin{minipage}{0.6\textwidth}
+	\begin{flushleft}
+		\hspace*{-0.5cm}\textbf{MA4702. Programación Lineal Mixta 2020.}\\
+		\hspace*{-0.5cm}\textbf{Profesor: José Soto.}\\
+	\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.36\textwidth}
+	\begin{flushright}
+		\includegraphics[scale=0.15]{fcfm.pdf}
+	\end{flushright}
+\end{minipage}
+\bigskip
+%Fin encabezado
+
+% END_FOLD
+\newif\ifsol
+\soltrue
+\solfalse
+
+\begin{center}
+  \LARGE \textbf{Tarea 2}.\\
+\end{center}
+\bigskip
+
+\noindent\textbf{Fecha entrega}: Lunes 01 de Junio, 23:59. Por u-cursos.\\
+
+\subsection*{Definiciones para esta tarea.} 
+
+Sea $n\geq 2$ y $K_{n,n}=(V,E)$ el grafo bipartito simple y completo con $n$ vértices por lado. Es decir, $V$ se particiona en $L$ y $R$, y todas las aristas con un vértice en $L$ y uno en $R$ están presentes en $E$. $E$ se identifica con $L\times R$.
+
+Sean $a\in \RR_+^L$, $b\in \RR_+^R$ vectores \textbf{estrictamente positivos} de capacidades en los vértices, con $a(L)=\sum_{v\in L}a_v=\sum_{v\in R}b_v=b(R)$. Llamamos polítopo de $(a,b)$-matching fraccional al conjunto
+$$M_n=\{x\in \RR^E\colon x(\delta(v))\leq a_v, \forall v\in L;\; x(\delta(v))\leq b_v, \forall v\in R;\; x_e\geq 0, \forall e\in E\}$$
+y llamamos $(a,b)$-matching fraccional a sus elementos.
+Notamos que si $A\in \RR^{V\times E}$ es la matriz de vértice-arista incidencia de $K_{n,n}$, entonces $M_n=\{x\in \RR^E_+\colon Ax\leq b\}$. Note que $A$ tiene $2n$ filas y $n^2$ columnas.
+
+Decimos además que un $(a,b)$-matching fraccional $x$ es perfecto si $x(E)=a(L)=b(R)$. El polítopo de $(a,b)$-transporte es el conjunto $$T_n=\{x\in M_n\colon x(E)=a(L)\}$$ de todos los $(a,b)$-matchings fraccionales perfectos. Es muy simple probar que $T_n\neq \emptyset$. Por ejemplo, podemos usar el siguiente algoritmo glotón para encontrar $x\in T_n$.
+
+\begin{algorithm} % enter the algorithm environment
+\floatname{algorithm}{Algoritmo}
+\caption{Calcula $x\in T_n$} % give the algorithm a caption
+%\label{alg1} % and a label for \ref{} commands later in the document
+\begin{algorithmic} % enter the algorithmic environment
+    %\REQUIRE $n \geq 0 \vee x \neq 0$
+    %\ENSURE $y =` x^n$
+    \STATE $x\gets 0\in \RR^E$
+    \WHILE{$x(E)< a(L)$}
+        \STATE Elegir $\ell \in L, r\in R$ tal que $x(\delta(\ell))<a_{\ell}$ y $x(\delta(r))<b_{r}$,\\
+        \STATE $x_{\ell, r}\gets \min(a_{\ell}-x(\delta(\ell)), b_{r}-x(\delta(r)))$
+    \ENDWHILE   
+    \RETURN $x$
+    \end{algorithmic}
+\end{algorithm}
+\newpage
+\noindent \textbf{Ejercicios:}
+\begin{enumerate}
+\item[(b)] [8 puntos] Demuestre que el Algoritmo 1 es correcto. En específico, solo debe demostrar que (i) si al principio de una iteración, $x(E)< a(L)$ entonces existe el $\ell \in L, r\in R$ buscados por el algoritmo, (ii) muestre que el algoritmo termina en una cantidad finita de iteraciones y (iii) que cuando termina, devuelve lo buscado.
+
+\textbf{Solución:}\\
+Llamemos nivel de un vértice $v$ a $x(\delta(v))$. Decimos que un vértice $\ell\in L$ (resp., $r\in R$) está ajustado si su nivel es $a_\ell$ (resp., si su nivel es $b_r$). 
+
+Probemos por inducción la parte (i) pedida y además las siguientes propiedades: $x\in M_n$; el valor de cada arista solo puede subir (por lo tanto los niveles solo pueden subir, y los vértices no se pueden desajustar); y en cada etapa se ajusta al menos un vértice. 
+
+Todo lo anterior es cierto al principio del algoritmo. Consideremos entonces a iteración $j$, sea $x^j$ el valor de $x$ al principio de dicha iteración y $x^{j+1}$ el valor al final. Supongamos también que $x^{j}(E)<a(L)$. Si todos los vértices de $L$ fueran ajustados, tendríamos  $x^j(E)=\sum_{\ell\in L}x^{j}(\delta(\ell))=\sum_{\ell\in L}a_\ell = a(L)$, luego debe haber un $\ell'\in L$ no ajustado, por lo tanto (como $x^{j}\in M_n$) se debe tener que $x^j(\delta(\ell'))<a_\ell$. De forma análoga se prueba que existe $r'$ tal que  $x^{j}(\delta(r))<b_\ell$. (En particular, se prueba (i)). Sean ahora $\ell'\in L, r'\in R$ los vértices elegidos por el algoritmo en esta iteración y $e=(\ell',r')$ la única arista que cambia su valor. Como $e$ no es incidente a vértices ajustados, tenemos $x^j_e=0$, y luego $x^{j+1}_{e}= \min(a_{\ell'}-x^{j}(\delta(\ell')), b_{r'}-x^{j}(r')) >0$. En palabras, la única arista que cambia de valor, lo hace aumentando su valor. Finalmente, se tiene:
+\begin{align*}
+x^{j+1}(\delta(\ell'))&=x^j(\delta(\ell'))-x^{j}_e+x^{j+1}_e\leq x^{j}(\delta(\ell'))-0+a_{\ell'}-x^{j}(\delta(\ell')=a_{\ell'}\\
+x^{j+1}(\delta(r'))&=x^j(\delta(r'))-x^{j}_e+x^{j+1}_e\leq x^{j}(\delta(r'))-0+b_{r'}-x^{j}(\delta(r')=b_{r'}
+\end{align*}
+y en alguna de las dos líneas hay igualdad. Todo esto implica que los niveles de los vértices se mantienen bajo sus cotas (i.e., $x^i\in M_n$) y que al menos uno de $\ell'$ o $r'$ se ajusta. Finalmente las aristas $f$ que  no son incidentes a vértices ajustados al final de la iteración, tampoco lo eran al principio, y luego $x^{j+1}_f=x^j_f=0$. Esto concluye la demostración de todas las propiedades.
+
+En la demostración arriba probamos (i). La propiedad (ii) se tiene pues en cada iteración al menos un vértice se ajusta, y por lo tanto no pueden haber más de $|L|+|R|$ iteraciones antes que $x(E)\geq a(L)$, y la parte (iii) es directa pues apenas $x(E)\geq a(L)$, el hecho que $x\in M_n$ garantiza que $x(E)=a(L)$ y luego $x\in T_n$.
+
+\item[(c)]  [4 puntos] Concluya que para todo $(\ell,r)\in E$ existe $x\in T_n$ con $x_{\ell,r}>0$.
+
+\textbf{Solución:}
+
+Basta notar que la arista elegida por el algoritmo en la primera iteración es arbitraria (esto es pues para todo $(\ell,r)$, $0<a_\ell$ y $0<b_r$). Luego si obligamos al algoritmo a elegir la arista $(\ell,r)$ tendremos que al final de la primera iteración $x_{\ell,r}=\min(a_\ell,b_r)>0$ y luego al final del algoritmo, $x_{\ell,r}>0$.
+
+\item[(d)] [8 puntos] Demuestre que $\dim(M_n)=|E|=n^2$.
+
+\textbf{Solución:}
+
+Demostrar que $\dim(M_n)=|E|=n^{2}$ equivale a demostrar que el poliedro es de dimensión completa, para esto basta demostrar que $\exists x\in M_{n}, \; \act(x)=\emptyset$. Sea $\epsilon > 0$ suficientemente pequeño, por ejemplo $\epsilon<\min\{a_{1}, \ldots, a_{L}, b_{1}, \ldots, b_{R}\}$, como todos los coeficientes son estrictamente positivos este coeficiente existe, luego, sea $x_{l,r}=\frac{\epsilon}{n} \;\forall l \in L, r \in R$, luego se tiene que $x_{l,r}>0 \;\forall (l,r) \in E$ y que $x(\delta(l))=\sum_{r\in R}x_{l,r}=\epsilon<a_{l} \; \forall l\in L \wedge x(\delta(r))=\sum_{l\in L}x_{l,r}=\epsilon<b_{r} \; \forall r\in R$, se concluye que $x$ no tienen ninguna restricción activa y pertenece a $M_n$, por tanto, $M_{n}$ tiene dimensión completa.
+
+Alternativamente, tome $\epsilon<\min\{a_{1}, \ldots, a_{L}, b_{1}, \ldots, b_{R}\}$, y llame para cada $e\in E$, $\chi^e$ al vector canónico que vale 1 en la coordenada $e$. Es fácil ver que todos los vectores de $B=\{\epsilon \chi^e\colon e\in E\}$ están en $M_n$ y son linealmente independientes y luego $B\cup \{0\}$ es una familia de $|E|+1$ vectores afínmente independiente, lo que prueba que $M_n$ tiene dimensión $|E|$.
+
+\item[(e)] [4 puntos] Pruebe que para todo $e\in E$, la desigualdad válida $x_e\geq 0$ induce una faceta de $M_n$.
+
+\textbf{Solución:}
+
+Sea $F_{e} = \{x\in M_{n}|x_{e}=0\}$, luego $F_{e}$ es faceta si la restricción $e$ es irredundante, en efecto, si eliminamos la restricción podemos escoger un $x$ tal que $x_{e}=-1$ y $x_{l,r}=\frac{\epsilon}{n} \; \forall (l,r)\in E\setminus\{e\}$, con el mismo $\epsilon$ de la parte anterior, luego se tiene que $x$ satisface todas las restricciones de $M_{n}$ con excepción de $x_e\geq 0$, por ende, la región factible cambia al eliminar la restricción, se concluye que $e$ es irredundante.
+
+Alternativamente, sea $C=[A,I]$ la matriz de todas las restricciones de $M_{n}$ ($A$ las de capacacidad y $I$ las de no negatividad), como una faceta cumple $\dim(F)=\dim(P)-1$ y la dimensión de una cara de $M_{n}$ cumple $\dim(F)=|E|-\rango(C_{\act(F)})$, solo necesitamos demostrar que el $\rango(C_{\act(F_{e})})=\rango(C_{\act(P)})+1=1$, esto puede demostrarse fácilmente si existe un $x\in F_{e}$ tal que $\act(x)=\act(P)\cup\{e\}=\{e\}$, basta con tomar un $x$ tal que $x_{e}=0$ y $x_{l,r}=\frac{\epsilon}{n} \;\forall (l,r) \in E \setminus \{e\}$.
+
+\item[(f)] [8 puntos] Demuestre que $T_n$ es una cara de $M_n$, que $\text{aff}(T_n)=\{x\in \RR^E\colon Ax=b\}$ y que $T_n=\{x\in \RR^E_+, Ax=b\}$
+
+\textbf{Solución:}
+
+ $T_{n}$ es un cara de $M_n$ si la desigualdad $x(E)\leq a(L)$ es valida para $M_n$, en efecto, $x(E) = \sum_{l\in L}x(\delta(l))\leq \sum_{l\in L}a_{l}=a(L)$ la segunda desigualdad viene de $x(\delta(l))\leq a_{l} \; \forall l \in L$.
+Por otro lado, $x(E)=a(L)$ ssi $x(\delta(l))=a_{l} \forall l \in L \wedge x(\delta(r))=b_{r} \forall r \in R$, luego $T_n = \{x\in\mathbb{R}^{E}_{+}|x(\delta(l))=a_{l} \; \forall l \in L, x(\delta(r))=b_{r} \; \forall r \in R\} = \{x\in\mathbb{R}^{E}_{+}|Ax=b\}$. Para concluir que $\text{aff}(T_n)=\{x\in \RR^E\colon Ax=b\}$ solo basta probar que las desigualdades $x_e\geq 0$ no son activas en $T_n$. Esto sale de la parte (c). \\
+
+\item[(g)] [12 puntos] Pruebe que $\dim(T_n)=(n-1)^2$. \textbf{Indicación:} Calcule exactamente el rango de $A$.
+
+\textbf{Solución:}
+
+La matriz $A$ de $2n$ filas y $n^{2}$ columnas y el vector $b$ que se mencionan en el enunciado para describir $M_{n}$ se pueden escribir de la siguiente forma:
+ \[
+A =
+ \begin{bmatrix}
+	1        &\dots     &1       &0     	&\dots     &0        &\dots     &0     	&\dots     &0       \\
+	0        &\dots     &0       &1     	&\dots     &1        &\dots     &0     	&\dots     &0       \\
+	\vdots   &\vdots    &\vdots  &\vdots	&\dots     &\vdots   &\vdots    &\vdots & \vdots   &\vdots  \\   
+	0        &\dots     &0       &0    		&\dots     &0        &\dots     &1      &\dots     &1       \\
+	1        &\dots     &0       &1         &\dots     &0        &\dots		&1      &\dots 	   &0		\\
+	\vdots 	 &\ddots    &\vdots  &\vdots    &\ddots    &\vdots    &\vdots	&\vdots &\ddots    &\vdots  \\
+	0        &\dots     &1       &0         &\dots     &1        &\dots		&0      &\dots     &1 		\\
+\end{bmatrix}
+=
+\begin{bmatrix}
+	\vec{1}   	&  			&		\\
+			  	&\ddots 	&		\\
+	   			&			&\vec{1}    \\
+	I         	&\dots     	&I			\\
+\end{bmatrix},
+b = 
+\begin{bmatrix}
+	a_{1}\\
+	\vdots\\
+	a_{L}\\
+	b_{1}\\
+	\vdots\\
+	b_{R}
+\end{bmatrix},
+\]
+donde $\vec{1}$ es un vector fila de dimensión $n$, y $I$ es una matriz identidad de $n$ filas y $n$ columnas, las columnas de $A$ representan los nodos $R$, con ciclicidad cada $n$ columnas, en cambio las $n$ primeras filas hacen referencia a los nodos de $L$ y las $n$ últimas a los nodos de $R$.
+
+Se tiene que $\dim(T_n) = \dim(\aff(T_n)) = n^{2}-\rango(A)$, por lo que basta demostrar que $\rango(A)=2n-1$, ya que $n^{2}-2n+1 = (n-1)^{2}$. Como $A$ es una matriz de $2n$ filas y $n^{2}$ columnas su rango es a lo más $2n$, por ende, probaremos primero que su rango no es $2n$ y luego que si eliminamos un vector fila la matriz resultante tiene $2n-1$ filas l.i.  
+
+Para demostrar que el rango de $A$ no es $2n$ basta considerar la siguiente combinación lineal $\sum_{i=1}^{n}a_{i}-\sum_{i=n+1}^{2n}a_{i} = 1-1=0$ (sumar las primeras $n$ filas y restar las últimas $n$), como existe una combinación lineal no nula de las filas de $A$ que da $0$ se tiene que las $2n$ filas no son l.i.
+
+Para demostrar que el rango de $A=2n-1$ eliminaremos la primera fila de la matriz, luego sea $x=\sum_{i=1}^{2n-1}\lambda_{i}a_{i+1}$ la combinación lineal del resto de fila, demostraremos que para que $x=0$ se debe cumplir $\lambda=0$, notar que:
+\begin{align*}
+	& x_{1}  = \lambda_{n}, x_{2}=\lambda_{n+1}, \ldots x_{n} = \lambda_{2n-1}\\
+	& x_{n+1} = \lambda_{1}+\lambda_{n}, x_{n+2} = \lambda_{1}+\lambda_{n+1}, \ldots x_{2n} = \lambda_{1}+\lambda_{2n-1}\\
+	& \vdots\\
+	&x_{n^{2}-n+1} =\lambda_{n-1}+\lambda_{n}, x_{n^{2}-n} =\lambda_{n-1}+\lambda_{n+1}, \ldots, x_{n^{2}}=\lambda_{n-1}+\lambda_{2n-1},
+\end{align*}
+luego $x_{1}=\ldots=x_{n}=0$ si $\lambda_{n}=\ldots=\lambda_{2n-1}=0$, luego $x_{n+1}= \ldots = x_{2n} = \lambda_{1}=0$ si $\lambda_{1}=0$, $\ldots$, $x_{n^{2}-n+1}=\ldots = x_{n^{2}}=\lambda_{n-1}$ son 0 si $\lambda_{n-1}=0$.
+
+\item[(h)] [4 puntos] Sea $x\in T_n$. Argumente que $x$ es vértice de $T_n$ si y solo si no existe $y\in \RR^E$, $y\neq 0$, y $\delta\in \RR, \delta>0$ tal que  $x+\varepsilon y\in T_n$ para todo $\varepsilon\in \RR$ con $|\varepsilon|<\delta$.
+
+\textbf{Solución:}
+
+($\Rightarrow$) Sea $x$ vertice y asumamos que existe $y$ que garantiza (h), además sea $u=x+\varepsilon y$ y $v=x-\varepsilon y$, luego se cumple que $u/2+v/2=x$, es decir, $x$ se puede escribir como una combinación convexa de $u, v \in T_{n}\setminus\{x\}$, lo que es una contradicción ya que $x$ es vertice, por tanto, no existe el $y$ que garantiza (h).
+
+($\Leftarrow$) Demostraremos que si $x$ no es un vertice entonces existe $y$ garantiza (h). Como $x$ no es vertice existen $u,v \in T_{n}\setminus\{x\}, \lambda\in(0,1)$ tal que $x=\lambda u +(1-\lambda) v$, es decir, $x$ esta en el segmento que une $u$ con $v$, sea $y=u-v$, luego $x+\varepsilon y=\lambda u +(1-\lambda) v+\epsilon(u-v)=(\lambda+\varepsilon)u+(1-\lambda-\varepsilon)v$, para que la expresión sea una combinación convexa y así se garantice la pertenencia al poliedro se debe cumplir que $\lambda+\varepsilon\in(0,1)$, para que esta condición se cumpla $\varepsilon$ debe satisfacer $|\varepsilon|<\min\{\lambda, 1-\lambda\}=\delta$.
+
+\item[(i)] [12 puntos] Sea $x\in T_n$. Demuestre que $x$ es un vértice de $T_n$ si y solo si su soporte $S_x=\{(i,j)\colon x_{i,j}>0\}$ es un bosque (un grafo sin ciclos) en $K_{n,n}$. Puede usar si lo desea la siguiente ruta:\\
+(i.1) Pruebe que si $S_x$ tiene un ciclo $C$, entonces puede usar este ciclo para construir el vector $y$ de (h), y concluya una dirección.\\
+(i.2) Pruebe que si $x$ no es vértice puede usar el vector $y$ que garantiza $(h)$ para encontrar un ciclo $C$ en $S_x$, y concluir la otra dirección.
+\textbf{Solución}
+
+Supongamos que $S_x$ tiene un ciclo (y como el grafo es bipartito debe tener largo par), $C=\{e_1,\dots, e_{2n}\}$ donde las aristas se enumeran de acuerdo al ciclo. Llame $y\in \RR^E$ al vector tal que $y(e_i)=1$ si $i$ es par, $y(e_i)=-1$ si $i$ es impar, e $y(e)=0$ si $e$ no está en el ciclo. Como los signos alternan $y(\delta(v))=0$ para todo $v\in V$.
+Sea $\delta=\min_{e\in S_x}x_e$ el menor valor positivo del soporte de $x$. Es fácil ver que para todo $\varepsilon$ con $|\varepsilon|<\delta$ se tiene que $x+\varepsilon y\geq 0$. Por otro lado para todo $v\in V$, $(x+\varepsilon y)(\delta(v))= x(\delta(v))+\varepsilon y(\delta(v))=x(\delta(v))$. En particular $(x+\varepsilon y)(\delta(\ell))=a_\ell$ para todo $\ell\in L$ y $(x+\varepsilon y)(\delta(r))=b_r$ para todo $r\in R$ por lo que $(x+\varepsilon y)\in T_n$. Esto quiere decir que $y$ satisface las condiciones de la parte $h$ y por lo tanto $x$ no es vértice.
+
+Para probar la otra dirección, supongamos que $x$ no es vértice y luego existe un vector $y$ y un escalar $\delta$ tal que $(x+\varepsilon y) \in T_n$ para todo $\varepsilon$ con $|\varepsilon|<\delta$. Como esto es cierto para $\varepsilon$ positivo o negativo, concluimos que si $x_e=0$ entonces $y_e=0$ (de otra forma $(x+\varepsilon y)_e$ podría ser negativo), sigue que $S_y$ está incluido en $S_x$. Note que para todo $\ell\in L$, $y(\delta(\ell))=(x+\varepsilon y)(\delta(\ell))-\varepsilon(\delta(\ell))=a_\ell - a_\ell =0$. Similarmente para $r\in R$, $y(\delta(r))=b_r-b_r=0$. Es decir, para todo $v\in L\cup R$, $y(\delta(v))=0$. Esto implica que el grado de $v$ en el grafo $(L\cup R, S_y)$ no puede ser 1 (pues si $\delta_{S_v}(v)=\{f\}$, entonces $0=y(\delta(v))=\sum_{e\in \delta_{S_y}(v)}y_e= y_f$). Pero entonces $S_y$ no tiene vértices de grado 1.  Como $S_y\neq \emptyset$, debemos tener que $S_y$ no es un bosque (la única forma que un bosque no tenga hojas, es que no tenga aristas) y luego $S_y$ debe tener un ciclo. Como $S_y\subseteq S_x$ tenemos que $S_x$ tiene un ciclo.
+\end{enumerate}
+
+\end{document}

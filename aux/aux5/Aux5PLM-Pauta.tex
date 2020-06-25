@@ -1,0 +1,129 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[activeacute,spanish,es-nodecimaldot]{babel}
+\usepackage[left=1.5cm,top=1.5cm,right=1.5cm, bottom=1.5cm,letterpaper, includeheadfoot]{geometry}
+\usepackage[parfill]{parskip}
+
+\usepackage{amssymb, amsmath, amsthm}
+\usepackage{graphicx}
+\usepackage{lmodern,url}
+\usepackage{paralist} %util para listas compactas
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancypagestyle{plain}{%
+\fancyhf{}
+\lhead{\footnotesize\itshape\bfseries\rightmark}
+\rhead{\footnotesize\itshape\bfseries\leftmark}
+}
+
+
+% macros
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\CC}{\mathbb C}
+
+%Teoremas, Lemas, etc.
+\theoremstyle{plain}
+\newtheorem{teo}{Teorema}
+\newtheorem{lem}{Lema}
+\newtheorem{prop}{Proposición}
+\newtheorem{cor}{Corolario}
+
+\theoremstyle{definition}
+\newtheorem{defi}{Definición}
+\newtheorem{eje}{Ejemplo}
+\newtheorem{ejer}{Ejercicio}
+% fin macros
+
+%%%%% NOMBRE AUXILIARES Y FECHA
+\newcommand{\sca}{Diego Garrido}
+\newcommand{\fecha}{25 de junio  de 2020}
+
+%%%%%%%%%%%%%%%%%%
+
+%Macros para este documento
+\newcommand{\cin}{\operatorname{cint}}
+
+
+\begin{document}
+%Encabezado
+\fancyhead[L]{Facultad de Ciencias Físicas y Matemáticas}
+\fancyhead[R]{Universidad de Chile}
+\vspace*{-1.2 cm}
+\begin{minipage}{0.6\textwidth}
+\begin{flushleft}
+\hspace*{-0.5cm}\textbf{MA4702. Programación Lineal Mixta. 2020.}\\
+\hspace*{-0.5cm}\textbf{Profesor:} José Soto\\
+\hspace*{-0.5cm}\textbf{Auxiliar:} \sca\\
+\hspace*{-0.5cm}\textbf{Fecha:} \fecha.
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.36\textwidth}
+\begin{flushright}
+\includegraphics[scale=0.15]{fcfm}
+\end{flushright}
+\end{minipage}
+\bigskip
+%Fin encabezado
+
+%Titulo Auxiliar
+\begin{center}
+\LARGE\textbf{Total Unimodularidad (TU)}
+\end{center}
+
+
+\section{Teorema de Braum-Trotter}
+
+Diremos que un poliedro $P$ tiene la propiedad de descomposición entera si $\forall k \in \mathbb{Z}^{+}\setminus\{0\}$ se tiene que todo vector integral del conjunto $kP$ es suma de $k$ vectores integrales de $P$. Sea $P=\{x\in\mathbb{R}^{n}: Ax\leq b, x\geq 0\}$ un poliedro racional.
+\begin{itemize}
+    \item[a)] Deuestra que si $P$ tiene la propiedad de descomposición entera, entonces $P$ es un poliedro entero.
+    
+    \textbf{Solución:}\\
+    Basta con demostrar que los vértices de $P$ son enteros para demostrar lo pedido. Por contradicción, sea $x$ un vertice no entero; como es racional, si $k$ es el mínimo común múltiplo de las coordenadas de $x$, se sigue que $kx$ es entero, y $kx\in kP$. Luego, existen $x_{1},\ldots, x_{k}\in P$ integrales tal que:
+    \begin{equation*}
+        x=\sum_{i=1}^{k}\frac{1}{k}x_{i}
+    \end{equation*}
+    Lo que contradice que $x$ es punto extremo de $P$.
+    \item[b)] Demuestre que si $A$ es total unimodular y $b$ es integral, entonces $P$ tiene la propiedad de descomposición entera.
+    
+    \textbf{Solución:}\\
+    Lo probaremos por inducción en $k$. El caso base es obvio ($k=1$). Sea $y\in kP\cup\mathbb{Z}^{n}$, es decir, $y$ integral tal que $k^{-1}y\geq 0, k^{-1}Ay\leq b$. Consideremos el poliedro:
+
+    \begin{equation*}
+    Q = \{x\in \mathbb{R}^{n}:0\leq x \leq y, Ax\leq b, Ax\leq Ay-kb+b\} 
+    \end{equation*}
+
+    Luego como $A$ es $TU$, $Q$ es entero, además es no vacío ya que $k^{-1}y\in Q$ y es un politopo ya que $x$ está acotado, por ende $Q$ es puntiagudo. Sea $x_{k}$ vértice de $Q$ (notar que es entero ya que $Q$ es entero), notar que un vertice cumple $Ax_{k}=b$, tomando $\bar{y}=y-x_{k}$ se cumple $\bar{y}\geq0$ y $A\bar{y}\leq(k-1)b$. Por hipótesis inductiva existen $x_{1},\ldots, x_{k-1}$ tales que $\bar{y}=x_{1}+\ldots+x_{k-1}$ y luego $y=x_{1}+\ldots x_{k}$.
+
+    \item[c)] Concluya quue $P$ tiene la propiedad de descomposición entera para todo $b$ integral si y sólo si $A$ es total unimodular.
+    
+    \textbf{Solución:}\\
+    ($\Longrightarrow$) Por parte (a) se tiene que para todo $b$ entero $P$ es entero, lo que es equivalente a que $A$ es TU.\\
+    ($\Longleftarrow$) Directo por parte (b).
+
+\end{itemize}
+
+\section{Propiedades de una Matriz TU}
+Prueba que si $A\in\{-1,0,1\}^{m\times n}$ es unimodular, entonces:
+\begin{itemize}
+    \item[a)] Cada submatriz cuadrada invertible de $A$ tiene una fila con un número impar de coordenadas no nulas.
+    
+    \textbf{Solución:}\\
+    Sea $B\in \{-1,0,1\}^{k\times k}$ una submatriz invertible de $A$, por propiedad de matrices TU sabemos que $B$ es TU, por ende podemos usar el teorema de Ghouila-Houri, el cual dice que para todo subconjunto $I\subset[k]$ de columnas de $B$ se puede particionar en dos $I_{+}$ y $I-{-}$ de modo tal que:
+    \begin{equation*}
+        \sum_{i\in I_{+}}B_{i}- \sum_{i\in I_{-}}B_{i} \in \{-1, 0, 1\}^{k}
+    \end{equation*}
+    Ahora supongamos que la cantidad de componentes no nulas de cada fila de $B$ es par y tomemos $I=[k]$, luego la suma por filas de $B$ es par, por lo que existe un $x\in{-1,1}^{k}$ con $x_{i} = 1 \;\forall i \in I_{+}$ y $x_{i} = -1 \;\forall i \in I_{-}$ que cumple $Bx=0$ (ya que la suma sobre $I_{+}$ tiene la misma paridad que sobre $I_{-}$, puesto que la suma de ambas es par) y como $x\neq0$ se tiene que $B$ es no invertible, lo que es una contradicción.
+    \item[b)] Si $B$ es submatriz cuadrada de $A$ tal que la suma sobre las filas y sobre las columnas de $B$ es par, entonces la suma sobre todo $B$ es divisible por 4.
+    
+    \textbf{Solución:}\\
+    Por la parte anterior sabemos que las columnas de $B$ se pueden particionar en $I_{+}$ y $I_{-}$ cuya suma tiene la misma paridad y por Ghouila-Houri se tiene que la suma de las columnas de $B_{I_{+}}$ es igual a $B_{I_{-}}$, por tanto, $\sum_{i\in I}B_{i}=2\sum_{i\in I_{+}}B_{i}$, además como la suma sobre cada columna es par se tiene que $\sum_{i\in I}\sum_{j\in I}B_{j,i} = 2\sum_{i\in I_{+}}2 z_{i}=4\sum_{i\in I_{+}}z_{i}$, donde $z_{i}\in\mathbb{Z} \;\forall i \in I_{+}$.
+      
+\end{itemize}
+\textbf{Hint: Si A es TU, entonces todo submatriz B de A es TU. Use el teorema de Ghouila-Houri.}
+
+
+\end{document}

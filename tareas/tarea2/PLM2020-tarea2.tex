@@ -1,0 +1,202 @@
+% BEGIN_FOLD preamble
+
+\documentclass{article}
+\usepackage[activeacute,spanish]{babel}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{url,multirow}
+\usepackage[centertableaux,smalltableaux]{ytableau}
+\usepackage[utf8]{inputenc}
+\usepackage{cancel, comment}
+\usepackage[left=2cm,top=1.5cm,right=2cm, bottom=1.5cm,letterpaper, includeheadfoot]{geometry}
+\usepackage{amssymb, amsmath, amsthm, mathtools}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	linkcolor={red!50!black},
+	citecolor={blue!50!black},
+	urlcolor={blue!80!black}
+}
+
+\usepackage[prependcaption,textsize=tiny,,textwidth=5cm]{todonotes}
+\newcommand{\js}[1]{\todo[inline,linecolor=red,backgroundcolor=red!25,bordercolor=red]{jsoto. #1}}
+
+\usepackage{paralist}
+\usepackage{contour}
+\usepackage{algorithm, algorithmic}
+
+%%%Definiciones
+\newcommand{\dis}{\displaystyle}
+\newcommand{\IV}[1]{[\![#1]\!]} %Iverson
+
+\newcommand{\E}{\mathcal{E}}
+\newcommand{\V}{\mathcal{V}}
+
+\def\multiset#1#2{\ensuremath{
+		\mathchoice{\left(\kern-.3em\left(\genfrac{}{}{0pt}{}{#1}{#2}\right)\kern-.3em\right)}}
+	{\big(\!\binom{#1}{#2}\!\big)}{\big(\!\binom{#1}{#2}\!\big)}{\big(\!\binom{#1}{#2}\!\big)}}
+\DeclareRobustCommand{\sbinom}{\genfrac{[}{]}{0pt}{}}
+\DeclareRobustCommand{\lbinom}{\genfrac{\{}{\}}{0pt}{}}
+\newcommand{\fallfac}[2]{{#1}^{\underline{#2}}}
+\newcommand{\risefac}[2]{{#1}^{\overline{#2}}}
+
+\newcommand{\defn}[1]{\textit{\textsc{[Def]\,}}\textbf{#1}\\[5pt]\indent}
+\newcommand{\nin}{\noindent}
+% macros
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\FF}{\mathbb F}
+\newcommand{\CC}{\mathbb C}
+\newcommand{\EE}{\mathbb E}
+\DeclareMathOperator{\COM}{COM}
+\DeclareMathOperator{\com}{com}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\DFJ}{DFJ}
+\DeclareMathOperator{\EUL}{EUL}
+\DeclareMathOperator{\WCOM}{WCOM}
+\DeclareMathOperator{\wcom}{wcom}
+\newcommand{\sop}{\operatorname{sop}}
+
+%Teoremas, Lemas, etc.
+
+\theoremstyle{plain}
+\newtheorem{teo}{Teorema}
+\newtheorem{lem}[teo]{Lema}
+\newtheorem{prop}{Proposici\'on}
+\newtheorem{cor}[teo]{Corolario}
+\newtheorem{cor*}{Corolario}
+\theoremstyle{definition}
+\newtheorem{defi}[teo]{Definici\'on}
+\newtheorem{eje}[teo]{Ejemplo}
+\newtheorem{ejeres}[teo]{Ejercicios resueltos}
+\newtheorem{ejere}[teo]{Ejercicio resuelto}
+\newtheorem{ejes}[teo]{Ejemplos}
+\newtheorem{ejer}[teo]{Ejercicio}
+\newtheorem{prob}[teo]{Problema}
+\newtheorem{obs}[teo]{Observaci\'on}
+\newtheoremstyle{Azul}
+{\topsep}   % ABOVESPACE
+{\topsep}   % BELOWSPACE
+{\color{blue}}  % BODYFONT
+{0pt}       % INDENT (empty value is the same as 0pt)
+{\color{blue}\bfseries} % HEADFONT
+{.}         % HEADPUNCT
+{5pt plus 1pt minus 1pt}  % HEADSPACE. `plain` default: {5pt plus 1pt minus 1pt}
+{}          % CUSTOM-HEAD-SPEC
+\theoremstyle{Azul}
+\newtheorem*{comm}{Comentario}
+\newcommand{\commento}[1]{\noindent{\color{blue}#1}\vspace*{-3pt}}
+
+% fin macros
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancypagestyle{plain}{%
+\fancyhf{}
+\lhead{\footnotesize\itshape\bfseries\rightmark}
+\rhead{\footnotesize\itshape\bfseries\leftmark}
+}
+
+% END_FOLD
+\begin{document}
+% BEGIN_FOLD encabezado
+\setlength{\headheight}{14pt}
+\fancyhead[L]{Facultad de Ciencias F\'isicas y Matem\'aticas}
+\fancyhead[R]{Universidad de Chile}
+\vspace*{-1.2 cm}
+\begin{minipage}{0.6\textwidth}
+	\begin{flushleft}
+		\hspace*{-0.5cm}\textbf{MA4702. Programación Lineal Mixta 2020.}\\
+		\hspace*{-0.5cm}\textbf{Profesor: José Soto.}\\
+	\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.36\textwidth}
+	\begin{flushright}
+		\includegraphics[scale=0.15]{fcfm.pdf}
+	\end{flushright}
+\end{minipage}
+\bigskip
+%Fin encabezado
+
+% END_FOLD
+\newif\ifsol
+\soltrue
+\solfalse
+
+\begin{center}
+  \LARGE \textbf{Tarea 2}.\\
+\end{center}
+\bigskip
+
+\noindent\textbf{Fecha entrega}: Lunes 01 de Junio, 23:59. Por u-cursos.\\
+\subsection*{Instrucciones:} 
+\begin{enumerate}
+    \item \textbf{Puntaje:} La tarea tiene un solo problema dividido en partes pequeñas relativamente independientes, que pueden usar partes anteriores. Tiene un puntaje total de 60 puntos.
+    \item \textbf{Extensión máxima}: Entregue su tarea en a lo más \textbf{6 planas}. Parte importante de su formación consiste en aprender a ser conciso(a) en sus argumentos. Se recomienda desarrollar un borrador y solo al final pasar su tarea resumida en limpio. 
+    \item \textbf{Formato:} La tarea debe entregarse en formato pdf, con fondo de un solo color (blanco de preferencia), letra legible en manuscrito y clara. (¡No se aceptarán documentos tipeados o generados por computador!, pero si tiene alguna manera de escribir en manuscrito directamente de manera digital lo puede hacer).
+    Si desarrolla su tarea en papel, entréguelo escaneados o en fotos de alta calidad, via ucursos.
+    \item \textbf{Tiempo de dedicación:} El tiempo estimado de \emph{desarrollo} de la tarea es de 2.5 horas de dedicación. Esto no considera el tiempo de estudio previo, el tiempo dedicado en asistir a cátedras y auxiliaree, ni el tiempo para \emph{ponerse al día}. Tendrá un plazo de 7 días para entregarlo. No espere hasta el último momento para escanear o fotografiar adecuadamente su tarea y cambiarla al formato solicitado (pdf). Entregue con suficiente anticipación a la hora límite.
+    \item \textbf{Revisión:} Se podrá descontar hasta 1 punto en la nota final por falta de formato o extensión.
+    \item \textbf{Declaración de honestidad:} Los ejercicios de la tarea se deben resolver de manera individual. El primer ejercicio consiste en entregar una breve declaración sobre este hecho. 
+    \end{enumerate}
+
+\subsection*{Definiciones para esta tarea.} 
+
+Sea $n\geq 2$ y $K_{n,n}=(V,E)$ el grafo bipartito simple y completo con $n$ vértices por lado. Es decir, $V$ se particiona en $L$ y $R$, y todas las aristas con un vértice en $L$ y uno en $R$ están presentes en $E$. $E$ se identifica con $L\times R$.
+
+Sean $a\in \RR_+^L$, $b\in \RR_+^R$ vectores \textbf{estrictamente positivos} de capacidades en los vértices, con $a(L)=\sum_{v\in L}a_v=\sum_{v\in R}b_v=b(R)$. Llamamos polítopo de $(a,b)$-matching fraccional al conjunto
+$$M_n=\{x\in \RR^E\colon x(\delta(v))\leq a_v, \forall v\in L;\; x(\delta(v))\leq b_v, \forall v\in R;\; x_e\geq 0, \forall e\in E\}$$
+y llamamos $(a,b)$-matching fraccional a sus elementos.
+Notamos que si $A\in \RR^{V\times E}$ es la matriz de vértice-arista incidencia de $K_{n,n}$, entonces $M_n=\{x\in \RR^E_+\colon Ax\leq b\}$. Note que $A$ tiene $2n$ filas y $n^2$ columnas.
+
+Decimos además que un $(a,b)$-matching fraccional $x$ es perfecto si $x(E)=a(L)=b(R)$. El polítopo de $(a,b)$-transporte es el conjunto $$T_n=\{x\in M_n\colon x(E)=a(L)\}$$ de todos los $(a,b)$-matchings fraccionales perfectos. Es muy simple probar que $T_n\neq \emptyset$. Por ejemplo, podemos usar el siguiente algoritmo glotón para encontrar $x\in T_n$.
+\newpage
+\begin{algorithm} % enter the algorithm environment
+\floatname{algorithm}{Algoritmo}
+\caption{Calcula $x\in T_n$} % give the algorithm a caption
+%\label{alg1} % and a label for \ref{} commands later in the document
+\begin{algorithmic} % enter the algorithmic environment
+    %\REQUIRE $n \geq 0 \vee x \neq 0$
+    %\ENSURE $y =` x^n$
+    \STATE $x\gets 0\in \RR^E$
+    \WHILE{$x(E)< a(L)$}
+        \STATE Elegir $\ell \in L, r\in R$ tal que $x(\delta(\ell))<a_{\ell}$ y $x(\delta(r))<b_{r}$,\\
+        \STATE $x_{\ell, r}\gets \min(a_{\ell}-x(\delta(\ell)), b_{r}-x(\delta(r)))$
+    \ENDWHILE   
+    \RETURN $x$
+    \end{algorithmic}
+\end{algorithm}
+
+\noindent \textbf{Ejercicios:}
+\begin{enumerate}[(a)]
+\item {} [0 puntos. Obligatorio] Copie en la primera página de su texto la siguiente declaración. Debe aceptarla y \textbf{firmarla} para que su tarea sea revisada.
+
+\begin{quote}
+    Declaro que la tarea adjunta es producto de mi propio trabajo y que ninguna parte de la misma ha sido copiada del trabajo producido por otro, de tareas o material de años anteriores, de libros o páginas web.
+    Esta tarea no fue producida por varios estudiantes trabajando en equipo.\\
+    
+    Nombre:\\
+    Firma:
+\end{quote}
+\item {} [8 puntos] Demuestre que el Algoritmo 1 es correcto. En específico, solo debe demostrar que (i) si al principio de una iteración, $x(E)< a(L)$ entonces existe el $\ell \in L, r\in R$ buscados por el algoritmo, (ii) muestre que el algoritmo termina en una cantidad finita de iteraciones y (iii) que cuando termina, devuelve lo buscado.
+\item {} [4 puntos] Concluya que para todo $(\ell,r)\in E$ existe $x\in T_n$ con $x_{\ell,r}>0$.
+\item {} [8 puntos] Demuestre que $\dim(M_n)=|E|=n^2$.
+\item {} [4 puntos] Pruebe que para todo $e\in E$, la desigualdad válida $x_e\geq 0$ induce una faceta de $M_n$.
+\item {} [8 puntos] Demuestre que $T_n$ es una cara de $M_n$, que $\text{aff}(T_n)=\{x\in \RR^E\colon Ax=b\}$ y que $T_n=\{x\in \RR^E_+, Ax=b\}$
+\item {} [12 puntos] Pruebe que $\dim(T_n)=(n-1)^2$. \textbf{Indicación:} Calcule exactamente el rango de $A$.
+\item {} [4 puntos] Sea $x\in T_n$. Argumente que $x$ es vértice de $T_n$ si y solo si no existe $y\in \RR^E$, $y\neq 0$, y $\delta\in \RR, \delta>0$ tal que  $x+\varepsilon y\in T_n$ para todo $\varepsilon\in \RR$ con $|\varepsilon|<\delta$.
+\item {} [12 puntos] Sea $x\in T_n$. Demuestre que $x$ es un vértice de $T_n$ si y solo si su soporte $S_x=\{(i,j)\colon x_{i,j}>0\}$ es un bosque (un grafo sin ciclos) en $K_{n,n}$. Puede usar si lo desea la siguiente ruta:\\
+(i.1) Pruebe que si $S_x$ tiene un ciclo $C$, entonces puede usar este ciclo para construir el vector $y$ de (h), y concluya una dirección.\\
+(i.2) Pruebe que si $x$ no es vértice puede usar el vector $y$ que garantiza $(h)$ para encontrar un ciclo $C$ en $S_x$, y concluir la otra dirección.
+\end{enumerate}
+
+
+
+
+	\end{document}
+	
+
+

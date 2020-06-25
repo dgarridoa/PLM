@@ -1,0 +1,96 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[activeacute,spanish,es-nodecimaldot]{babel}
+\usepackage[left=1.5cm,top=1.5cm,right=1.5cm, bottom=1.5cm,letterpaper, includeheadfoot]{geometry}
+\usepackage[parfill]{parskip}
+
+\usepackage{amssymb, amsmath, amsthm}
+\usepackage{graphicx}
+\usepackage{lmodern,url}
+\usepackage{paralist} %util para listas compactas
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancypagestyle{plain}{%
+\fancyhf{}
+\lhead{\footnotesize\itshape\bfseries\rightmark}
+\rhead{\footnotesize\itshape\bfseries\leftmark}
+}
+
+
+% macros
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\CC}{\mathbb C}
+
+%Teoremas, Lemas, etc.
+\theoremstyle{plain}
+\newtheorem{teo}{Teorema}
+\newtheorem{lem}{Lema}
+\newtheorem{prop}{Proposición}
+\newtheorem{cor}{Corolario}
+
+\theoremstyle{definition}
+\newtheorem{defi}{Definición}
+\newtheorem{eje}{Ejemplo}
+\newtheorem{ejer}{Ejercicio}
+% fin macros
+
+%%%%% NOMBRE AUXILIARES Y FECHA
+\newcommand{\sca}{Diego Garrido}
+\newcommand{\fecha}{25 de junio  de 2020}
+
+%%%%%%%%%%%%%%%%%%
+
+%Macros para este documento
+\newcommand{\cin}{\operatorname{cint}}
+
+
+\begin{document}
+%Encabezado
+\fancyhead[L]{Facultad de Ciencias Físicas y Matemáticas}
+\fancyhead[R]{Universidad de Chile}
+\vspace*{-1.2 cm}
+\begin{minipage}{0.6\textwidth}
+\begin{flushleft}
+\hspace*{-0.5cm}\textbf{MA4702. Programación Lineal Mixta. 2020.}\\
+\hspace*{-0.5cm}\textbf{Profesor:} José Soto\\
+\hspace*{-0.5cm}\textbf{Auxiliar:} \sca\\
+\hspace*{-0.5cm}\textbf{Fecha:} \fecha.
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.36\textwidth}
+\begin{flushright}
+\includegraphics[scale=0.15]{fcfm}
+\end{flushright}
+\end{minipage}
+\bigskip
+%Fin encabezado
+
+%Titulo Auxiliar
+\begin{center}
+\LARGE\textbf{Total Unimodularidad (TU)}
+\end{center}
+
+
+\section{Teorema de Braum-Trotter}
+
+Diremos que un poliedro $P$ tiene la propiedad de descomposición entera si $\forall k \in \mathbb{Z}^{+}\setminus\{0\}$ se tiene que todo vector integral del conjunto $kP$ es suma de $k$ vectores integrales de $P$. Sea $P=\{x\in\mathbb{R}^{n}: Ax\leq b, x\geq 0\}$ un poliedro racional.
+\begin{itemize}
+    \item[a)] Deuestra que si $P$ tiene la propiedad de descomposición entera, entonces $P$ es un poliedro entero.
+    \item[b)] Demuestre que si $A$ es total unimodular y $b$ es integral, entonces $P$ tiene la propiedad de descomposición entera.
+    \item[c)] Concluya quue $P$ tiene la propiedad de descomposición entera para todo $b$ integral si y sólo si $A$ es total unimodular.
+\end{itemize}
+
+\section{Propiedades de una Matriz TU}
+Prueba que si $A\in\{-1,0,1\}^{m\times n}$ es unimodular, entonces:
+\begin{itemize}
+    \item[a)] Cada submatriz cuadrada invertible de $A$ tiene una fila con un número impar de coordenadas no nulas.
+    \item[b)] Si $B$ es submatriz cuadrada de $A$ tal que la suma sobre las filas y sobre las columnas de $B$ es par, entonces la suma sobre todo $B$ es divisible por 4.
+\end{itemize}
+\textbf{Hint: Si A es TU, entonces todo submatriz B de A es TU. Use el teorema de Ghouila-Houri.}
+
+
+\end{document}
