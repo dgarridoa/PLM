@@ -1,0 +1,95 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[activeacute,spanish,es-nodecimaldot]{babel}
+\usepackage[left=1.5cm,top=1.5cm,right=1.5cm, bottom=1.5cm,letterpaper, includeheadfoot]{geometry}
+\usepackage[parfill]{parskip}
+
+\usepackage{amssymb, amsmath, amsthm}
+\usepackage{graphicx}
+\usepackage{lmodern,url}
+\usepackage{paralist} %util para listas compactas
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancypagestyle{plain}{%
+\fancyhf{}
+\lhead{\footnotesize\itshape\bfseries\rightmark}
+\rhead{\footnotesize\itshape\bfseries\leftmark}
+}
+
+
+% macros
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\CC}{\mathbb C}
+
+%Teoremas, Lemas, etc.
+\theoremstyle{plain}
+\newtheorem{teo}{Teorema}
+\newtheorem{lem}{Lema}
+\newtheorem{prop}{Proposición}
+\newtheorem{cor}{Corolario}
+
+\theoremstyle{definition}
+\newtheorem{defi}{Definición}
+\newtheorem{eje}{Ejemplo}
+\newtheorem{ejer}{Ejercicio}
+% fin macros
+
+%%%%% NOMBRE AUXILIARES Y FECHA
+\newcommand{\sca}{Diego Garrido}
+\newcommand{\fecha}{9 de julio  de 2020}
+
+%%%%%%%%%%%%%%%%%%
+
+%Macros para este documento
+\newcommand{\cin}{\operatorname{cint}}
+
+
+\begin{document}
+%Encabezado
+\fancyhead[L]{Facultad de Ciencias Físicas y Matemáticas}
+\fancyhead[R]{Universidad de Chile}
+\vspace*{-1.2 cm}
+\begin{minipage}{0.6\textwidth}
+\begin{flushleft}
+\hspace*{-0.5cm}\textbf{MA4702. Programación Lineal Mixta. 2020.}\\
+\hspace*{-0.5cm}\textbf{Profesor:} José Soto\\
+\hspace*{-0.5cm}\textbf{Auxiliar:} \sca\\
+\hspace*{-0.5cm}\textbf{Fecha:} \fecha.
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.36\textwidth}
+\begin{flushright}
+\includegraphics[scale=0.15]{fcfm}
+\end{flushright}
+\end{minipage}
+\bigskip
+%Fin encabezado
+
+%Titulo Auxiliar
+\begin{center}
+\LARGE\textbf{Total Dual Integral (TDI)}
+\end{center}
+
+Sea $G=(V,E)$ un grafo conexo y no dirigido. 
+El objetivo de este problema es probar que el sistema que define al polítopo de los bosques de $G$,
+$B(G)=\{x\in \RR^E\colon x(E(S))\leq |S|-1, \forall\; \emptyset\neq S\subseteq V, x\geq 0\}$ es TDI.
+
+\hspace{-15pt}\textbf{(a)} 
+Escriba el dual (D) del problema $\max\{c^Tx\colon x\in B(G)\}$, usando variables $\{y_S\}_{S\subseteq V, S\neq \emptyset}$.
+
+\hspace{-15pt}\textbf{(b)} Considere una solución dual óptima $y^*$ que minimice la cantidad $\Psi(y)=\sum_{S\subseteq V, S\neq \emptyset} y_S |S||V\setminus S|$
+y pruebe que el soporte $\mathcal{L}$ de $y^*$ es una familia \textbf{laminar}, es decir que no existen dos conjuntos $A, B$ intersectantes en su soporte\footnote{$A, B$ se dicen intersectantes si $A\setminus B$, $B\setminus A$, $A\cap B$ son todos no vacíos.}. ¡Cuidado! Recuerde que no existe la variable $y_\emptyset$.\\
+
+\hspace{-15pt}\textbf{(c)} Sea $W$ un conjunto finito, $\mathcal{L}\subseteq 2^W$ una familia laminar y $\mathcal{E}\subseteq 2^W$ una familia de conjuntos. Pruebe que la matriz $M\in \{0,1\}^{\mathcal{E}\times \mathcal{L}}$ dada por
+$M_{I,J}=\begin{cases} 1 & \text{ si } I \subseteq J,\\ 0 &\text{ en otro caso,}\end{cases}$ es totalmente unimodular (TU)
+
+\textbf{Indicación:} Use Ghouila-Houri asignando signos en las columnas adecuadamente.
+
+\hspace{-15pt}\textbf{(d)} Usando las partes (b) y (c), pruebe que el sistema que define $B(G)$ es totalmente dual integral (TDI). Concluya que $B(G)$ es integral.
+
+\end{document}
+
