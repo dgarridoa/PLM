@@ -1,0 +1,197 @@
+% BEGIN_FOLD preamble
+
+\documentclass{article}
+\usepackage[activeacute,spanish]{babel}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{url,multirow}
+\usepackage[centertableaux,smalltableaux]{ytableau}
+\usepackage[utf8]{inputenc}
+\usepackage{cancel, comment}
+\usepackage[left=2cm,top=1.5cm,right=2cm, bottom=1.5cm,letterpaper, includeheadfoot]{geometry}
+\usepackage{amssymb, amsmath, amsthm, mathtools}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	linkcolor={red!50!black},
+	citecolor={blue!50!black},
+	urlcolor={blue!80!black}
+}
+
+\usepackage[prependcaption,textsize=tiny,,textwidth=5cm]{todonotes}
+\newcommand{\js}[1]{\todo[inline,linecolor=red,backgroundcolor=red!25,bordercolor=red]{jsoto. #1}}
+
+\usepackage{paralist}
+\usepackage{contour}
+\usepackage{algorithm, algorithmic}
+
+%%%Definiciones
+\newcommand{\dis}{\displaystyle}
+\newcommand{\IV}[1]{[\![#1]\!]} %Iverson
+
+\newcommand{\E}{\mathcal{E}}
+\newcommand{\V}{\mathcal{V}}
+
+\def\multiset#1#2{\ensuremath{
+		\mathchoice{\left(\kern-.3em\left(\genfrac{}{}{0pt}{}{#1}{#2}\right)\kern-.3em\right)}}
+	{\big(\!\binom{#1}{#2}\!\big)}{\big(\!\binom{#1}{#2}\!\big)}{\big(\!\binom{#1}{#2}\!\big)}}
+\DeclareRobustCommand{\sbinom}{\genfrac{[}{]}{0pt}{}}
+\DeclareRobustCommand{\lbinom}{\genfrac{\{}{\}}{0pt}{}}
+\newcommand{\fallfac}[2]{{#1}^{\underline{#2}}}
+\newcommand{\risefac}[2]{{#1}^{\overline{#2}}}
+
+\newcommand{\defn}[1]{\textit{\textsc{[Def]\,}}\textbf{#1}\\[5pt]\indent}
+\newcommand{\nin}{\noindent}
+% macros
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\FF}{\mathbb F}
+\newcommand{\CC}{\mathbb C}
+\newcommand{\EE}{\mathbb E}
+\DeclareMathOperator{\COM}{COM}
+\DeclareMathOperator{\com}{com}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\DFJ}{DFJ}
+\DeclareMathOperator{\EUL}{EUL}
+\DeclareMathOperator{\WCOM}{WCOM}
+\DeclareMathOperator{\wcom}{wcom}
+\newcommand{\sop}{\operatorname{sop}}
+
+%Teoremas, Lemas, etc.
+
+\theoremstyle{plain}
+\newtheorem{teo}{Teorema}
+\newtheorem{lem}[teo]{Lema}
+\newtheorem{prop}{Proposici\'on}
+\newtheorem{cor}[teo]{Corolario}
+\newtheorem{cor*}{Corolario}
+\theoremstyle{definition}
+\newtheorem{defi}[teo]{Definici\'on}
+\newtheorem{eje}[teo]{Ejemplo}
+\newtheorem{ejeres}[teo]{Ejercicios resueltos}
+\newtheorem{ejere}[teo]{Ejercicio resuelto}
+\newtheorem{ejes}[teo]{Ejemplos}
+\newtheorem{ejer}[teo]{Ejercicio}
+\newtheorem{prob}[teo]{Problema}
+\newtheorem{obs}[teo]{Observaci\'on}
+\newtheoremstyle{Azul}
+{\topsep}   % ABOVESPACE
+{\topsep}   % BELOWSPACE
+{\color{blue}}  % BODYFONT
+{0pt}       % INDENT (empty value is the same as 0pt)
+{\color{blue}\bfseries} % HEADFONT
+{.}         % HEADPUNCT
+{5pt plus 1pt minus 1pt}  % HEADSPACE. `plain` default: {5pt plus 1pt minus 1pt}
+{}          % CUSTOM-HEAD-SPEC
+\theoremstyle{Azul}
+\newtheorem*{comm}{Comentario}
+\newcommand{\commento}[1]{\noindent{\color{blue}#1}\vspace*{-3pt}}
+
+% fin macros
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancypagestyle{plain}{%
+\fancyhf{}
+\lhead{\footnotesize\itshape\bfseries\rightmark}
+\rhead{\footnotesize\itshape\bfseries\leftmark}
+}
+
+% END_FOLD
+\begin{document}
+% BEGIN_FOLD encabezado
+\setlength{\headheight}{14pt}
+\fancyhead[L]{Facultad de Ciencias F\'isicas y Matem\'aticas}
+\fancyhead[R]{Universidad de Chile}
+\vspace*{-1.2 cm}
+\begin{minipage}{0.6\textwidth}
+	\begin{flushleft}
+		\hspace*{-0.5cm}\textbf{MA4702. Programación Lineal Mixta 2020.}\\
+		\hspace*{-0.5cm}\textbf{Profesor: José Soto.}\\
+	\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.36\textwidth}
+	\begin{flushright}
+		\includegraphics[scale=0.15]{fcfm.pdf}
+	\end{flushright}
+\end{minipage}
+\bigskip
+%Fin encabezado
+
+% END_FOLD
+\newif\ifsol
+\soltrue
+\solfalse
+
+\begin{center}
+  \LARGE \textbf{Tarea 4}.\\
+\end{center}
+\bigskip
+
+\noindent\textbf{Fecha entrega}: Lunes 13 de Julio, 23:59. Por u-cursos.
+\subsection*{Instrucciones:} 
+\begin{enumerate}
+\item \textbf{Extensión máxima}: Entregue su tarea en a lo más \textbf{6 planas}.
+    \item \textbf{Formato:} La tarea debe entregarse en formato pdf, con fondo de un solo color (blanco de preferencia), letra legible en manuscrito y clara. (No se aceptarán documentos tipeados o generados por computador, pero si tiene alguna manera de escribir en manuscrito directamente de manera digital lo puede hacer).
+    Si desarrolla su tarea en papel, entréguelo escaneados o en fotos de alta calidad, via ucursos.    \item \textbf{Tiempo de dedicación:} El tiempo estimado de \emph{desarrollo} de la tarea es de 3 horas de dedicación. Esto no considera el tiempo de estudio previo, el tiempo dedicado en asistir a cátedras y auxiliares, ni el tiempo para \emph{ponerse al día}. \textbf{En particular, para la última parte se recomienda repasar la clase 19 del curso}.
+     Tendrá un plazo de 7 días para entregarlo. No espere hasta el último momento para escanear o fotografiar adecuadamente su tarea y cambiarla al formato solicitado (pdf). Entregue con suficiente anticipación a la hora límite.
+    \item \textbf{Revisión:} Se podrá descontar hasta 1 punto en la nota final por falta de formato o extensión.
+\item Esta tarea está pensada para ser hecha en forma individual.
+    \end{enumerate}
+    
+  \subsection*{Definiciones para esta tarea}
+Sea $N$ un conjunto finito. Decimos que dos conjuntos $A, B \in 2^N$ son \emph{intersectantes} si los conjuntos $A\setminus B$, $B\setminus A$ y $A\cap B$ son todos no vacíos. Notamos que cuando dos conjuntos no son intersectantes entonces debemos tener que $A$ y $B$ son disjuntos, o bien uno contiene al otro.
+
+Una familia $\mathcal{L}\subseteq 2^N$ de subconjuntos de $N$ se dice \textbf{familia laminar sobre $N$} si no posee pares de conjuntos intersectantes, es decir, si para todo $A, B\in \mathcal{L}$.
+\begin{align*}
+(A\subseteq B) \text{ o } (B\subseteq A) \text{ ó } 
+(A\cap B = \emptyset)
+\end{align*}
+
+
+\subsection*{Ejercicios:}
+\noindent \textbf{Parte I (30 puntos).} \textbf{Elija, resuelva y entregue 3 ejercicios de esta parte $I$.} Si entrega más que 3 se calificarán los 3 peores ejercicios entregados.
+\begin{enumerate}[(a)]
+\item Demuestre la siguiente dirección del Teorema de Ghoulia-Houri: 
+Si $A\in \{-1,0,1\}^{m\times n}$ es una matriz totalmente unimodular, entonces para todo $J\subseteq [n]$ existe una partición $J_1, J_2$ de $J$ tal que
+$$\sum_{j\in J_1}a_{ij}-\sum_{j\in J_2}a_{ij} \in \{0,1,-1\}, \text{ para todo } i \in [m].$$
+\textbf{Indicación:} Sea $B=A^J$. Demuestre que el poliedro $P=\{x\in \RR^J\colon \lfloor \frac12 B 1 \rfloor \leq Bx\leq \lceil \frac12 B 1\rceil, 0\leq x \leq 1\}$ es no vacío, y concluya que tiene un punto  $y\in \{0,1\}^J$ integral. Use ese punto $y$ para determinar la partición pedida (el vector $y$ tiene solo 2 tipos de valores).
+\item Sea $\mathcal{I}$ una familia de intervalos cerrados, todos subconjuntos de $[0,n]$ y cada uno con sus extremos enteros. El \emph{minimum hitting set problem} consiste en encontrar el conjunto $H\subseteq [0,n]\cap \ZZ$ de menor cardinalidad tal que cada intervalo $J\in \mathcal{I}$ contiene al menos un punto de $H$. Encuentre un programa lineal puro que permita resolver este problema. \textbf{Indicación:} Demuestre primero que el programa lineal entero natural, tiene conjunto factible integral.
+\item Sea $A\in \RR^{m\times n}$, con $m\leq n$. Demuestre que $A$ es totalmente unimodular si y solo si $[A | I]$ es unimodular.
+\item Sea $G=(V,E)$ un digrafo, y sean $s$, $t$ dos nodos distintos de $V$. Encuentre un programa lineal puro que permita resolver el problema del $s$-$t$ camino de largo (número de aristas) mínimo.\\ \textbf{Indicación:} Escriba primero este problema como un flujo de costo mínimo con restricciones adicionales y argumente que esta versión del problema es integral.
+\item Sea $\mathcal{L}$ una familia laminar sobre un conjunto $V$ y sea $G=(V,E)$ un digrafo. Se define la matriz de corte de entrada de $G$ respecto a $\mathcal{L}$ como la matriz $M\in \{0,1\}^{E,\mathcal{L}}$ tal que $M_{e, A}=1$ si y solo si $e\in \delta^-(A)$. 
+Demuestre que la matriz $M$ es totalmente unimodular.
+
+\textbf{Indicación:} Puede usar sin demostrar que cualquier subfamilia $\mathcal{F}$ de $\mathcal{L}$ también es laminar. Apóyese en un dibujo ¿puede ponerle signos a los conjuntos adecuados de modo que el número de conjuntos positivos que cada arco $e$ entre difiera poco del número de conjuntos negativos con esta propiedad? Use Ghoulia-Houri.
+\item Sea $G=(V,E)$ un digrafo. Demuestre que para todo par de conjuntos $A, B\subseteq V$ y todo arco $e=(s,t)\in E$, se tiene la siguiente desigualdad
+$$\IV{e\in \delta^-(A\cup B)}+\IV{e\in \delta^-(A\cap B)}-\IV{e\in \delta^-(A)}-\IV{e\in \delta^-(B)} \leq 0$$
+donde $\IV{p}=1$ si $p$ es verdadero, y $\IV{p}=0$ en otro caso.
+Concluya que para toda función $w\colon E \to \RR_+$, la función $f\colon 2^V\to \RR$ dada por $f(X)=w(\delta^-(X)) = \sum_{e\in \delta^-(X)}w_e$ es submodular.
+\end{enumerate}
+
+\noindent \textbf{Parte II (30 puntos).} \\
+\textbf{Nota}: para hacer esta parte recomiendo basarse en las clases 19/20 del curso.\\
+
+Sea $G=(V,E)$ un digrafo y sea $r\in V$ un nodo raiz. Un $r$-conector es cualquier subconjunto $F$ de arcos de $E$ tal que para cada nodo $v\in V$ existe un $r$-$v$ camino dirigido en $F$. Supongamos para evitar conjuntos vacíos que el conjunto $E$ en si mismo es $r$-conector. Defina
+$$Q=\{x\in \RR^E\colon x(\delta^-(S))\geq 1, \forall\, \emptyset \neq S\subseteq V\setminus \{r\}, x\geq 0\}$$
+El objetivo de este problema es demostrar que $Q=\text{conv}\{\chi^F\colon F\text{ es $r$-conector}\}+\RR_+^E$. Es fácil ver (no lo demuestre) que demostrar la igualdad anterior equivale a demostrar que $Q$ es un poliedro entero. Para hacerlo, demostraremos que el sistema que define a $Q$ es TDI (eso es suficiente pues el vector lado derecho es entero).
+
+Sea $c\in \ZZ^E$ tal que el problema $(P)=\min \{c^Tx\colon x\in Q\}$ tenga solución finita. 
+\begin{enumerate}[(a)]
+\item (5 puntos) Escriba el dual $(D)$ del problema $(P)$, en variables $(y_S\colon \emptyset \neq S \subseteq V\setminus \{r\}$).
+\item (15 puntos) Llame $y^*$ a una solución óptima de $(D)$ que minimice el potencial $\Psi(y)=\sum_{S} y_S |S||V\setminus S|$. (Existe pues $(P)$ tiene solución finita, y hay un número finito de vértices en el poliedro dual). Demuestre que $y^*$ tiene soporte laminar (es decir, que los conjuntos asociados a coordenadas no nulas de $y^*$ son una familia laminar).\\
+\textbf{Indicación:} Al hacer el descruce, considere un par de conjuntos $A$ y $B$ intersectantes y asegúrese que $A\cap B$ y $A\cup B$ indiquen coordenadas del vector $y$.
+Use (aunque no la haya hecho) el ejercicio ($f$) de la parte I. 
+\item (10 puntos) Concluya que el sistema que define a $Q$ es totalmente dual integral.\\
+\textbf{Indicación:} Use el resultado del ejercicio ($e$) de la parte I, aunque no lo haya hecho en su tarea.
+\end{enumerate}
+
+
+
+	\end{document}
+	
+
+

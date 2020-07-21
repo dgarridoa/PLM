@@ -1,0 +1,245 @@
+% BEGIN_FOLD preamble
+
+\documentclass{article}
+\usepackage[activeacute,spanish]{babel}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{url,multirow}
+\usepackage[centertableaux,smalltableaux]{ytableau}
+\usepackage[utf8]{inputenc}
+\usepackage{cancel, comment}
+\usepackage[left=2cm,top=1.5cm,right=2cm, bottom=1.5cm,letterpaper, includeheadfoot]{geometry}
+\usepackage{amssymb, amsmath, amsthm, mathtools}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	linkcolor={red!50!black},
+	citecolor={blue!50!black},
+	urlcolor={blue!80!black}
+}
+
+\usepackage[prependcaption,textsize=tiny,,textwidth=5cm]{todonotes}
+\newcommand{\js}[1]{\todo[inline,linecolor=red,backgroundcolor=red!25,bordercolor=red]{jsoto. #1}}
+
+\usepackage{paralist}
+\usepackage{contour}
+\usepackage{algorithm, algorithmic}
+
+%%%Definiciones
+\newcommand{\dis}{\displaystyle}
+\newcommand{\IV}[1]{[\![#1]\!]} %Iverson
+
+\newcommand{\E}{\mathcal{E}}
+\newcommand{\V}{\mathcal{V}}
+
+\def\multiset#1#2{\ensuremath{
+		\mathchoice{\left(\kern-.3em\left(\genfrac{}{}{0pt}{}{#1}{#2}\right)\kern-.3em\right)}}
+	{\big(\!\binom{#1}{#2}\!\big)}{\big(\!\binom{#1}{#2}\!\big)}{\big(\!\binom{#1}{#2}\!\big)}}
+\DeclareRobustCommand{\sbinom}{\genfrac{[}{]}{0pt}{}}
+\DeclareRobustCommand{\lbinom}{\genfrac{\{}{\}}{0pt}{}}
+\newcommand{\fallfac}[2]{{#1}^{\underline{#2}}}
+\newcommand{\risefac}[2]{{#1}^{\overline{#2}}}
+
+\newcommand{\defn}[1]{\textit{\textsc{[Def]\,}}\textbf{#1}\\[5pt]\indent}
+\newcommand{\nin}{\noindent}
+% macros
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\FF}{\mathbb F}
+\newcommand{\CC}{\mathbb C}
+\newcommand{\EE}{\mathbb E}
+\DeclareMathOperator{\COM}{COM}
+\DeclareMathOperator{\com}{com}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\DFJ}{DFJ}
+\DeclareMathOperator{\EUL}{EUL}
+\DeclareMathOperator{\WCOM}{WCOM}
+\DeclareMathOperator{\wcom}{wcom}
+\newcommand{\sop}{\operatorname{sop}}
+
+%Teoremas, Lemas, etc.
+
+\theoremstyle{plain}
+\newtheorem{teo}{Teorema}
+\newtheorem{lem}[teo]{Lema}
+\newtheorem{prop}{Proposici\'on}
+\newtheorem{cor}[teo]{Corolario}
+\newtheorem{cor*}{Corolario}
+\theoremstyle{definition}
+\newtheorem{defi}[teo]{Definici\'on}
+\newtheorem{eje}[teo]{Ejemplo}
+\newtheorem{ejeres}[teo]{Ejercicios resueltos}
+\newtheorem{ejere}[teo]{Ejercicio resuelto}
+\newtheorem{ejes}[teo]{Ejemplos}
+\newtheorem{ejer}[teo]{Ejercicio}
+\newtheorem{prob}[teo]{Problema}
+\newtheorem{obs}[teo]{Observaci\'on}
+\newtheoremstyle{Azul}
+{\topsep}   % ABOVESPACE
+{\topsep}   % BELOWSPACE
+{\color{blue}}  % BODYFONT
+{0pt}       % INDENT (empty value is the same as 0pt)
+{\color{blue}\bfseries} % HEADFONT
+{.}         % HEADPUNCT
+{5pt plus 1pt minus 1pt}  % HEADSPACE. `plain` default: {5pt plus 1pt minus 1pt}
+{}          % CUSTOM-HEAD-SPEC
+\theoremstyle{Azul}
+\newtheorem*{comm}{Comentario}
+\newcommand{\commento}[1]{\noindent{\color{blue}#1}\vspace*{-3pt}}
+
+% fin macros
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancypagestyle{plain}{%
+\fancyhf{}
+\lhead{\footnotesize\itshape\bfseries\rightmark}
+\rhead{\footnotesize\itshape\bfseries\leftmark}
+}
+
+% END_FOLD
+\begin{document}
+% BEGIN_FOLD encabezado
+\setlength{\headheight}{14pt}
+\fancyhead[L]{Facultad de Ciencias F\'isicas y Matem\'aticas}
+\fancyhead[R]{Universidad de Chile}
+\vspace*{-1.2 cm}
+\begin{minipage}{0.6\textwidth}
+	\begin{flushleft}
+		\hspace*{-0.5cm}\textbf{MA4702. Programación Lineal Mixta 2020.}\\
+		\hspace*{-0.5cm}\textbf{Profesor: José Soto.}\\
+	\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.36\textwidth}
+	\begin{flushright}
+		\includegraphics[scale=0.15]{fcfm.pdf}
+	\end{flushright}
+\end{minipage}
+\bigskip
+%Fin encabezado
+
+% END_FOLD
+\newif\ifsol
+\soltrue
+\solfalse
+
+\begin{center}
+  \LARGE \textbf{Tarea 3}.\\
+\end{center}
+\bigskip
+
+\noindent\textbf{Fecha entrega}: Lunes 15 de Junio, 23:59. Por u-cursos.
+\subsection*{Instrucciones:} 
+\begin{enumerate}
+\item \textbf{Extensión máxima}: Entregue su tarea en a lo más \textbf{6 planas}.
+    \item \textbf{Formato:} La tarea debe entregarse en formato pdf, con fondo de un solo color (blanco de preferencia), letra legible en manuscrito y clara. (No se aceptarán documentos tipeados o generados por computador, pero si tiene alguna manera de escribir en manuscrito directamente de manera digital lo puede hacer).
+    Si desarrolla su tarea en papel, entréguelo escaneados o en fotos de alta calidad, via ucursos.    \item \textbf{Tiempo de dedicación:} El tiempo estimado de \emph{desarrollo} de la tarea es de 2.5 horas de dedicación. Esto no considera el tiempo de estudio previo, el tiempo dedicado en asistir a cátedras y auxiliares, ni el tiempo para \emph{ponerse al día}. Tendrá un plazo de 7 días para entregarlo. No espere hasta el último momento para escanear o fotografiar adecuadamente su tarea y cambiarla al formato solicitado (pdf). Entregue con suficiente anticipación a la hora límite.
+    \item \textbf{Revisión:} Se podrá descontar hasta 1 punto en la nota final por falta de formato o extensión.
+\item Esta tarea está pensada para ser hecha en forma individual.
+	\end{enumerate}
+
+\subsection*{Ejercicios:}
+\begin{enumerate}[(a)]
+\item {} [15 puntos] Sean $S,T\subseteq \RR^n$. Pruebe que $\text{conv}(S + T)=\text{conv}(S)+\text{conv}(T)$.
+
+\textbf{Solución}
+
+($\subseteq$)
+Sea $U=S+T=\{u\in \mathbb{R}^{n}|u=s+t, s\in S, t\in T\}$,  sea $\bar{u}\in conv(U)$, luego $\bar{u}=\sum_{i=1}^{n}\lambda_{i}u_{i}$, con $\lambda\geq 0$, $1^{T}\lambda=1$, $n$ finito y $u_{i}\in U \; \forall i \in [n]$, luego $\bar{u}$ puede escribirse como sigue:
+
+\begin{align*}
+\bar{u} &= \sum_{i=1}^{n}\lambda_{i}u_{i} = \sum_{i=1}^{n}\lambda_{i}(s_{i}+t_{i}) = \sum_{i=1}^{n}\lambda_{i}s_{i}+\sum_{i=1}^{n}\lambda_{i}t_{i} = \bar{s}+\bar{t}
+\end{align*}
+
+, donde $\bar{s}\in conv(S)$ y $\bar{t}\in conv(T)$,  luego $\bar{u}\in conv(S)+conv(T)$, se concluye que $conv(S+T)\subseteq conv(S)+conv(T)$. 
+
+($\supseteq$)
+Sea $\bar{s}=\sum_{i=1}^{n_{1}}\lambda_{i}s_{i}$, $\bar{t}=\sum_{j=1}^{n_{2}}\theta_{j}t_{j}$, con $1^{T}\lambda=1, \lambda\geq 0, 1^{T}\theta=1, \theta\geq 0$, $n_{1}$ y $n_{2}$ finitos, luego la suma entre una combinación convexa de elementos de $S$ y $T$ se puede escribir así:
+
+\begin{align*}
+    \bar{s}+\bar{t}&=\sum_{i=1}^{n_{1}}\lambda_{i}s_{i}+\sum_{j=1}^{n_{2}}\theta_{j}t_{j}=\sum_{i=1}^{n_{1}}\lambda_{i}s_{i}\sum_{j=1}^{n_{2}}\theta_{j}+\sum_{j=1}^{n_{2}}\theta_{j}t_{j}\sum_{i=1}^{n_{1}}\lambda_{i} =\sum_{i=1}^{n_{1}}\sum_{j=1}^{n_{2}}s_{i}\lambda_{i}\theta_{j}+t_{j}\theta_{j}\lambda_{i}\\
+    & =\sum_{i=1}^{n_{1}}\sum_{j=1}^{n_{2}}(s_{i}+t_{j})\lambda_{i}\theta_{j}, \; \lambda_{i}\theta_{j}\geq 0, \; \sum_{i=1}^{n_{1}}\sum_{j=1}^{n_{2}}\lambda_{i}\theta_{j}=\sum_{i=1}^{n_{1}}\lambda_{i}\sum_{j=1}^{n_{2}}\theta_{j} = 1
+\end{align*}
+, luego $\bar{s}+\bar{t}\in conv(S+T)$, se concluye que $conv(S)+conv(T)\subseteq conv(S+T)$.
+
+\item {} [15 puntos] Sean $P$, $Q$ polítopos con vértices $V(P)$ y $V(Q)$ respectivamente. Demuestre que
+$R=\text{conv}(P\cup Q)$ es polítopo y que si $V(R)$ son los vértices de $R$ entonces $V(R)\subseteq V(P)\cup V(Q)$.
+
+\textbf{Solución}
+
+ Sea $S=P\cup Q$, como $R=conv(S)$ se tiene que todo $\bar{r}\in R$ se puede escribir como una combinación finita de elementos de $S$, formalmente, $\bar{r}=\sum_{k\in K}\alpha_{k}s_{k}, \; \alpha\geq 0, \; 1^{T}\alpha=1, \;s_{k}\in S \; \forall k \in K$, con $K$ finito. Notar que $K$ se puede reescribir como $K=K_{1}\cup K_{2}$, donde $K_{1}$ es el conjunto de índices de los elementos de $P$ que participan y $K_{2}$ de los elementos de $Q$, como $P$ y $Q$ son politopos sus elementos se pueden escribir como una combinación convexa de sus vertices, así si $k\in K_{1}$, entonces existe $\lambda^{k}\geq 0, 1^{T}\lambda^{k}=1$ tal que  $s_{k} = \sum_{v \in V(P)\cup V(Q)}\lambda^{k}_{v}v$, con $\lambda^{k}_{v}=0 \; \forall v\in V(Q)$ (lo mismo aplica para $k\in K_{2}$), así $\bar{r}$ se puede escribir como sigue:
+
+\begin{align*}
+\bar{r} & = \sum_{k\in K_{1}\cup K_{2}}\alpha_{k}s_{k}= \sum_{k\in K_{1}\cup K_{2}}\alpha_{k}\sum_{v\in V(P)\cup V(Q)}\lambda^{k}_{v}v  = \sum_{v\in V(P)\cup V(Q)} v \sum_{k\in K_{1}\cup K_{2}}\alpha_{k}\lambda^{k}_{v}\\
+& = \sum_{v\in V(P)\cup V(Q)}v \theta_{v},\; \theta_{v} = \sum_{k\in K_{1}\cup K_{2}}\alpha_{k}\lambda^{k}_{v}
+\end{align*}
+
+Notar además que:
+
+\begin{align*}
+    \sum_{v\in V(P)\cup V(Q)}\theta_{v} = \sum_{v\in V(P)\cup V(Q)} \sum_{k\in K_{1}\cup K_{2}}\alpha_{k}\lambda^{k}_{v} =  \sum_{k\in K_{1}\cup K_{2}}\alpha_{k} \sum_{v\in V(P)\cup V(Q)}\lambda^{k}_{v}  =  \sum_{k\in K_{1}\cup K_{2}}\alpha_{k} = 1
+\end{align*}
+
+, luego $\bar{r}$ es combinación convexa de elementos de $V(P)\cup V(R)$, esto implica que $conv(P\cup Q) \subseteq conv(V(P)\cup V(Q))$ y como $V(P)\cup V(Q) \subseteq P\cup Q$ se tiene que $conv(V(P)\cup V(Q))\subseteq conv(P\cup Q)$, por ende $R=conv(V(P)\cup V(Q))$ y como la envoltura convexa de un conjunto finito es polítopo se concluye que $R$ lo es.
+
+Un elemento $\bar{r}$ es punto extremo de $R$ si para todo $H\subseteq R$ con $H$ finito, se tiene que si $x\in conv(H)$, entonces $x$ está en $H$. Tomando $H = V(P)\cup V(Q)$ y $\bar{r}$ punto extremo de $R$, se tiene que $r\in conv(V(P)\cup V(R))$, luego $\bar{r}\in V(P)\cup V(Q)$, se concluye que $V(R)\subseteq V(P)\cup V(Q)$.
+
+\item {} [30 puntos] Considere la variante del cutting stock problem en el cual cada cliente $i$ desea \textbf{a lo más} $b_i$ rollos de ancho $w_i$ y está dispuesto a pagar $g_i$ pesos por cada rollo de dicho ancho recibido (y no recibirá más de $b_i$). Además, la papelera incurre en un costo fijo de $s$ pesos por cada tronco de ancho $W$ usado, y dispone de no más de $N$ rollos. La papelera desea maximizar su utilidad definida como el ingreso recibido por los rollos vendidos menos el costo de los troncos usados. Determine:\\[2pt]
+
+
+(c1) Modele el problema como un programa lineal entero (PE) que solo use variables $x_p$ para cada posible patrón $p\in \mathcal{P}$ (use la misma definición de patrón usada en clases y laboratorio).
+\textbf{Indicación:} Defina explícitamente $g_p$ como el ingreso que le reporta vender los rollos de cierto patrón $p$. Este valor es una constante para (PE).\\[2pt]
+
+\textbf{Solución}\\
+Se define la ganancia de un patrón como el ingreso generado por las rollos cortados, es decir, $g_{p}=\sum_{i=1}^{m}g_{i}p_{i}$, luego PE se puede escribir como:
+\begin{align*}
+    \text{(PE)} \max &\sum_{p\in P} (g_{p}-s)x_{p}\\
+    & \sum_{p\in P}x_{p}p_{i}\leq b_{i}, \;\forall i\in[m]\\
+    &\sum_{p\in P}x_{p}\leq N\\
+    & x_p\in \mathbb{N}\;\forall p \in P
+\end{align*}
+, la primera restricción indica que cada cliente $i$ no recibe más de $b_{i}$ unidades y la segunda restriccion impide cortar más de $N$ troncos.
+
+
+(c2) Para $Q\subseteq \mathcal{P}$, el master problem MP$(Q)$ asociado y su dual DUAL-MP$(Q)$.
+
+\textbf{Indicación:} Recuerde que MP$(Q)$ se obtiene tomando la relajación lineal de (PE) y eliminando (fijando a cero) todas las variables $x_p$ para $p$ fuera de $Q$. Su formulación MP$(Q)$ solo debe incluir variables $x_p$ con $p\in Q$ (no debe hacer mención al resto de los $x_p$).\\[2pt]
+
+\textbf{Solución}\\
+El problema maestro es la relajación lineal de PE sobre un sunconjunto $Q\subseteq P$ de patrones, así el maestro es:
+\begin{align*}
+    \text{(MP(Q))} \max & \sum_{p\in Q} (g_{p}-s)x_{p}\\
+    & \sum_{p\in Q}x_{p}p_{i}\leq b_{i}, \; \forall i\in[m]\\
+    & \sum_{p\in Q}x_{p}\leq N\\
+    & x_p\geq 0 \;\forall p \in Q
+\end{align*}
+Sea $y\in \mathbb{R_{+}}^{m}$ y $z\in\mathbb{R_{+}}$ las variable duales asociadas a la primera y segunda restricción de MP(Q) respectivamente, así su dual es:
+\begin{align*}
+    \text{(DUAL-MP(Q))} \min & \sum_{i=1}^{m}y_{i}b_{i}+zN\\
+    & \sum_{i=1}^{m}y_{i}p_{i}+z\geq g_{p}-s, \; \forall p \in Q\\
+ 	& y_{i}\geq 0 \;\forall i \in [m], z\geq0
+\end{align*}
+
+(c3) Para una solución dual factible $q$ de DUAL-MP$(Q)$ dada, el pricing problem asociado. Escriba este pricing problem como un programa lineal entero e interprételo como un problema de mochila.
+
+\textbf{Indicación:} Recuerde que el pricing problem consiste en determinar cual es el índice (columna) asociada a la restricción de DUAL-MP$(\mathcal{P})$ que más viola $q$ (la menos satisfecha).
+
+\textbf{Solución}\\
+Dado $(y,z)$ dual factibles el Pricing Problem (PP(y,z)) consiste en determinar $p\in P$ que más viola la restricción $\eta = g_{p}-\sum_{i=1}^{m}y_{i}p_{i}\leq z+s$, así PP(y,z) equivale a resolver el siguiente PLE:
+\begin{align*}
+	\text{(PP(y,z))} \max &\sum_{i=1}^{m}p_{i}(g_{i}-y_{i})\\
+    &\sum_{i=1}^{m}p_{i}w_{i}\leq W\\
+ 	&p_{i}\in \mathbb{N} \; \forall i \in [m]
+\end{align*}
+
+, el problema anterior se puede interpretar como un problema de la mochila, donde  $p_{i}$ es cuantas unidades se lleva del bien $i$, $g_{i}-y_{i}$ es la utilidad que aporta, $w_{i}$ el espacio que ocupa y $W$ la capacidad de la mochila.
+
+\end{enumerate}
+
+\end{document}
+	
+
+
