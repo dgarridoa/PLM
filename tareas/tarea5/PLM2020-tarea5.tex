@@ -1,0 +1,204 @@
+% BEGIN_FOLD preamble
+
+\documentclass{article}
+\usepackage[activeacute,spanish]{babel}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{url,multirow}
+\usepackage[centertableaux,smalltableaux]{ytableau}
+\usepackage[utf8]{inputenc}
+\usepackage{cancel, comment}
+\usepackage[left=2cm,top=1.5cm,right=2cm, bottom=1.5cm,letterpaper, includeheadfoot]{geometry}
+\usepackage{amssymb, amsmath, amsthm, mathtools}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	linkcolor={red!50!black},
+	citecolor={blue!50!black},
+	urlcolor={blue!80!black}
+}
+
+\usepackage[prependcaption,textsize=tiny,,textwidth=5cm]{todonotes}
+\newcommand{\js}[1]{\todo[inline,linecolor=red,backgroundcolor=red!25,bordercolor=red]{jsoto. #1}}
+
+\usepackage{paralist}
+\usepackage{contour}
+\usepackage{algorithm, algorithmic}
+
+%%%Definiciones
+\newcommand{\dis}{\displaystyle}
+\newcommand{\IV}[1]{[\![#1]\!]} %Iverson
+
+\newcommand{\E}{\mathcal{E}}
+\newcommand{\V}{\mathcal{V}}
+
+\def\multiset#1#2{\ensuremath{
+		\mathchoice{\left(\kern-.3em\left(\genfrac{}{}{0pt}{}{#1}{#2}\right)\kern-.3em\right)}}
+	{\big(\!\binom{#1}{#2}\!\big)}{\big(\!\binom{#1}{#2}\!\big)}{\big(\!\binom{#1}{#2}\!\big)}}
+\DeclareRobustCommand{\sbinom}{\genfrac{[}{]}{0pt}{}}
+\DeclareRobustCommand{\lbinom}{\genfrac{\{}{\}}{0pt}{}}
+\newcommand{\fallfac}[2]{{#1}^{\underline{#2}}}
+\newcommand{\risefac}[2]{{#1}^{\overline{#2}}}
+
+\newcommand{\defn}[1]{\textit{\textsc{[Def]\,}}\textbf{#1}\\[5pt]\indent}
+\newcommand{\nin}{\noindent}
+% macros
+\newcommand{\QQ}{\mathbb Q}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\NN}{\mathbb N}
+\newcommand{\ZZ}{\mathbb Z}
+\newcommand{\FF}{\mathbb F}
+\newcommand{\CC}{\mathbb C}
+\newcommand{\EE}{\mathbb E}
+\DeclareMathOperator{\COM}{COM}
+\DeclareMathOperator{\com}{com}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\DFJ}{DFJ}
+\DeclareMathOperator{\EUL}{EUL}
+\DeclareMathOperator{\WCOM}{WCOM}
+\DeclareMathOperator{\wcom}{wcom}
+\newcommand{\sop}{\operatorname{sop}}
+\newcommand{\conv}{\operatorname{conv}}
+\newcommand{\Ch}{\operatorname{Ch}}
+
+%Teoremas, Lemas, etc.
+
+\theoremstyle{plain}
+\newtheorem{teo}{Teorema}
+\newtheorem{lem}[teo]{Lema}
+\newtheorem{prop}{Proposici\'on}
+\newtheorem{cor}[teo]{Corolario}
+\newtheorem{cor*}{Corolario}
+\theoremstyle{definition}
+\newtheorem{defi}[teo]{Definici\'on}
+\newtheorem{eje}[teo]{Ejemplo}
+\newtheorem{ejeres}[teo]{Ejercicios resueltos}
+\newtheorem{ejere}[teo]{Ejercicio resuelto}
+\newtheorem{ejes}[teo]{Ejemplos}
+\newtheorem{ejer}[teo]{Ejercicio}
+\newtheorem{prob}[teo]{Problema}
+\newtheorem{obs}[teo]{Observaci\'on}
+\newtheoremstyle{Azul}
+{\topsep}   % ABOVESPACE
+{\topsep}   % BELOWSPACE
+{\color{blue}}  % BODYFONT
+{0pt}       % INDENT (empty value is the same as 0pt)
+{\color{blue}\bfseries} % HEADFONT
+{.}         % HEADPUNCT
+{5pt plus 1pt minus 1pt}  % HEADSPACE. `plain` default: {5pt plus 1pt minus 1pt}
+{}          % CUSTOM-HEAD-SPEC
+\theoremstyle{Azul}
+\newtheorem*{comm}{Comentario}
+\newcommand{\commento}[1]{\noindent{\color{blue}#1}\vspace*{-3pt}}
+
+% fin macros
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancypagestyle{plain}{%
+\fancyhf{}
+\lhead{\footnotesize\itshape\bfseries\rightmark}
+\rhead{\footnotesize\itshape\bfseries\leftmark}
+}
+
+% END_FOLD
+\begin{document}
+% BEGIN_FOLD encabezado
+\setlength{\headheight}{14pt}
+\fancyhead[L]{Facultad de Ciencias F\'isicas y Matem\'aticas}
+\fancyhead[R]{Universidad de Chile}
+\vspace*{-1.2 cm}
+\begin{minipage}{0.6\textwidth}
+	\begin{flushleft}
+		\hspace*{-0.5cm}\textbf{MA4702. Programación Lineal Mixta 2020.}\\
+		\hspace*{-0.5cm}\textbf{Profesor: José Soto.}\\
+	\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.36\textwidth}
+	\begin{flushright}
+		\includegraphics[scale=0.15]{fcfm.pdf}
+	\end{flushright}
+\end{minipage}
+\bigskip
+%Fin encabezado
+
+% END_FOLD
+\newif\ifsol
+\soltrue
+\solfalse
+
+\begin{center}
+  \LARGE \textbf{Tarea 5}.\\
+\end{center}
+\bigskip
+
+\noindent\textbf{Fecha entrega}: Viernes 24 de Julio, 23:59. Por u-cursos. (Se recomienda entregar el Miércoles para acelerar corrección)
+\subsection*{Instrucciones:} 
+\begin{enumerate}
+\item \textbf{Extensión máxima}: Entregue su tarea en a lo más \textbf{6 planas}.
+    \item \textbf{Formato:} La tarea debe entregarse en formato pdf, con fondo de un solo color (blanco de preferencia), letra legible en manuscrito y clara. (No se aceptarán documentos tipeados o generados por computador, pero si tiene alguna manera de escribir en manuscrito directamente de manera digital lo puede hacer).
+    Si desarrolla su tarea en papel, entréguelo escaneados o en fotos de alta calidad, via ucursos.    \item \textbf{Tiempo de dedicación:} El tiempo estimado de \emph{desarrollo} de la tarea es de 2.5 horas de dedicación. Esto no considera el tiempo de estudio previo, el tiempo dedicado en asistir a cátedras y auxiliares, ni el tiempo para \emph{ponerse al día}. 
+     Tendrá un plazo de 7 días para entregarlo. No espere hasta el último momento para escanear o fotografiar adecuadamente su tarea y cambiarla al formato solicitado (pdf). Entregue con suficiente anticipación a la hora límite.
+    \item \textbf{Revisión:} Se podrá descontar hasta 1 punto en la nota final por falta de formato o extensión.
+\item Esta tarea está pensada para ser hecha en forma individual.
+    \end{enumerate}
+    
+\subsection*{Definiciones:}
+Llamamos rango de Chvátal de un poliedro $P$, y lo denotamos $\Ch(P)$, al valor mínimo $k$ tal que la $k$-ésima cerradura de Chvátal,  $P^{(k)}$ es igual a $\conv(P\cap \ZZ^n)$. Por ejemplo, si $P$ es integral, $\Ch(P)=0$.
+ 
+Si $\alpha^Tx\leq \beta$ es una desigualdad válida para $\conv(P\cap \ZZ^n)$, llamamos rango de Chvátal de la desigualdad en $P$ al menor valor $k$ tal que la desigualdad es válida para $P^{(k)}$
+
+\subsection*{Ejercicios:} Cada uno vale 1.5 puntos.
+
+\begin{enumerate}[(a)]
+\item Edmonds demostró que para todo grafo $G=(V,E)$, 
+$\conv(\chi^F\colon F \text{ matching perfecto de $G$})$ es igual al poliedro $$\{x^E_+\colon x(\delta(v))=1, \forall v\in V; x(\delta(U))\geq 1, \forall U\subseteq V, |U|\text{ impar}\}$$
+Decimos $G$ es cúbico si el grado de cada vértice es 3. Es fácil ver (no lo demuestre) que en este caso $G$ tiene un número par de vértices.
+
+Decimos que $G$ es 2-arista-conexo si para todo conjunto de vértices $U$, $\emptyset\neq U\neq V$, $|\delta(U)|\geq 2$. Use todo lo anterior para demostrar el siguiente teorema de Petersen.
+
+Si $G$ tiene una cantidad par de vértices, y es 2-arista-conexo y cúbico, entonces $G$ tiene un matching perfecto.
+
+
+\item 
+Sea $k\geq 0$ entero y sea $Q$ un poliedro en $\RR^2$ tal que $Q\supseteq \{(0,0),(0,1),(1/2,k)\}$ y $Q\cap \ZZ^2=\{(0,0),(0,1)\}$. Pruebe que $\Ch(Q)\geq k$.
+
+\textbf{Indicación:} Use inducción.
+
+
+\item Considere una mochila que soporta un peso máximo de $W$ y $n$ objetos, donde el $i$-ésimo objeto tiene peso $0< a_i\leq W$ (no necesariamente enteros).
+
+Decimos que un conjunto $S\subseteq [n]$ es un packing, si los objetos indexados por $S$ caben en la mochila, es decir $\sum_{i\in S}a_i \leq W$. Decimos que $C\subseteq [n]$ es un cover, si $C$ no es un packing. Decimos que $C$ es un cover minimal si $C$ es un cover pero $C\setminus\{j\}$ no es cover para todo $j\in C$.
+
+La envoltura convexa de las indicatrices de todos los packings es $P\cap \ZZ^n$ donde $P$ es el polítopo de mochila siguiente:
+$$P=\{x\in \RR^n\colon \sum_{i=1}^na_ix_i \leq W; x_i \geq 0, \forall i\in [n], x_i\leq 1, \forall i\in [n]\}$$
+
+Notamos que si $C$ es un cover minimal entonces todo packing puede contener a lo más $|C|-1$ elementos de $C$. En particular, la desigualdad de cover 
+$$\sum_{i\in C}x_i \leq |C|-1$$ 
+es válida para $P\cap \ZZ^n$.
+
+Demuestre que para todo $C$ cover, la desigualdad de cover asociada tiene rango de Chvátal 1 en $P$ (es decir, es un corte de Chvátal de $P$).
+
+\textbf{Indicación:} Encuentre una combinación cónica adecuada de las desigualdades de $P$.
+
+\item Sea $G=(V,E)$ un grafo. Un conjunto estable de $G$ es un conjunto de vértices $S\subseteq V$ tal que $E(S)=\emptyset$. Definamos 
+$$P_G=\{x\in \RR^E\colon x_u+x_v\leq 1, \forall uv\in E; x_v\geq 0, \forall v\in V\}$$
+No es difícil probar que $P_G$ es una formulación para el conjunto de las indicatrices de conjuntos estables, es decir
+$$\conv(\chi^S\colon S\text{ conjunto estable de $G$})=P_G\cap \ZZ^V.$$
+
+Un conjunto $K$ de vértices es un clique de $G$ si $E$ contiene todas las aristas entre pares de vértices de $K$. Claramente, si $S$ es un conjunto estable entonces para todo clique $K$, $S$ contiene a lo más un vértice de $K$. Esto prueba que para todo $K$ clique, la desigualdad de clique:
+$$\sum_{v\in K}x_v \leq 1$$
+es válida para $P_G\cap \ZZ^V$.
+
+Demuestre por inducción que si $K$ es un clique con $|K|\leq k$ entonces la desigualdad de clique de $K$ tiene rango de Chvátal a lo más $k-2$ en $P_G$.
+
+Bonus: Tendrá 0.5 puntos adicionales que puede agregar a cualquier tarea si demuestra que el rango de Chvátal es en realidad $O(\log k)$. (Esta pregunta es binaria, no puede estar explicada a medias)
+\end{enumerate}
+
+
+
+	\end{document}
+	
+
+
