@@ -1,5 +1,9 @@
 # 1. Instalar Julia
 
+## Opción 1
+Instalar solo <a href="https://julialang.org/downloads/">Julia</a>, esta versión permite usar Julia desde una terminal. En la misma página están las instrucciones para añadir Julia a la variable de entorno PATH para así poder llamar julia mediante la terminal a través del comando `julia`.
+
+## Opción 2 (no recomendado para OS Windows)
 Descargar JuliaPro v1.3.1-1 a partir del siguiente link:
 
 https://juliacomputing.com/products/juliapro.html
@@ -7,7 +11,9 @@ https://juliacomputing.com/products/juliapro.html
 Descargar versión compatible al sistema operativo, al lado del enlace de descarga hay un manual de instalacción (Quick-start Guide) con las instrucciones de instalación y ejecución del programa.
 
 # 2. IDE para Julia
-La distribución JuliaPro viene con dos IDE para escribir código en Julia, el primero es <a href=https://junolab.org/>Juno</a> y el segundo es <a href=https://github.com/JuliaLang/IJulia.jl>IJulia</a> el cual posee el entorno interactivo de Jupyter notebook (<a href=https://jupyter.org/>Jupyter notebook</a>).
+
+## Jupyter Notebook
+Julia cuenta con <a href=https://github.com/JuliaLang/IJulia.jl>IJulia</a>, un paquete que permite utilizar el entorno interactivo de <a href=https://jupyter.org/>Jupyter notebook</a>.
 
 Para abrir Jupyter notebook en el navegador se debe desde la consola de Julia ejecutar los siguientes comandos:
 
@@ -15,6 +21,13 @@ Para abrir Jupyter notebook en el navegador se debe desde la consola de Julia ej
 julia>  using IJulia
 julia>  notebook()
 ```
+
+## JUNO
+La distribución JuliaPro viene <a href=https://junolab.org/>Juno</a>, editor de código construido sobre ATOM.
+
+## Otros
+
+También es posible usar Julia con IDEs genéricas, como lo son ATOM, VSCode, etc.
 
 # 3. Instalar Gurobi y JuMP
 Descargar gurobi v9.0.1 en el siguiente link, en el mismo link en el archivo README están las instrucciones de instalación:

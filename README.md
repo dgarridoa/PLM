@@ -7,6 +7,7 @@ Repositorio de código del curso, la estructura del repositorio hasta el momento
 3. `gurobi/`: tutoriales de gurobi.
 4. `labs/`: enunciados laboratorios y su solución.
 5. `auxs/`: enunciados auxiliares teóricas y su solución.
+6. `tareas/`: tareas teóricas y su solución.
 ## Requisitos
 ```
 julia v1.3.1
